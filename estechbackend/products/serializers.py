@@ -21,12 +21,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'description', 'price', 'photos', 'average_rating', 'reviews_count']
 
 
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductDetailSerializer(ProductSerializer):
     reviews = serializers.SerializerMethodField()
 
     class Meta:
-        model = Product
-        fields = ['id', 'title', 'description', 'price', 'reviews']
+        model = ProductSerializer.Meta.model
+        fields = ProductSerializer.Meta.fields + ['reviews']
 
     def get_reviews(self, obj):
         reviews = obj.reviews.all()
