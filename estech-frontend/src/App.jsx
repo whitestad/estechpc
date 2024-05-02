@@ -8,6 +8,7 @@ import MainPage from "@/pages/MainPage.jsx";
 import ComponentDemonstration from "@/pages/ComponentDemonstration.jsx";
 import Logout from "@/pages/Logout.jsx";
 import Login from "@/pages/Login.jsx";
+import CategoriesPage from "@/pages/CategoriesPage.jsx";
 
 function App() {
 
@@ -17,6 +18,9 @@ function App() {
                 <Header></Header>
                 <Routes>
                     <Route path="/" element={<MainPage></MainPage> } />
+
+                    <Route path="/categories" element={<CategoriesPage></CategoriesPage> } />
+
                     <Route path="/component-demonstration" element={<ComponentDemonstration></ComponentDemonstration> } />
                     <Route path="/login" element={<Login/> } />
                     <Route path="/logout" element={<Logout />} />

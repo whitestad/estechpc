@@ -1,5 +1,5 @@
 import {useAuthStore} from "../store/auth";
-import {Container} from "@components/common/container/Container.jsx";
+import {Container} from "@components/common/layouts/Layouts.jsx";
 
 function MainPage() {
     const [isLoggedIn, user] = useAuthStore((state) => [

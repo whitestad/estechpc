@@ -2,8 +2,13 @@ from django.db.models import Avg, Count
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from products.models import Product
-from .serializers import ProductSerializer, ProductDetailSerializer
+from products.models import Product, Category
+from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):

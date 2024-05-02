@@ -59,7 +59,7 @@
 
 }
 
-*{
+*, :after, :before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -109,4 +109,8 @@ a:hover {
 
 h1 {
     line-height: 1.1;
+}
+
+img{
+    object-fit: contain;
 }

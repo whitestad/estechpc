@@ -1,5 +1,5 @@
 import {useAuthStore} from "@/store/auth";
-import {Container} from "@components/common/container/Container.jsx";
+import {Container} from "@components/common/layouts/Layouts.jsx";
 import Strap from "@components/common/strap/Strap.jsx";
 import {Button, OutlineButton} from "@components/common/button/Button.jsx";
 import {FieldsGroup} from "@components/layout/fieldsGroup/FieldGroup.jsx";

@@ -1,7 +1,13 @@
 from rest_framework import serializers
 
 from community.serializers import ProductReviewSerializer
-from .models import Product, ProductPhoto
+from .models import Product, ProductPhoto, Category
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 
 class ProductPhotoSerializer(serializers.ModelSerializer):
