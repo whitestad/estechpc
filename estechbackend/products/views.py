@@ -7,12 +7,28 @@ from .serializers import ProductSerializer, ProductDetailSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.annotate(
-        average_rating=Avg('reviews__rating'),
-        reviews_count=Count('reviews')
-    ).order_by('id')
-
     serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+
+        category_id = self.request.query_params.get('category')
+        min_price = self.request.query_params.get('min_price')
+        max_price = self.request.query_params.get('max_price')
+
+        if category_id:
+            queryset = queryset.filter(category__id=category_id)
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+
+        queryset = queryset.annotate().annotate(
+            average_rating=Avg('reviews__rating'),
+            reviews_count=Count('reviews')
+        ).order_by('id')
+
+        return queryset
 
     def get_serializer_class(self):
         if self.action == 'retrieve' or self.request.query_params.get('include_reviews') == 'true':
