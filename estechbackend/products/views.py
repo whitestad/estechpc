@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.db.models import Avg, Count
+from rest_framework import viewsets
+from products.models import Product
+from .serializers import ProductSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all().order_by('title')
+    queryset = Product.objects.annotate(
+        average_rating=Avg('reviews__rating'),
+        reviews_count=Count('reviews')
+    )
     serializer_class = ProductSerializer
-
-    def get_serializer_context(self):
-        context = super(ProductViewSet, self).get_serializer_context()
-        context.update({"request": self.request})
-        return context
