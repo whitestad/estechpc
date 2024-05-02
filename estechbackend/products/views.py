@@ -10,7 +10,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.annotate(
         average_rating=Avg('reviews__rating'),
         reviews_count=Count('reviews')
-    )
+    ).order_by('id')
+
     serializer_class = ProductSerializer
 
     def get_serializer_class(self):
