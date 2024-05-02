@@ -1,0 +1,16 @@
+.strap{
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100px;
+    gap: var(--base-gap);
+
+    background-color: var(--background-color-2);
+    padding: 2rem;
+
+    border-radius: var(--base-border-radius);
+}
+
+.strap.reverse{
+    background-color: var(--main-color-1);
+}

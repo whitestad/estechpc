@@ -1,0 +1,10 @@
+
+
+.text{
+    color: var(--main-color-1);
+}
+
+
+.secondary{
+    color: var(--color-transparent);
+}

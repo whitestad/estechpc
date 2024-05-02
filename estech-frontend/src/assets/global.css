@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap');
+
+
+:root {
+    --base-font: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    --background-color-1: #F0F0F0;
+    --background-color-2: #fff;
+
+    --main-color-1: #232a3f;
+    --main-color-2: #3C486B;
+
+    --text-color-in-button: var(--background-color-2);
+    --text-color-in-button-hover: var(--main-color-1);
+
+    --hover-color-1: #8062D6;
+    --hover-color-2: #9288F8;
+    --hover-color-3: #F9D949;
+
+    --gradient: var(--hover-color-2), var(--hover-color-1);
+
+    --color-transparent: rgba(0, 0, 0, 0.5);
+
+    --error-color: #DA0037;
+
+    --light-color: rgba(244, 80, 80, 0.25);
+
+    --shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0px 2px 10px rgba(137, 80, 244, 0.3);
+
+    --window-border-radius: 20px;
+    --base-border-radius: 15px;
+    --small-border-radius: calc(var(--base-border-radius) / 2);
+
+    --base-transition: all 0.1s;
+
+    --max-width: 1440px;
+    --base-gap: 1rem
+}
+
+:root {
+    font-family: var(--base-font);
+
+    line-height: 1.5;
+    font-weight: 400;
+
+    color: var(--main-color-1);
+
+    /*color-scheme: light dark;*/
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+@media (prefers-color-scheme: dark) {
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    transition: var(--base-transition);
+}
+
+*:hover{
+    transition: var(--base-transition);
+}
+
+body{
+    background-color: var(--background-color-1);
+
+    margin: 0;
+    display: flex;
+    min-width: 320px;
+    min-height: 100vh;
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background: transparent;
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+a:hover {
+    color: #535bf2;
+}
+
+h1 {
+    line-height: 1.1;
+}
