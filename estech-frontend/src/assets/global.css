@@ -35,7 +35,7 @@
 
     --base-transition: all 0.1s;
 
-    --max-width: 1440px;
+    --max-width: min(1440px, 90vw);
     --base-gap: 1rem
 }
 
