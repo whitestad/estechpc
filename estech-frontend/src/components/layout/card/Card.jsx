@@ -2,9 +2,9 @@ import styles from './Card.module.css';
 
 
 
-function SimpleCard({children, image}) {
+function SimpleCard({children, image, ...props}) {
     return (
-        <div className={styles.card}>
+        <div className={styles.card} {...props}>
             <div className={styles.imageDiv}>
                 <img className={styles.image} src={image} />
             </div>

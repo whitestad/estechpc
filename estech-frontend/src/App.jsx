@@ -9,6 +9,7 @@ import ComponentDemonstration from "@/pages/ComponentDemonstration.jsx";
 import Logout from "@/pages/Logout.jsx";
 import Login from "@/pages/Login.jsx";
 import CategoriesPage from "@/pages/CategoriesPage.jsx";
+import ProductsPage from "@/pages/ProductsPage.jsx";
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
                     <Route path="/" element={<MainPage></MainPage> } />
 
                     <Route path="/categories" element={<CategoriesPage></CategoriesPage> } />
+
+                    <Route path="/products" element={<ProductsPage />} />
 
                     <Route path="/component-demonstration" element={<ComponentDemonstration></ComponentDemonstration> } />
                     <Route path="/login" element={<Login/> } />

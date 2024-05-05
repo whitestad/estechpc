@@ -10,7 +10,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to='products', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.title} <- {self.parent}'
+        return f'{self.title}{f' <- {self.parent}' if self.parent  else ''}'
 
     class Meta:
         verbose_name = 'категория'
@@ -22,6 +22,8 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.IntegerField()
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
+
     count_of_orders = models.IntegerField(default=0)
     count_of_likes = models.IntegerField(default=0)
 
@@ -30,7 +32,6 @@ class Product(models.Model):
 
     def add_price_history(self, new_price):
         PriceHistory.objects.create(product=self, price=new_price)
-
 
     class Meta:
         verbose_name = 'товар'

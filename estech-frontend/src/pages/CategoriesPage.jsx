@@ -2,11 +2,13 @@ import {SimpleCard} from "@components/layout/card/Card.jsx";
 import {Container, Grid} from "@components/common/layouts/Layouts.jsx";
 import {useEffect, useState} from "react";
 import apiInstance from "@utils/axios.js";
+import {useNavigate} from "react-router-dom";
 
 
 function CategoriesPage() {
 
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
 
     async function fetchCategories() {
         try {
@@ -24,6 +26,10 @@ function CategoriesPage() {
         });
     }, []);
 
+    function handleNavigateCategory(category){
+        return navigate(`/products?c=${category.id}`);
+    }
+
 
     return (
         <Container>
@@ -35,7 +41,11 @@ function CategoriesPage() {
 
                     <Grid>
                         {categories.map((category) => (
-                            <SimpleCard key={category.id} image={category.image}>{category.title}</SimpleCard>
+                            <SimpleCard key={category.id}
+                                        image={category.image}
+                                        onClick={() => handleNavigateCategory(category)}>
+                                {category.title}
+                            </SimpleCard>
                         ))}
                     </Grid>
                 </>

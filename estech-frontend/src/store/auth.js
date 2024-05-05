@@ -13,7 +13,8 @@ const useAuthStore = create((set, get) => ({
     isLoggedIn: () => get().allUserData !== null,
 }));
 
-// if (import.meta.env.DEV) {
-mountStoreDevtool('Store', useAuthStore);
+if (import.meta.env.DEV) {
+    mountStoreDevtool('Store', useAuthStore);
+}
 
 export { useAuthStore };
