@@ -20,11 +20,11 @@ class ProductSerializer(serializers.ModelSerializer):
     photos = ProductPhotoSerializer(many=True, read_only=True)
 
     average_rating = serializers.FloatField(read_only=True)
-    reviews_count = serializers.IntegerField(read_only=True)
+    count_of_reviews = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'description', 'price', 'photos', 'average_rating', 'reviews_count']
+        fields = ['id', 'title', 'description', 'price', 'photos', 'average_rating', 'count_of_reviews', 'count_of_orders']
 
 
 class ProductDetailSerializer(ProductSerializer):

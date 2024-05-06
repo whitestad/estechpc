@@ -44,7 +44,7 @@ function Navigations(){
             {/*<SwitchToggle isChecked={isChecked} onChecked={switchTheme}></SwitchToggle>*/}
             
             <NavigationItem title={'Главная'} to={'/'}></NavigationItem>
-            <NavigationItem title={'Каталог'} to={'/component-demonstration'}></NavigationItem>
+            <NavigationItem title={'Каталог'} to={'/categories'}></NavigationItem>
             <NavigationItem title={'Корзина'} to={'/basket'}></NavigationItem>
 
             {isLoggedIn() ?

@@ -30,7 +30,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         queryset = queryset.annotate().annotate(
             average_rating=Avg('reviews__rating'),
-            reviews_count=Count('reviews')
+            count_of_reviews=Count('reviews')
         ).order_by('id')
 
         return queryset

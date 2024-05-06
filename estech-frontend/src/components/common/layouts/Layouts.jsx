@@ -1,8 +1,8 @@
 import styles from './Layout.module.css'
 
-function BaseLayout({children, className}) {
+function BaseLayout({children, className, ...props}) {
     return (
-        <div className={className}>
+        <div className={className} {...props}>
             {children}
         </div>
     )
@@ -14,9 +14,9 @@ function Grid({children}) {
     );
 }
 
-function Container({children}) {
+function Container({children, marginTop='3rem'}) {
     return (
-        <BaseLayout className={styles.container}>{children}</BaseLayout>
+        <BaseLayout className={styles.container} style={{marginTop: marginTop}}>{children}</BaseLayout>
     );
 }
 

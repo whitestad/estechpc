@@ -10,6 +10,7 @@ import Logout from "@/pages/Logout.jsx";
 import Login from "@/pages/Login.jsx";
 import CategoriesPage from "@/pages/CategoriesPage.jsx";
 import ProductsPage from "@/pages/ProductsPage.jsx";
+import ProductPage from "@/pages/ProductPage.jsx";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/categories" element={<CategoriesPage></CategoriesPage> } />
 
                     <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/products/:id" element={<ProductPage />} />
 
                     <Route path="/component-demonstration" element={<ComponentDemonstration></ComponentDemonstration> } />
                     <Route path="/login" element={<Login/> } />

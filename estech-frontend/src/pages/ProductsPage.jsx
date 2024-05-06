@@ -1,8 +1,8 @@
-import {SimpleCard} from "@components/layout/card/Card.jsx";
 import {Container, Grid} from "@components/common/layouts/Layouts.jsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import apiInstance from "@utils/axios.js";
 import {useEffect, useState} from "react";
+import {ProductList} from "@components/layout/productsList/ProductList.jsx";
 
 function ProductPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -34,23 +34,8 @@ function ProductPage() {
 
     return (
         <Container>
-            {!products ?
-                <h1>Загрузка...</h1>
-                :
-                <>
-                    <h1>Каталог товаров</h1>
-
-                    <Grid>
-                        {products.map((product) => (
-                            <SimpleCard key={product.id}
-                                        image={product.photos[0].photo}
-                                        onClick={() => handleNavigateProduct(product)}>
-                                {product.title}
-                            </SimpleCard>
-                        ))}
-                    </Grid>
-                </>
-            }
+            <h1>Каталог товаров</h1>
+            <ProductList products={products}/>
         </Container>
     );
 }
