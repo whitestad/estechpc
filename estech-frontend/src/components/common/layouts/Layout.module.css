@@ -3,6 +3,7 @@
     max-width: var(--max-width);
 
     display: flex;
+    justify-content: start;
     flex-direction: column;
 
     margin: 3rem auto;
@@ -13,7 +14,10 @@
 
 .container.row{
     flex-direction: row;
-    justify-content: center;
+}
+
+.container.spaceBetween{
+    justify-content: space-between;
 }
 
 .grid{

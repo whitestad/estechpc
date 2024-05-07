@@ -5,11 +5,11 @@ import {Button} from "@components/common/button/Button.jsx";
 import {trimStringToLength} from "@utils/stringUtils.js";
 
 
-function ProductListItem({title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+function ProductListItem({onClick, title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
     price = price.toString();
 
     return (
-        <div className={style.product}>
+        <div onClick={onClick} className={style.product}>
             <img className={style.image} src={photos[0].photo}></img>
             <div className={style.textSection}>
 

@@ -5,22 +5,23 @@
 :root {
     --base-font: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-    --background-color-1: #F0F0F0;
-    --background-color-2: #fff;
+    --background-color-1: #000;
+    --background-color-2: #323232;
 
-    --main-color-1: #232a3f;
-    --main-color-2: #3C486B;
+    --main-color-1: #fff;
+    --main-color-2: #F0F0F0;
 
     --text-color-in-button: var(--background-color-2);
     --text-color-in-button-hover: var(--main-color-1);
 
-    --hover-color-1: #8062D6;
-    --hover-color-2: #9288F8;
+    --hover-color-1: #7C83FD;
+    --hover-color-2: #96BAFF;
     --hover-color-3: #F9D949;
 
     --gradient: var(--hover-color-2), var(--hover-color-1);
 
-    --color-transparent: rgba(0, 0, 0, 0.5);
+    --secondary-color: #232a3f;
+    --color-transparent: rgba(255, 255, 255, 0.5);
 
     --error-color: #DA0037;
 
@@ -104,11 +105,12 @@ body{
 
 a {
     font-weight: 500;
-    color: #646cff;
+    color: var(--hover-color-1);
     text-decoration: inherit;
 }
 a:hover {
-    color: #535bf2;
+    color: var(--hover-color-2);
+    /*text-decoration: underline;*/
 }
 
 h1 {

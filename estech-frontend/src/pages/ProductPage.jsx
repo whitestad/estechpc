@@ -35,7 +35,6 @@ function ProductPage() {
                 </>
                 :
                 <>
-                    <h1>Товар</h1>
                     <Product {...product}></Product>
                 </>
             }
