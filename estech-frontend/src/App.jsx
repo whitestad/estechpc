@@ -11,6 +11,7 @@ import Login from "@/pages/Login.jsx";
 import CategoriesPage from "@/pages/CategoriesPage.jsx";
 import ProductsPage from "@/pages/ProductsPage.jsx";
 import ProductPage from "@/pages/ProductPage.jsx";
+import SoundPage from "@/pages/SoundPage.jsx";
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
             <MainWrapper>
                 <Header></Header>
                 <Routes>
-                    <Route path="/" element={<MainPage></MainPage> } />
+                    <Route path="/" element={<SoundPage></SoundPage> } />
 
                     <Route path="/categories" element={<CategoriesPage></CategoriesPage> } />
 
