@@ -3,24 +3,24 @@
 
 
 :root {
-    --base-font: Nunito, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --base-font: Montserrat, Nunito, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-    --background-color-1: #000;
-    --background-color-2: #151515;
+    --background-color-1: #F2F4F7;
+    --background-color-2: #fff;
 
-    --main-color-1: #fff;
-    --main-color-2: #F0F0F0;
+    --main-color-1: #142850;
+    --main-color-2: #27496D;
 
     --text-color-in-button: var(--background-color-2);
     --text-color-in-button-hover: var(--main-color-1);
 
-    --hover-color-1: #C73659;
-    --hover-color-2: #ef426c;
+    --hover-color-1: #7F56D9;
+    --hover-color-2: #7F56D9;
     --hover-color-3: #F9D949;
 
     --gradient: var(--hover-color-2), var(--hover-color-1);
 
-    --secondary-color: #232a3f;
+    --secondary-color: #98A2B3;
     --color-transparent: rgba(255, 255, 255, 0.5);
 
     --error-color: #DA0037;

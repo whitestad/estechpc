@@ -16,6 +16,6 @@
 }
 
 .strap.secondary{
-    background-color: var(--secondary-color);
+    background-color: var(--background-color-1);
     border-radius: var(--small-border-radius);
 }

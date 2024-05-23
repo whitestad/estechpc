@@ -19,11 +19,14 @@
     border-radius: var(--base-border-radius);
     background-color: var(--background-color-2);
     box-shadow: var(--shadow);
+
+    border: 1px solid transparent;
 }
 
 .product:hover{
     cursor: pointer;
-    box-shadow: var(--shadow-hover);
+    /*box-shadow: var(--shadow-hover);*/
+    border-color: var(--hover-color-2);
 }
 
 .product:hover .image{

@@ -20,7 +20,7 @@ const Rating = ({ average, count }) => {
             <div className={styles.stars}>
                 {stars}
             </div>
-            <span>{average} <SecondaryText>● {count} оценки</SecondaryText></span>
+            <span>{average} <span style={{opacity: 0.7}}>● {count} оценки</span></span>
         </div>);
 };
 
