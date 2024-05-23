@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models import SameTypeProducts, Basket, Order, OrderItem
+from .models import Basket, BasketItem, Order, OrderItem
 
 
-@admin.register(SameTypeProducts)
-class SameTypeProductsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'count')
+@admin.register(BasketItem)
+class BasketItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'basket', 'product', 'quantity')
 
 
 @admin.register(Order)

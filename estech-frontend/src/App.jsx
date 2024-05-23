@@ -12,6 +12,7 @@ import CategoriesPage from "@/pages/CategoriesPage.jsx";
 import ProductsPage from "@/pages/ProductsPage.jsx";
 import ProductPage from "@/pages/ProductPage.jsx";
 import SoundPage from "@/pages/SoundPage.jsx";
+import BasketPage from "@/pages/BasketPage.jsx";
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
 
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/products/:id" element={<ProductPage />} />
+
+                    <Route path="/basket/" element={<BasketPage />} />
 
                     <Route path="/component-demonstration" element={<ComponentDemonstration></ComponentDemonstration> } />
                     <Route path="/login" element={<Login/> } />

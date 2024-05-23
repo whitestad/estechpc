@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+
 import styles from './Basket.module.css'
-import Container from "../../../../../../../webstorm/estech-react/src/components/generic/container/Container.jsx";
-import Strap from "../../../../../../../webstorm/estech-react/src/components/strap/Strap.jsx";
-import axios from "axios";
-import ProductListItem from "../productsList/ProductListItem.jsx";
+import {useEffect, useState} from "react";
+import {Container, RowContainer} from "@components/common/layouts/Layouts.jsx";
+import Strap from "@components/common/strap/Strap.jsx";
+import useAxios from "@utils/useAxios.js";
+import BasketItem from "@components/layout/basket/BasketItem.jsx";
 
-
-const API_URL = 'http://localhost:8000/api/products';
+const axiosInstance = useAxios();
+const API_URL = 'http://localhost:8000/api/orders/basket/';
 
 async function fetchProducts() {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axiosInstance.get(API_URL);
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
@@ -19,13 +20,14 @@ async function fetchProducts() {
 
 function Basket({children}){
 
-    const [products, setProducts] = useState([]);
+    const [items, setItems] = useState([]);
 
     useEffect(() => {
         fetchProducts().then(data => {
-            console.log(data);
             if (data) {
-                setProducts(data);
+                setItems(data.items);
+
+                console.log(data.items);
             }
         });
     }, []);
@@ -34,17 +36,28 @@ function Basket({children}){
 
     return (
         <Container>
-            <Strap>
-                <h1>Корзина</h1>
+            <h1>Корзина</h1>
 
-                {products.length > 0 ? (
-                    products.map((product, index) => (
-                        <ProductListItem key={index} info={product}></ProductListItem>
-                    ))
-                ) : (
-                    <p>Ничего не найдено</p>
-                )}
-            </Strap>
+            <RowContainer>
+                <div className={styles.items}>
+                    {items.length > 0 ? (
+                        items.map((item, index) => (
+                            <BasketItem key={index}
+                                        product={item}
+                                        title={item.product.title}
+                                        photo={item.product.photos[0].photo}
+                                        price={item.product.price}
+                            />
+                        ))
+                    ) : (
+                        <p>Ничего не найдено</p>
+                    )}
+                </div>
+
+                <Strap extraClasses={[styles.check]}>
+
+                </Strap>
+            </RowContainer>
 
         </Container>
     );
