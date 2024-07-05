@@ -3,6 +3,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import apiInstance from "@utils/axios.js";
 import {useEffect, useState} from "react";
 import {ProductList} from "@components/layout/productsList/ProductList.jsx";
+import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 function ProductPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +35,7 @@ function ProductPage() {
 
     return (
         <Container>
-            <h1>Каталог товаров</h1>
+            <HeaderText secondFont>Каталог товаров</HeaderText>
             <ProductList products={products}/>
         </Container>
     );

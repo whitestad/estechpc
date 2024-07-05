@@ -2,20 +2,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap');
 
 
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
+@font-face {
+    font-family: 'ActayWide';
+    src: url('fonts/ActayWide-Bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 :root {
-    --base-font: Montserrat, Nunito, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --base-font: Onest, Nunito, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --second-font: ActayWide, Onest;
 
-    --background-color-1: #F2F4F7;
-    --background-color-2: #fff;
+    --background-color-1: #191a1b;
+    --background-color-2: #212124;
 
-    --main-color-1: #142850;
-    --main-color-2: #27496D;
+    --main-color-1: #EDEDED;
+    --main-color-2: #bdbdbd;
 
-    --text-color-in-button: var(--background-color-2);
+    --text-color-in-button: var(--main-color-1);
     --text-color-in-button-hover: var(--main-color-1);
 
-    --hover-color-1: #7F56D9;
-    --hover-color-2: #7F56D9;
+    --hover-color-1: #00ADB5;
+    --hover-color-2: #00dee7;
     --hover-color-3: #F9D949;
 
     --gradient: var(--hover-color-2), var(--hover-color-1);
@@ -31,7 +42,7 @@
     --shadow-hover: 0px 2px 10px rgba(244, 80, 99, 0.5);
 
     --window-border-radius: 20px;
-    --base-border-radius: 15px;
+    --base-border-radius: 10px;
     --small-border-radius: calc(var(--base-border-radius) / 2);
 
     --base-transition: all 0.1s;

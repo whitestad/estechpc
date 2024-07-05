@@ -4,6 +4,7 @@ import {ProductList} from "@components/layout/productsList/ProductList.jsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import apiInstance from "@utils/axios.js";
+import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 function MainPage() {
     const [isLoggedIn, user] = useAuthStore((state) => [
@@ -32,7 +33,7 @@ function MainPage() {
 
     return (
         <Container>
-            <h1>Все товары</h1>
+            <HeaderText secondFont>Все товары</HeaderText>
             <ProductList products={products}/>
         </Container>
     );

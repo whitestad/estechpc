@@ -6,6 +6,7 @@ import {Button} from "@components/common/button/Button.jsx";
 import {Container, RowContainer} from "@components/common/layouts/Layouts.jsx";
 import Strap from "@components/common/strap/Strap.jsx";
 import defaultPhoto from "@/assets/no-photo.png";
+import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 
 
@@ -17,7 +18,7 @@ function Product({title, short_characteristics, description, price, photos, aver
 
             <div className={style.productCardTopFull}>
 
-                <h1 className={style.headerSection}>{title}</h1>
+                <HeaderText className={style.headerSection}>1a{title}</HeaderText>
 
                 <div className={style.imagesSection}>
                     <picture className={style.picture}>

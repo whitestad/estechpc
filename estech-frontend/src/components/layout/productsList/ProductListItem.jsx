@@ -5,12 +5,11 @@ import {Button} from "@components/common/button/Button.jsx";
 import {trimStringToLength} from "@utils/stringUtils.js";
 import useBasket from "@/hooks/useBasket.js";
 
-import defaultPhoto from '@/assets/no-photo.png';
+import defaultPhoto from '@/assets/no-photo-dark.png';
+import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 
 function ProductListItem({onClick, id, title, short_characteristics, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
-    const photo = photos.length > 0 ? photos[0].photo : defaultPhoto;
-
     price = price.toString();
 
     const {addProductToBasket} = useBasket()
@@ -24,12 +23,15 @@ function ProductListItem({onClick, id, title, short_characteristics, price, phot
     return (
         <div onClick={onClick} className={style.product}>
             <div className={style.imageDiv}>
-                <img className={style.image} src={photo}></img>
+                {photos.length > 0 ?
+                    <img className={style.image} src={photos[0].photo}></img>
+                    :
+                    <img className={style.image} style={{padding: '30px', overflow: 'visible'}} src={defaultPhoto}></img>}
             </div>
             <div className={style.textSection}>
 
                 <div className={style.textSectionInfo}>
-                    <span className={style.title}>{title}</span>
+                    <HeaderText extraClasses={[style.title]} >{title}</HeaderText>
                     <span className={style.description}>{trimStringToLength(short_characteristics, 375)}</span>
                 </div>
 
@@ -41,12 +43,12 @@ function ProductListItem({onClick, id, title, short_characteristics, price, phot
             </div>
             <div className={style.buySection}>
 
-                <span className={style.price}>
+                <HeaderText variant={'h2'} extraClasses={[style.price]}>
                     {/*<span className={style.pastPrice}>{info.price + 2000}</span>&nbsp;&nbsp;*/}
                     {price.slice(0, -3)}.
                     <span className={style.smallPrice}>{price.slice(-3)}</span>
                     <span className={style.rub}>₽</span>
-                </span>
+                </HeaderText>
                 <div className={style.buttons}>
                     <LikeButton></LikeButton>
                     <Button extraClasses={[style.buyButton]} onClick={handleAddProductToBasket}>Купить</Button>
