@@ -2,6 +2,8 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+from config import jazzmin_settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -33,50 +35,8 @@ INSTALLED_APPS = [
     'community.apps.CommunityConfig',
 ]
 
-JAZZMIN_SETTINGS = {
-    "site_title": "Админ Панель Estech",
-    "site_header": "Estech",
-    "site_brand": "Estech PC",
-    "welcome_sign": "Добро пожаловать в Админ Панель Estech",
-    "search_model": "auth.User",
-    "user_avatar": None,
-
-    'show_ui_builder': True,
-
-    "theme": "cerulean",
-}
-
-JAZZMIN_UI_TWEAKS = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": False,
-    "accent": "accent-indigo",
-    "navbar": "navbar-white navbar-light",
-    "no_navbar_border": False,
-    "navbar_fixed": False,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": False,
-    "sidebar": "sidebar-light-indigo",
-    "sidebar_nav_small_text": False,
-    "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": False,
-    "sidebar_nav_compact_style": False,
-    "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": False,
-    "theme": "default",
-    "dark_mode_theme": None,
-    "button_classes": {
-        "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    }
-}
+JAZZMIN_SETTINGS = jazzmin_settings.SETTINGS
+JAZZMIN_UI_TWEAKS = jazzmin_settings.UI_TWEAKS
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
