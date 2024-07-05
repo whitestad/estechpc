@@ -5,11 +5,12 @@ import LikeButton from "@components/common/likeButton/LikeButton.jsx";
 import {Button} from "@components/common/button/Button.jsx";
 import {Container, RowContainer} from "@components/common/layouts/Layouts.jsx";
 import Strap from "@components/common/strap/Strap.jsx";
+import defaultPhoto from "@/assets/no-photo.png";
 
 
 
-function Product({title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
-
+function Product({title, short_characteristics, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+    const photo = photos.length > 0 ? photos[0].photo : defaultPhoto;
 
     return (
         <Strap>
@@ -26,7 +27,7 @@ function Product({title, description, price, photos, average_rating, count_of_re
                 </div>
 
                 <div className={style.specBrandSection}>
-                    <p>PCI-E 4.0 8 ГБ GDDR6, 128 бит, 3 x DisplayPort, HDMI, GPU 1830 МГц</p>
+                    <p>{short_characteristics}</p>
                     <a href={'#'}>Подробнее</a>
                 </div>
 

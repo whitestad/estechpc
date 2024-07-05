@@ -5,8 +5,12 @@ import {Button} from "@components/common/button/Button.jsx";
 import {trimStringToLength} from "@utils/stringUtils.js";
 import useBasket from "@/hooks/useBasket.js";
 
+import defaultPhoto from '@/assets/no-photo.png';
 
-function ProductListItem({onClick, id, title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+
+function ProductListItem({onClick, id, title, short_characteristics, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+    const photo = photos.length > 0 ? photos[0].photo : defaultPhoto;
+
     price = price.toString();
 
     const {addProductToBasket} = useBasket()
@@ -19,12 +23,14 @@ function ProductListItem({onClick, id, title, description, price, photos, averag
 
     return (
         <div onClick={onClick} className={style.product}>
-            <img className={style.image} src={photos[0].photo}></img>
+            <div className={style.imageDiv}>
+                <img className={style.image} src={photo}></img>
+            </div>
             <div className={style.textSection}>
 
                 <div className={style.textSectionInfo}>
                     <span className={style.title}>{title}</span>
-                    <span className={style.description}>{trimStringToLength(description, 375)}</span>
+                    <span className={style.description}>{trimStringToLength(short_characteristics, 375)}</span>
                 </div>
 
                 <div className={style.textSectionStatistics}>

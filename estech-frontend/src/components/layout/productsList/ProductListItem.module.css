@@ -11,7 +11,7 @@
     width: 100%;
     height: var(--row-height);
 
-    padding: 1rem;
+    padding: 0.5rem;
     gap: 1rem;
 
     display: flex;
@@ -30,16 +30,23 @@
 }
 
 .product:hover .image{
-    transform: scale(1.05);
+    transform: scale(1.02);
+}
+
+.imageDiv{
+    width: var(--row-height);
+    height: 100%;
+    background-color: var(--background-color-1);
+
+    border-radius: var(--base-border-radius);
+    overflow: hidden;
 }
 
 .image{
-    max-width: var(--row-height);
-    max-height: var(--row-height);
-    object-fit: cover;
-    padding: 0;
+    width: var(--row-height);
+    height: 100%;
 
-    border-radius: var(--base-border-radius);
+    object-fit: cover;
 }
 
 .textSection, .buySection{
@@ -50,6 +57,7 @@
 }
 
 .textSection{
+    flex: 1;
     justify-content: space-between;
     width: calc(100% - (var(--row-height) + var(--buy-section-width)));
     height: 90%;

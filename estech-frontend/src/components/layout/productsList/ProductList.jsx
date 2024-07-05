@@ -11,7 +11,7 @@ function ProductList({products}) {
     }
 
     return (
-        <Container marginTop={'0'}>
+        <Container margin={'0'}>
             {!products ?
                 <h1>Загрузка...</h1>
                 :

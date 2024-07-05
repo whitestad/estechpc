@@ -32,7 +32,7 @@ function MainPage() {
 
     return (
         <Container>
-            <h1>Все товары товаров</h1>
+            <h1>Все товары</h1>
             <ProductList products={products}/>
         </Container>
     );
