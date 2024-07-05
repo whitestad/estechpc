@@ -6,7 +6,7 @@ import {FieldsGroup} from "@components/layout/fieldsGroup/FieldGroup.jsx";
 import {Input} from "@components/common/input/Input.jsx";
 import {Text} from "@components/common/textes/Text.jsx";
 import SecondaryText from "@components/common/textes/SecondaryText.jsx";
-import {HorizontalLine} from "@/horizontalLine/HorizontalLine.jsx";
+import {HorizontalLine} from "@components/common/horizontalLine/HorizontalLine.jsx";
 import {Dropdown, DropdownOption} from "@components/common/dropdown/Dropdown.jsx";
 import {FileUploader} from "@components/common/fileUploader/FileUploader.jsx";
 
