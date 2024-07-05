@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 function ProductList({products}) {
     const navigate = useNavigate();
 
-    function handleNavigateProduct(id){
+    function handleNavigateProduct(event, id){
         return navigate(`/products/${id}`);
     }
 
@@ -17,7 +17,9 @@ function ProductList({products}) {
                 :
                 <>
                     {products.map((product) => (
-                        <ProductListItem key={product.id} onClick={() => handleNavigateProduct(product.id)} {...product}></ProductListItem>
+                        <ProductListItem key={product.id} id={product.id}
+                                         onClick={(event) => handleNavigateProduct(event, product.id)}
+                                         {...product}></ProductListItem>
                     ))}
                 </>
             }

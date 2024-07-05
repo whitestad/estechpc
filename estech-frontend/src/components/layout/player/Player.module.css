@@ -69,11 +69,13 @@ button:hover {
 .title{
     font-size: 1rem;
     font-weight: 600;
+
+    color: var(--background-color-1);
 }
 
 .artist{
     font-size: 0.8rem;
-
+    color: var(--background-color-1);
 }
 
 .info{
@@ -86,6 +88,8 @@ button:hover {
 .timerText{
     pointer-events: none;
     cursor: default;
+
+    color: var(--background-color-1);
 }
 
 /* src/components/Player/Player.module.css */

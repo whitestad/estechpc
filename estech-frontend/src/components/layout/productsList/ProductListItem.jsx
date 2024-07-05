@@ -3,10 +3,19 @@ import Rating from "@components/layout/rating/Rating.jsx";
 import LikeButton from "@components/common/likeButton/LikeButton.jsx";
 import {Button} from "@components/common/button/Button.jsx";
 import {trimStringToLength} from "@utils/stringUtils.js";
+import useBasket from "@/hooks/useBasket.js";
 
 
-function ProductListItem({onClick, title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+function ProductListItem({onClick, id, title, description, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
     price = price.toString();
+
+    const {addProductToBasket} = useBasket()
+
+    function handleAddProductToBasket() {
+        addProductToBasket(id).then((data) => {
+            console.log(data);
+        });
+    }
 
     return (
         <div onClick={onClick} className={style.product}>
@@ -34,7 +43,7 @@ function ProductListItem({onClick, title, description, price, photos, average_ra
                 </span>
                 <div className={style.buttons}>
                     <LikeButton></LikeButton>
-                    <Button extraClasses={[style.buyButton]}>Купить</Button>
+                    <Button extraClasses={[style.buyButton]} onClick={handleAddProductToBasket}>Купить</Button>
                 </div>
 
             </div>

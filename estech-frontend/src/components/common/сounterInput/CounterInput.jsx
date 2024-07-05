@@ -2,17 +2,26 @@ import styles from './CounterInput.module.css';
 import {useState} from "react";
 import {Button} from "@components/common/button/Button.jsx";
 
-function CounterInput() {
-    const [count, setCount] = useState(0);
+function CounterInput({defaultValue= 1, onChange= null}) {
+    const [count, setCount] = useState(defaultValue);
 
     const increment = () => {
-        setCount(count + 1);
+        setCount(prevCount => {
+            const newCount = prevCount + 1;
+            onChange?.(newCount);
+            return newCount;
+        });
     };
 
     const decrement = () => {
-        if (count > 0) {
-            setCount(count - 1);
-        }
+        setCount(prevCount => {
+            if (prevCount > 0) {
+                const newCount = prevCount - 1;
+                onChange?.(newCount);
+                return newCount;
+            }
+            return prevCount; // если count <= 0, не изменяем состояние
+        });
     };
 
     return (

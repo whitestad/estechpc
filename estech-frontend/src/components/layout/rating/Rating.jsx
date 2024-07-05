@@ -20,7 +20,7 @@ const Rating = ({ average, count }) => {
             <div className={styles.stars}>
                 {stars}
             </div>
-            <span>{average} <span style={{opacity: 0.7}}>● {count} оценки</span></span>
+            <span>{average ? parseFloat(average).toFixed(1) : 0} <span style={{opacity: 0.7}}>● {count} оценки</span></span>
         </div>);
 };
 

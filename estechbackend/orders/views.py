@@ -44,6 +44,8 @@ class UpdateBasketItemView(generics.GenericAPIView):
         item_id = request.data.get('item_id')
         quantity = request.data.get('quantity')
 
+        print(request.data)
+
         try:
             basket_item = BasketItem.objects.get(basket=basket, id=item_id)
             if quantity > 0:

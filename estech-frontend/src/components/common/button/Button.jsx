@@ -3,12 +3,14 @@ import styles from './Button.module.css'
 
 function Button({children, onClick, className = styles.button, extraClasses = [], ...props}) {
 
-    function click(){
+    function click(event){
         if (!onClick){
             console.warn(`[Button] [click] onClick is ${onClick}`);
             return;
         }
-        onClick();
+
+        event.stopPropagation();
+        onClick(event);
     }
 
     const classes = [className, ...extraClasses];
