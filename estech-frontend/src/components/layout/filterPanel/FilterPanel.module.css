@@ -1,0 +1,19 @@
+.filterPanel {
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.filterGroup {
+    margin-bottom: 20px;
+}
+
+.filterGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filterGroup select {
+    width: 100%;
+    padding: 5px;
+}

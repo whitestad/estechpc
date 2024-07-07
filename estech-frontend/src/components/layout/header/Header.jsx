@@ -1,10 +1,10 @@
 import styles from './Header.module.css';
-// import {useTheme} from '../../../../../../estech-react/src/hooks/useTheme.js';
+// import {useTheme} from '@/hooks/useTheme.js';
 
 import {Link} from "react-router-dom";
 
-import {Logo} from "../../common/logo/Logo.jsx";
-import {useAuthStore} from "../../../store/auth.js";
+import {Logo} from "@components/common/logo/Logo.jsx";
+import {useAuthStore} from "@/store/auth.js";
 
 
 
