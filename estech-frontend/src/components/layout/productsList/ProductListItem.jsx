@@ -45,8 +45,7 @@ function ProductListItem({onClick, id, title, short_characteristics, price, phot
 
                 <HeaderText variant={'h2'} extraClasses={[style.price]}>
                     {/*<span className={style.pastPrice}>{info.price + 2000}</span>&nbsp;&nbsp;*/}
-                    {price.slice(0, -3)}.
-                    <span className={style.smallPrice}>{price.slice(-3)}</span>
+                    {price.slice(0, -3)} {price.slice(-3)}
                     <span className={style.rub}>₽</span>
                 </HeaderText>
                 <div className={style.buttons}>

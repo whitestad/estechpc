@@ -1,5 +1,5 @@
 :root{
-    --row-height: 200px;
+    --row-height: 170px;
     --buy-section-width: 250px;
 }
 
@@ -11,7 +11,7 @@
     width: 100%;
     height: var(--row-height);
 
-    padding: 0.5rem;
+    padding: 10px;
     gap: 1rem;
 
     display: flex;
@@ -101,8 +101,8 @@
 }
 
 .title{
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 
 .description{
@@ -118,8 +118,8 @@
 
     width: 100%;
     padding-right: 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: 700;
     text-align: right;
 }
 
