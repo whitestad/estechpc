@@ -17,14 +17,27 @@ class Category(models.Model):
         verbose_name_plural = 'категории'
 
 
+class AttributesGroup(models.Model):
+    title = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Attribute(models.Model):
+    group = models.ForeignKey(AttributesGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='attributes')
+    title = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
+
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     short_characteristics = models.TextField(blank=True)
     description = models.TextField(blank=True)
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
     price = models.IntegerField()
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
+    attributesGroups = models.ManyToManyField(AttributesGroup, blank=True)
 
     count_of_orders = models.IntegerField(default=0)
     count_of_likes = models.IntegerField(default=0)
