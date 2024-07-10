@@ -9,7 +9,7 @@ import defaultPhoto from '@/assets/no-photo-dark.png';
 import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 
-function ProductListItem({onClick, id, title, short_characteristics, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
+function ProductListItem({onClick, id, name, short_characteristics, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
     price = price.toString();
 
     const {addProductToBasket} = useBasket()
@@ -31,7 +31,7 @@ function ProductListItem({onClick, id, title, short_characteristics, price, phot
             <div className={style.textSection}>
 
                 <div className={style.textSectionInfo}>
-                    <HeaderText extraClasses={[style.title]} >{title}</HeaderText>
+                    <HeaderText extraClasses={[style.title]} >{name}</HeaderText>
                     <span className={style.description}>{trimStringToLength(short_characteristics, 375)}</span>
                 </div>
 

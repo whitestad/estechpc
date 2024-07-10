@@ -10,22 +10,24 @@
     gap: 2px;
 }
 
+.starPair{
+
+}
+
 .star {
-    fill: var(--main-color-1);
+    /*fill: var(--main-color-1);*/
 
     --size: 16px;
-
     width: var(--size);
     height: var(--size);
 
-    .fille{
-        width: var(--size);
-        height: var(--size);
+    .fill{
+        fill: var(--main-color-1);
+        position: absolute;
     }
 
     .empty{
-        width: var(--size);
-        height: var(--size);
+        fill: var(--background-color-1);
         position: absolute;
     }
 

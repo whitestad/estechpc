@@ -10,7 +10,7 @@ const Rating = ({ average, count }) => {
         return (
             <div className={styles.star} key={index}>
                 <StarEmpty className={[styles.star, styles.empty].join(' ')}/>
-                <Star className={[styles.star, styles.fille].join(' ')} style={{clipPath: `polygon(0 0, ${fillLevel * 100}% 0, ${fillLevel * 100}% 100%, 0 100%)`}}/>
+                <Star className={[styles.star, styles.fill].join(' ')} style={{clipPath: `polygon(0 0, ${fillLevel * 100}% 0, ${fillLevel * 100}% 100%, 0 100%)`}}/>
             </div>
         );
     });

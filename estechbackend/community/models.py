@@ -30,7 +30,7 @@ class ProductReview(BaseComment):
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     def __str__(self):
-        return f"отвзыв {self.product.title} ({self.rating}/5)"
+        return f"отвзыв {self.product.name} ({self.rating}/5)"
 
     class Meta:
         verbose_name = 'отзыв товаров'
