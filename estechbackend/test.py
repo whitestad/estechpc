@@ -7,8 +7,6 @@ PLASTIC_PRICE = 31 / 100
 BLUE_CREATE_PRICE = 3
 TURQUOISE_CREATE_PRICE = 15
 
-
-
 scrap = 650 + 75 + 20 + 650 + 30 + 35
 copper = 130 + 15 + 4 + 130 + 6 + 8
 
@@ -33,3 +31,7 @@ result += create_price
 print(result)
 
 print(650 * SCRAP_PRICE + 130 * COPPER_PRICE + 3)
+
+a = True
+b = True
+c = False

@@ -1,4 +1,5 @@
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
+
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -23,6 +24,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         min_price = self.request.query_params.get('min_price')
         max_price = self.request.query_params.get('max_price')
 
+        attribute_filters = self.request.query_params.getlist('attribute')
+
         if category_id:
             queryset = queryset.filter(category__id=category_id)
         if min_price:
@@ -30,7 +33,14 @@ class ProductViewSet(viewsets.ModelViewSet):
         if max_price:
             queryset = queryset.filter(price__lte=max_price)
 
-        queryset = queryset.annotate().annotate(
+        if attribute_filters:
+            q_objects = Q()
+            for attr_filter in attribute_filters:
+                attribute_id, value = attr_filter.split(':')
+                q_objects &= Q(attributes__attribute_id=attribute_id, attributes__value=value)
+            queryset = queryset.filter(q_objects)
+
+        queryset = queryset.annotate(
             average_rating=Avg('reviews__rating'),
             count_of_reviews=Count('reviews')
         ).order_by('id')
