@@ -25,6 +25,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         max_price = self.request.query_params.get('max_price')
 
         attribute_filters = self.request.query_params.getlist('attribute')
+        print(attribute_filters)
+
+        print(self.request.query_params)
 
         if category_id:
             queryset = queryset.filter(category__id=category_id)

@@ -1,18 +1,12 @@
 import styles from './FilterPanel.module.css';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import apiInstance from "@utils/axios.js";
-
-
-const filter_test = {
-    'name': 'FilterPanel',
-    'options': ''
-}
 
 const FilterPanel = ({ onFilterChange }) => {
     const [category, setCategory] = useState('');
     const [priceRange, setPriceRange] = useState('');
-
     const [filters, setFilters] = useState([]);
+    const [selectedAttributes, setSelectedAttributes] = useState([]);
 
     async function fetchFilters() {
         try {
@@ -25,18 +19,27 @@ const FilterPanel = ({ onFilterChange }) => {
 
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
-        onFilterChange({ category: e.target.value, priceRange });
+        onFilterChange({ category: e.target.value, priceRange, attributes: selectedAttributes });
     };
 
     const handlePriceRangeChange = (e) => {
         setPriceRange(e.target.value);
-        onFilterChange({ category, priceRange: e.target.value });
+        onFilterChange({ category, priceRange: e.target.value, attributes: selectedAttributes });
+    };
+
+    const handleAttributeChange = (attributeId, value) => {
+        const updatedAttributes = selectedAttributes.filter(attr => attr.id !== attributeId);
+        if (value) {
+            updatedAttributes.push({ id: attributeId, value });
+        }
+        setSelectedAttributes(updatedAttributes);
+        onFilterChange({ category, priceRange, attributes: updatedAttributes });
     };
 
     useEffect(() => {
         fetchFilters().then(result => {
-            setFilters(result)
-        })
+            setFilters(result);
+        });
     }, []);
 
     return (
@@ -48,15 +51,15 @@ const FilterPanel = ({ onFilterChange }) => {
                     <option value="">Все</option>
                     <option value="0-50">Менее 10 000</option>
                     <option value="51-100">10 000 - 20 000</option>
-                    <option value="51-100">20 000 - 30 000</option>
-                    <option value="101-200">101 - 200</option>
+                    <option value="101-150">20 000 - 30 000</option>
+                    <option value="151-200">30 000 - 40 000</option>
                 </select>
             </div>
 
             {filters.map((filter) => (
                 <div key={filter.id} className={styles.filterGroup}>
                     <label>{filter.name}</label>
-                    <select value={priceRange} onChange={handlePriceRangeChange}>
+                    <select onChange={(e) => handleAttributeChange(filter.id, e.target.value)}>
                         <option value="">Все</option>
                         {filter.values.map((value, index) => (
                             <option key={index} value={value}>{value}</option>
@@ -65,7 +68,7 @@ const FilterPanel = ({ onFilterChange }) => {
                 </div>
             ))}
         </div>
-    )
+    );
 };
 
 export default FilterPanel;

@@ -32,7 +32,7 @@ class ProductPhotoAdmin(admin.ModelAdmin):
     search_fields = ['product__name']
 
 class FilterAdmin(admin.ModelAdmin):
-    list_display = ['category', 'attribute']
+    list_display = ['id', 'category', 'attribute']
     search_fields = ['category__name', 'attribute__name']
     list_filter = ['category']
 
