@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from community.serializers import ProductReviewSerializer
-from .models import Product, ProductPhoto, Category
+from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -37,3 +37,41 @@ class ProductDetailSerializer(ProductSerializer):
     def get_reviews(self, obj):
         reviews = obj.reviews.all()
         return ProductReviewSerializer(reviews, many=True).data
+
+
+class AttributeValueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AttributeValue
+        fields = ['value']
+
+class AttributeSerializer(serializers.ModelSerializer):
+    values = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Attribute
+        fields = ['id', 'name', 'values']
+
+    def get_values(self, obj):
+        values = AttributeValue.objects.filter(attribute=obj).values_list('value', flat=True).distinct()
+        return values   
+
+class FilterSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField(source='attribute.id')
+    name = serializers.ReadOnlyField(source='attribute.name')
+    values = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Filter
+        fields = ['id', 'name', 'values']
+
+    def get_values(self, obj):
+        values = AttributeValue.objects.filter(attribute=obj.attribute).values_list('value', flat=True).distinct()
+        return values
+
+
+class CategoryFiltersSerializer(serializers.ModelSerializer):
+    filters = FilterSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'filters']

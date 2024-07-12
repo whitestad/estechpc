@@ -1,9 +1,11 @@
 from django.db.models import Avg, Count
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from products.models import Product, Category
-from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer
+from products.models import Product, Category, Filter
+from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer, CategoryFiltersSerializer, \
+    FilterSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -40,3 +42,17 @@ class ProductViewSet(viewsets.ModelViewSet):
             return ProductDetailSerializer
         return super().get_serializer_class()
 
+
+class CategoryFiltersView(APIView):
+    def get(self, request, category_id):
+        try:
+            category = Category.objects.get(pk=category_id)
+            filters = Filter.objects.filter(category=category)
+            serializer = FilterSerializer(filters, many=True)
+            return Response({
+                "id": category.id,
+                "name": category.name,
+                "filters": serializer.data
+            })
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=404)
