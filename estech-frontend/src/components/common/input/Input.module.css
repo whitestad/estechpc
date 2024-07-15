@@ -10,6 +10,8 @@
     border-radius: var(--small-border-radius);
     border: 1px solid transparent;
 
+    color: var(--main-color-1);
+
     padding: 0.6em;
     font-size: 1em;
     font-weight: 500;
@@ -19,8 +21,13 @@
     outline: none;
 }
 
+.input.outline{
+    border: 1px solid var(--main-color-2);
+}
+
+
 .input:valid, .input:focus{
-    border: 1px solid var(--hover-color-1);
+    border: 1px solid var(--main-color-1);
 }
 
 .placeholder{
