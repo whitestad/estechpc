@@ -21,8 +21,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         queryset = Product.objects.all()
 
         category_id = self.request.query_params.get('c')
-        min_price = self.request.query_params.get('min_price')
-        max_price = self.request.query_params.get('max_price')
+        min_price = self.request.query_params.get('minp')
+        max_price = self.request.query_params.get('maxp')
 
         attribute_filters = self.request.query_params.getlist('attribute')
         print(attribute_filters)
