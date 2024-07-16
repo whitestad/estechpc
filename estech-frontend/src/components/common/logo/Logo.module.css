@@ -2,7 +2,7 @@
 .logo{
     height: 100%;
     padding: 10px 0;
-    fill: var(--main-color-1)
+    fill: var(--color-1)
 }
 
 .part1{
@@ -10,5 +10,5 @@
 }
 
 .part2{
-    color: var(--main-color-1);
+    color: var(--color-1);
 }

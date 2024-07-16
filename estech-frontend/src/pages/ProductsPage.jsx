@@ -9,6 +9,7 @@ import FilterPanel from "@components/layout/filterPanel/FilterPanel.jsx";
 function ProductPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [products, setProducts] = useState([]);
+    const [selectedFilters, setSelectedFilters] = useState({ minPrice: 0, maxPrice: 100000, attributes: [] });
 
     const fetchProducts = useCallback(async () => {
         try {
@@ -21,30 +22,33 @@ function ProductPage() {
 
     useEffect(() => {
         fetchProducts();
-    }, [fetchProducts]);
+    }, [searchParams, fetchProducts]);
 
-    const handleFilterChange = useCallback((newFilters) => {
+    useEffect(() => {
         const params = new URLSearchParams(searchParams);
-
-        if (newFilters.category !== undefined) params.set('c', newFilters.category);
-        if (newFilters.minPrice !== undefined) params.set('minp', newFilters.minPrice);
-        if (newFilters.maxPrice !== undefined) params.set('maxp', newFilters.maxPrice);
+        selectedFilters.category !== undefined ? params.set('c', selectedFilters.category) : params.delete('c')
+        selectedFilters.minPrice !== undefined && selectedFilters.minPrice ? params.set('minp', selectedFilters.minPrice) : params.delete('minp')
+        selectedFilters.maxPrice !== undefined && selectedFilters.maxPrice ? params.set('maxp', selectedFilters.maxPrice) : params.delete('maxp')
 
         params.delete('attribute');
-        if (newFilters.attributes) {
-            newFilters.attributes.forEach(attr => {
+        if (selectedFilters.attributes) {
+            selectedFilters.attributes.forEach(attr => {
                 params.append('attribute', `${attr.id}:${attr.value}`);
             });
         }
 
         setSearchParams(params);
-    }, [searchParams, setSearchParams]);
+    }, [searchParams, selectedFilters, setSearchParams]);
+
+    const handleSetSelectedFilters = useCallback((filters) => {
+        setSelectedFilters(filters);
+    }, []);
 
     return (
         <Container>
             <HeaderText secondFont>Каталог товаров</HeaderText>
             <RowContainer>
-                <FilterPanel onFilterChange={handleFilterChange} />
+                <FilterPanel selectedFilters={selectedFilters} setSelectedFilters={handleSetSelectedFilters}/>
                 <ProductList products={products} />
             </RowContainer>
         </Container>

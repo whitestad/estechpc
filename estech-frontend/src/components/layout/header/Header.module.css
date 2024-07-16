@@ -3,7 +3,7 @@
     width: 100vw;
     height: 60px;
 
-    background-color: var(--background-color-2);
+    background-color: var(--background-color-1);
 
     box-shadow: var(--shadow);
 }
@@ -28,7 +28,7 @@
 }
 
 .navigationItem, .navigationButton{
-    color: var(--main-color-1);
+    color: var(--color-1);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;

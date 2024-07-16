@@ -22,7 +22,7 @@
     height: var(--size);
 
     .fill{
-        fill: var(--main-color-1);
+        fill: var(--color-1);
         position: absolute;
     }
 

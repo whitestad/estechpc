@@ -4,11 +4,11 @@ import { useSearchParams } from "react-router-dom";
 import apiInstance from "@utils/axios.js";
 import { FieldsGroup } from "@components/layout/fieldsGroup/FieldGroup.jsx";
 import { OutlineInput } from "@components/common/input/Input.jsx";
+import useInput from "@/hooks/useInput.js";
 
-const FilterPanel = ({ onFilterChange }) => {
+const FilterPanel = ({ setSelectedFilters, selectedFilters }) => {
     const [searchParams] = useSearchParams();
     const [filters, setFilters] = useState([]);
-    const [selectedFilters, setSelectedFilters] = useState({ category: '', attributes: [], minPrice: '', maxPrice: '' });
 
     const fetchFilters = async () => {
         try {
@@ -21,55 +21,26 @@ const FilterPanel = ({ onFilterChange }) => {
 
     useEffect(() => {
         fetchFilters();
-
-        const initialFilters = {
-            category: searchParams.get('c') || '',
-            minPrice: searchParams.get('minp') || '',
-            maxPrice: searchParams.get('maxp') || '',
-            attributes: []
-        };
-
-        // Parse attributes from URL
-        const attributesFromParams = searchParams.getAll('attribute');
-        initialFilters.attributes = attributesFromParams.map(attr => {
-            const [id, value] = attr.split(':');
-            return { id, value };
-        });
-
-        setSelectedFilters(initialFilters);
-        onFilterChange(initialFilters); // Передать начальные фильтры
-    }, [searchParams, onFilterChange]);
-
-    const updateFilters = (updates) => {
-        setSelectedFilters(prevFilters => {
-            const newFilters = { ...prevFilters, ...updates };
-            onFilterChange(newFilters);
-            return newFilters;
-        });
-    };
+    }, [searchParams, setSelectedFilters]);
 
     const handleCategoryChange = (e) => {
-        updateFilters({ category: e.target.value });
+        setSelectedFilters({ category: e.target.value, ...selectedFilters })
     };
 
     const handleMinPriceChange = (e) => {
-        updateFilters({ minPrice: e.target.value });
+        setSelectedFilters({ ...selectedFilters, minPrice: e.target.value })
     };
 
     const handleMaxPriceChange = (e) => {
-        updateFilters({ maxPrice: e.target.value });
+        setSelectedFilters({ ...selectedFilters, maxPrice: e.target.value,  })
     };
 
     const handleAttributeChange = (attributeId, value) => {
-        setSelectedFilters(prevFilters => {
-            const updatedAttributes = prevFilters.attributes.filter(attr => attr.id !== attributeId);
-            if (value) {
-                updatedAttributes.push({ id: attributeId, value });
-            }
-            const newFilters = { ...prevFilters, attributes: updatedAttributes };
-            onFilterChange(newFilters);
-            return newFilters;
-        });
+        const updatedAttributes = selectedFilters.attributes.filter(attr => attr.id != attributeId);
+        if (value) {
+            updatedAttributes.push({ id: attributeId, value });
+        }
+        setSelectedFilters({ ...selectedFilters, attributes: updatedAttributes,  })
     };
 
     return (
@@ -78,8 +49,8 @@ const FilterPanel = ({ onFilterChange }) => {
             <div className={styles.filterGroup}>
                 <label>Цена</label>
                 <FieldsGroup>
-                    <OutlineInput placeholder={'от'} type={'number'} value={selectedFilters.minPrice} onChange={handleMinPriceChange} />
-                    <OutlineInput placeholder={'до'} type={'number'} value={selectedFilters.maxPrice} onChange={handleMaxPriceChange} />
+                    <OutlineInput placeholder={'от'} type={'number'} {...useInput('', handleMinPriceChange )} />
+                    <OutlineInput placeholder={'до'} type={'number'} {...useInput('', handleMaxPriceChange )} />
                 </FieldsGroup>
             </div>
 

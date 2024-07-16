@@ -1,22 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function useInput(initialValue, onChanged = null) {
     const [value, setValue] = useState(initialValue);
 
     const handleChange = (event) => {
         setValue(event.target.value);
-
-        onChanged && onChanged(event.target.value);
+        if (onChanged) onChanged(event);
     };
-
-    // useEffect(() => {
-    //     console.log("Значение изменено на: ", value);
-    // }, [value]);
 
     return {
         value,
-        onChange: handleChange,
-        setValue: setValue
+        onChange: handleChange
     };
 }
 

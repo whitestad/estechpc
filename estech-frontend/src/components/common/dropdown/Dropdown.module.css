@@ -36,7 +36,7 @@
     height: 100%;
     cursor: pointer;
     background-color: var(--background-color-1);
-    color: var(--main-color-1);
+    color: var(--color-1);
     border: none;
     outline: none;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);

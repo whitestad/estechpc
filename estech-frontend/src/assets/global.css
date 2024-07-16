@@ -21,11 +21,11 @@
     --background-color-1: #1A1A1C;
     --background-color-2: #2C2C2F;
 
-    --main-color-1: #EDEDED;
-    --main-color-2: #bdbdbd;
+    --color-1: #EDEDED;
+    --color-2: #bdbdbd;
 
-    --text-color-in-button: var(--main-color-1);
-    --text-color-in-button-hover: var(--main-color-1);
+    --text-color-in-button: var(--color-1);
+    --text-color-in-button-hover: var(--color-1);
 
     --hover-color-1: #766BED;
     --hover-color-2: #7e73ff;
@@ -59,7 +59,7 @@
     line-height: 1.5;
     font-weight: 400;
 
-    color: var(--main-color-1);
+    color: var(--color-1);
 
     /*color-scheme: light dark;*/
 
