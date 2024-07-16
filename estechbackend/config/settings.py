@@ -4,13 +4,21 @@ import os
 
 from config import jazzmin_settings
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8ibfycwawnd7x^mojob8=#!lb^fg7@j+fobb1cid=tw2)evs_9'
 
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+
+ALLOWED_HOSTS = ['esteachpc.ru', 'localhost']
+
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -115,10 +123,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'estechbd'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'root'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -145,11 +158,15 @@ USE_TZ = True
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [
+    'https://estechpc.ru', 'http://localhost'
+]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://estechpc.ru',
+    'https://estechpc.ru',
+    'http://localhost'
+]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
