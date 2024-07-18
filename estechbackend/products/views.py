@@ -69,3 +69,38 @@ class CategoryFiltersView(APIView):
             })
         except Category.DoesNotExist:
             return Response({'error': 'Category not found'}, status=404)
+
+
+
+import json
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from .models import Product, Category
+from .forms import JSONUploadForm
+
+
+def upload_json(request):
+    if request.method == 'POST':
+        form = JSONUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.cleaned_data['file']
+            data = json.load(file)
+
+            for category_name, products in data.items():
+                category, _ = Category.objects.get_or_create(name=category_name)
+
+                for item in products:
+                    Product.objects.update_or_create(
+                        name=item['name'],
+                        defaults={
+                            'category': category,
+                            'price': item['selling_price'],
+                            'count': item['count'] - item['sales_count'],
+                            'count_of_orders': item['sales_count'],
+                        }
+                    )
+
+            return HttpResponseRedirect('/admin/products/product/')
+    else:
+        form = JSONUploadForm()
+    return render(request, 'admin/upload_json.html', {'form': form})

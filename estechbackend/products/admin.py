@@ -7,7 +7,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ['parent']
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'price', 'count_of_orders', 'count_of_likes']
+    list_display = ['name', 'category', 'price', 'count', 'count_of_orders', 'count_of_likes']
     search_fields = ['name', 'category__name']
     list_filter = ['category']
     readonly_fields = ['count_of_orders', 'count_of_likes']

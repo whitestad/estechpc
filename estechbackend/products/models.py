@@ -25,6 +25,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='products')
     price = models.IntegerField()
 
+    count = models.IntegerField(default=1)
     count_of_orders = models.IntegerField(default=0)
     count_of_likes = models.IntegerField(default=0)
 
