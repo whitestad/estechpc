@@ -5,7 +5,7 @@ import {Button} from "@components/common/button/Button.jsx";
 import {trimStringToLength} from "@utils/stringUtils.js";
 import useBasket from "@/hooks/useBasket.js";
 
-import defaultPhoto from '@/assets/no-photo-dark.png';
+import defaultPhoto from '@/assets/no-photo.png';
 import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 

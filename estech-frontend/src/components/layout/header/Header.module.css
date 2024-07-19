@@ -1,11 +1,10 @@
 .header{
 
     width: 100vw;
-    height: 60px;
+    height: 80px;
 
     background-color: var(--background-color-1);
 
-    box-shadow: var(--shadow);
 }
 
 .headerContent{

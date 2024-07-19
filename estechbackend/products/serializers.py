@@ -4,7 +4,20 @@ from community.serializers import ProductReviewSerializer
 from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter
 
 
+class ParentCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
+class ChildCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
 class CategorySerializer(serializers.ModelSerializer):
+    parent = ChildCategorySerializer(read_only=True)
+    children = ChildCategorySerializer(many=True, read_only=True, source='children_set')
+
     class Meta:
         model = Category
         fields = '__all__'

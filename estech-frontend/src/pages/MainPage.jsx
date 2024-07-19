@@ -33,8 +33,7 @@ function MainPage() {
 
     return (
         <Container>
-            <HeaderText secondFont>Все товары</HeaderText>
-            <ProductList products={products}/>
+            
         </Container>
     );
 }

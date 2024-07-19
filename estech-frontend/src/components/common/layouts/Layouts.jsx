@@ -1,28 +1,28 @@
 import styles from './Layout.module.css'
 
-function BaseLayout({children, className, margin='3rem auto', ...props}) {
+function BaseLayout({children, className, gap= '1rem', margin='3rem auto', ...props}) {
     return (
-        <div className={className} style={{margin: margin}} {...props}>
+        <div className={className} style={{margin: margin, gap: gap}} {...props}>
             {children}
         </div>
     )
 }
 
-function Grid({children, margin='1rem auto'}) {
+function Grid({children, gap= '1rem', margin='1rem auto'}) {
     return (
-        <BaseLayout className={styles.grid} margin={margin}>{children}</BaseLayout>
+        <BaseLayout className={styles.grid} gap={gap} margin={margin}>{children}</BaseLayout>
     );
 }
 
-function Container({children, margin='3rem auto'}) {
+function Container({children, gap= '1rem', margin='3rem auto'}) {
     return (
-        <BaseLayout className={styles.container} margin={margin}>{children}</BaseLayout>
+        <BaseLayout className={styles.container} gap={gap} margin={margin}>{children}</BaseLayout>
     );
 }
 
-function RowContainer({children, margin='3rem auto', spaceBetween=false}){
+function RowContainer({children, gap= '1rem', margin='3rem auto', spaceBetween=false}){
     return (
-        <BaseLayout className={[styles.container, styles.row, spaceBetween && styles.spaceBetween].join(' ')} margin={margin}>{children}</BaseLayout>
+        <BaseLayout className={[styles.container, styles.row, spaceBetween && styles.spaceBetween].join(' ')} gap={gap} margin={margin}>{children}</BaseLayout>
     );
 }
 

@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import ProductViewSet, CategoryViewSet, CategoryFiltersView, upload_json
 
 router = routers.DefaultRouter()
-router.register(r'categories', CategoryViewSet)
+router.register(r'categories', CategoryViewSet, basename='category')
 router.register(r'list', ProductViewSet, basename='products')
 
 urlpatterns = [

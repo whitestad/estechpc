@@ -3,16 +3,45 @@ from django.db.models import Avg, Count, Q
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 
 from products.models import Product, Category, Filter
 from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer, CategoryFiltersSerializer, \
-    FilterSerializer
+    FilterSerializer, ParentCategorySerializer, ChildCategorySerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = None
 
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        parent_id = self.request.query_params.get('parent_id', None)
+        if parent_id is None:
+            queryset = queryset.all()
+        elif parent_id == '0':
+            queryset = queryset.filter(parent__isnull=True)
+        else:
+            queryset = queryset.filter(parent_id=parent_id)
+
+        return queryset
+
+    @action(detail=True, methods=['get'])
+    def parents(self, request, pk=None):
+        category = self.get_object()
+        parents = []
+        while category.parent:
+            category = category.parent
+            parents.insert(0, category)
+        serializer = ParentCategorySerializer(parents, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def children(self, request, pk=None):
+        category = self.get_object()
+        children = category.children.all()
+        serializer = ChildCategorySerializer(children, many=True)
+        return Response(serializer.data)
 
 class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer

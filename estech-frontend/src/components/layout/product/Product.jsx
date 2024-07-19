@@ -5,7 +5,7 @@ import LikeButton from "@components/common/likeButton/LikeButton.jsx";
 import {Button} from "@components/common/button/Button.jsx";
 import {Container, RowContainer} from "@components/common/layouts/Layouts.jsx";
 import Strap from "@components/common/strap/Strap.jsx";
-import defaultPhoto from '@/assets/no-photo-dark.png';
+import defaultPhoto from '@/assets/no-photo.png';
 import HeaderText from "@components/common/headerText/HeaderText.jsx";
 
 
@@ -14,7 +14,7 @@ function Product({name, short_characteristics, description, price, photos, avera
     const photo = photos.length > 0 ? photos[0].photo : defaultPhoto;
 
     return (
-        <Strap>
+        <Strap secondary={true}>
 
             <div className={style.productCardTopFull}>
 
@@ -38,15 +38,15 @@ function Product({name, short_characteristics, description, price, photos, avera
                 <div className={style.statSection}>
                     <RowContainer margin={'0 auto'}>
 
-                        <Strap padding={'0.7rem 1rem'} secondary={true}>
+                        <Strap padding={'0.7rem 1rem'}>
                             <Rating average={average_rating} count={count_of_reviews}/>
                         </Strap>
 
-                        <Strap padding={'0.7rem 1rem'} secondary={true}>
+                        <Strap padding={'0.7rem 1rem'}>
                             <p>Заказано: {count_of_orders}</p>
                         </Strap>
 
-                        <Strap padding={'0.7rem 1rem'} secondary={true}>
+                        <Strap padding={'0.7rem 1rem'}>
                             <p>Отличная надежность</p>
                         </Strap>
 
@@ -55,7 +55,7 @@ function Product({name, short_characteristics, description, price, photos, avera
 
                 <div className={style.buySection}>
 
-                    <Strap padding={'0.7rem 1rem'} secondary={true} width={'100%'}>
+                    <Strap padding={'0.7rem 1rem'} width={'100%'}>
                         <h2>{price} ₽</h2>
                     </Strap>
                     <LikeButton></LikeButton>
@@ -64,7 +64,7 @@ function Product({name, short_characteristics, description, price, photos, avera
                 </div>
 
                 <div className={style.infoSection}>
-                    <Strap padding={'0.7rem 1rem'} secondary={true} width={'50%'}>
+                    <Strap padding={'0.7rem 1rem'} width={'50%'}>
                         <p>В налачии 1 шт</p>
                     </Strap>
                 </div>

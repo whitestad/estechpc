@@ -2,6 +2,7 @@ import styles from "./ProductsList.module.css";
 import {Container} from "@components/common/layouts/Layouts.jsx";
 import ProductListItem from "@components/layout/productsList/ProductListItem.jsx";
 import {useNavigate} from "react-router-dom";
+import {HorizontalLine} from "@components/common/horizontalLine/HorizontalLine.jsx";
 
 function ProductList({products}) {
     const navigate = useNavigate();
@@ -17,9 +18,11 @@ function ProductList({products}) {
                 :
                 <>
                     {products.map((product) => (
-                        <ProductListItem key={product.id} id={product.id}
-                                         onClick={(event) => handleNavigateProduct(event, product.id)}
-                                         {...product}></ProductListItem>
+                        <>
+                            <ProductListItem key={product.id} id={product.id}
+                                             onClick={(event) => handleNavigateProduct(event, product.id)}
+                                             {...product}></ProductListItem>
+                        </>
                     ))}
                 </>
             }
