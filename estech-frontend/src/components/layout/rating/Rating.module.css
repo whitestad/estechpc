@@ -22,12 +22,12 @@
     height: var(--size);
 
     .fill{
-        fill: var(--color-1);
+        fill: var(--hover-color-1);
         position: absolute;
     }
 
     .empty{
-        fill: var(--background-color-1);
+        fill: var(--secondary-color);
         position: absolute;
     }
 

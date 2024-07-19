@@ -7,6 +7,8 @@ import useBasket from "@/hooks/useBasket.js";
 
 import defaultPhoto from '@/assets/no-photo.png';
 import HeaderText from "@components/common/headerText/HeaderText.jsx";
+import {Checkbox} from "@mui/material";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
 
 
 function ProductListItem({onClick, id, name, short_characteristics, price, photos, average_rating, count_of_reviews, count_of_orders=0}) {
@@ -49,7 +51,9 @@ function ProductListItem({onClick, id, name, short_characteristics, price, photo
                     <span className={style.rub}>₽</span>
                 </HeaderText>
                 <div className={style.buttons}>
-                    <LikeButton></LikeButton>
+                    {/*<LikeButton></LikeButton>*/}
+                    <Checkbox
+                        icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                     <Button extraClasses={[style.buyButton]} onClick={handleAddProductToBasket}>Купить</Button>
                 </div>
 
