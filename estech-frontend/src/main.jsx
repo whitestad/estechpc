@@ -27,7 +27,34 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: '#ff1e63',
+            main: '#766BED',
+            contrastText: '#ffffff',
+        },
+        secondary: {
+            main: '#FFA726',
+            contrastText: '#ffffff',
+        },
+        error: {
+            main: '#f44336',
+        },
+        warning: {
+            main: '#ff9800',
+        },
+        info: {
+            main: '#2196f3',
+        },
+        success: {
+            main: '#4caf50',
+        },
+        background: {
+            default: '#ffffff',
+            paper: '#eee',
+        },
+        text: {
+            primary: '#1A1A1C',
+            secondary: '#2C2C2F',
+            disabled: '#9e9e9e',
+            hint: '#bdbdbd',
         },
     },
 });

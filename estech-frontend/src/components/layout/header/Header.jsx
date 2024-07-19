@@ -45,7 +45,8 @@ function Navigations(){
             
             <NavigationItem title={'Главная'} to={'/'}></NavigationItem>
             <NavigationItem title={'Каталог'} to={'/categories'}></NavigationItem>
-            <NavigationItem title={'Корзина'} to={'/basket'}></NavigationItem>
+            {/*<NavigationItem title={'Корзина'} to={'/basket'}></NavigationItem>*/}
+            <NavigationItem title={'Контакты'} to={'/contacts'}></NavigationItem>
 
             {isLoggedIn() ?
                 <NavigationItem title={user().username} to={'/logout'}></NavigationItem> : <NavigationItem title={'Войти'} to={'/login'}></NavigationItem>}

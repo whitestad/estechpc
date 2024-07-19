@@ -12,6 +12,7 @@ import CategoriesPage from "@/pages/CategoriesPage.jsx";
 import ProductsPage from "@/pages/ProductsPage.jsx";
 import ProductPage from "@/pages/ProductPage.jsx";
 import BasketPage from "@/pages/BasketPage.jsx";
+import ContactsPage from "@/pages/ContactsPage.jsx";
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
                     <Route path="/component-demonstration" element={<ComponentDemonstration></ComponentDemonstration> } />
                     <Route path="/login" element={<Login/> } />
                     <Route path="/logout" element={<Logout />} />
+
+                    <Route path="/contacts" element={<ContactsPage />} />
                 </Routes>
             </MainWrapper>
         </BrowserRouter>

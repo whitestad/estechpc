@@ -1,10 +1,11 @@
 import {useAuthStore} from "../store/auth";
-import {Container} from "@components/common/layouts/Layouts.jsx";
 import {ProductList} from "@components/layout/productsList/ProductList.jsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import apiInstance from "@utils/axios.js";
 import HeaderText from "@components/common/headerText/HeaderText.jsx";
+import {Box, Button, Container, Typography} from "@mui/material";
+import { Link } from 'react-router-dom';
 
 function MainPage() {
     const [isLoggedIn, user] = useAuthStore((state) => [
@@ -33,7 +34,43 @@ function MainPage() {
 
     return (
         <Container>
-            
+            <Box
+                gap={'20px'}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    paddingY: '4rem',
+                }}>
+
+                <Typography variant={'h2'}>Добро Пожаловать!</Typography>
+
+                <Box paddingY={'2rem'}>
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 200,
+                            width: '100%',
+                            maxWidth: { xs: 300, md: 600 },
+                        }}
+                        alt="Logo"
+                        src={'/estech_logo.svg'}
+                    />
+
+                    <Typography variant={'h3'}>Estech PC</Typography>
+                    <Typography variant={'body1'}>Магазин компьютерной техники</Typography>
+                </Box>
+
+                <Button component={Link}
+                        to="/categories"
+                        variant="contained" color="primary" size={'large'}>
+                    Перейти в каталог
+                </Button>
+
+            </Box>
+
         </Container>
     );
 }
