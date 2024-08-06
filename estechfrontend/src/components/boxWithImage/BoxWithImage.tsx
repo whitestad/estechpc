@@ -7,8 +7,8 @@ interface BoxWithImageProps extends BoxProps {
     backgroundSize?: string;
     backgroundPosition?: string;
     backgroundRepeat?: string;
-    overlayColor?: string; // Добавленное свойство для цвета затемнения
-    overlayOpacity?: number; // Добавленное свойство для прозрачности затемнения
+    overlayColor?: string;
+    overlayOpacity?: number;
 }
 
 const BoxWithImage: React.FC<BoxWithImageProps> = ({

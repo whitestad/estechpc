@@ -18,9 +18,9 @@ const Home = () => {
     console.log(imageHeight);
 
     return (
-        <Container maxWidth={"xl"} sx={{ my: 5, display: "flex", flexDirection: "column", gap: 5 }}>
+        <Container maxWidth={"xl"} sx={{ my: 5, display: "flex", flexDirection: "column", gap: 4 }}>
             <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ height: { md: "500px", sx: "auto" } }}>
-                <Grid item xs={12} md={10} height={"100%"}>
+                <Grid item xs={12} md={9} height={"100%"}>
                     <BoxWithImage imageUrl={room} overlayOpacity={0.5} sx={{ height: "100%" }}>
                         <Container sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", my: "auto" }}>
                             <CardContent>
@@ -39,7 +39,7 @@ const Home = () => {
                     </BoxWithImage>
                 </Grid>
 
-                <Grid item xs={12} md={2} sx={{ height: totalHeight }}>
+                <Grid item xs={12} md={3} sx={{ height: totalHeight }}>
                     <Box
                         sx={{
                             width: "100%",
