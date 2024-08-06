@@ -1,20 +1,25 @@
-function App() {
-  function handle() {
-    console.log('Hello World!');
-    console.log('Hello World!');
-    console.log('Hello World!');
-  }
+// src/App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
+import Header from '@components/header/Header';
+import Home from '@pages/home/Home';
+import theme from '@styles/theme';
+
+const App: React.FC = () => {
   return (
-    <>
-      <h1>Page</h1>
-      <div>
-        <p>1</p>
-        <p>2</p>
-      </div>
-      <div>es322ddsa</div>
-    </>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
