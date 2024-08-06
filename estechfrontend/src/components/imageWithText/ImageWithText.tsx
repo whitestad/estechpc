@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import BoxWithImage from "@components/boxWithImage/BoxWithImage";
 
+// Используем objectFit: 'cover' для растягивания изображения
 const Image = styled("img")(({ theme }) => ({
   width: "100%",
-  height: "auto",
+  height: "100%", // Заполняет всю высоту контейнера
   borderRadius: theme.shape.borderRadius,
+  objectFit: "cover", // Заполняет всю ширину контейнера, сохраняя пропорции
 }));
 
 interface BoxImageProps {
@@ -17,11 +20,41 @@ interface BoxImageProps {
 
 const ImageWithText: React.FC<BoxImageProps> = ({ src, text, alt, sx }) => {
   return (
-    <Box sx={{ position: "relative", height: 500 / 3 }}>
-      <CardMedia component="img" image={src} sx={{ height: "100%" }} alt={alt} />
-      <Typography sx={{ position: "absolute", bottom: 10, left: 10, color: "white", fontWeight: "bold" }}>{text}</Typography>
-    </Box>
+    <BoxWithImage imageUrl={src} sx={{ position: "relative", height: "100%", width: "100%", ...sx }}>
+      <Typography
+        sx={{
+          color: "white",
+          fontWeight: "bold",
+          height: "100%",
+          alignContent: "end",
+
+          p: "1rem 2rem",
+        }}
+      >
+        {text}
+      </Typography>
+    </BoxWithImage>
   );
 };
+
+// const ImageWithText: React.FC<BoxImageProps> = ({ src, text, alt, sx }) => {
+//     return (
+//         <Box sx={{ position: "relative", height: "100%", width: "100%", ...sx }}>
+//             <Image src={src} alt={alt} />
+//             <Typography
+//                 variant={"body1"}
+//                 sx={{
+//                     position: "absolute",
+//                     bottom: 10,
+//                     left: 10,
+//                     color: "white",
+//                     fontWeight: "bold",
+//                 }}
+//             >
+//                 {text}
+//             </Typography>
+//         </Box>
+//     );
+// };
 
 export default ImageWithText;

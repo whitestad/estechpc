@@ -8,6 +8,7 @@ import Header from "@components/header/Header";
 import Home from "@pages/home/Home";
 import theme from "@styles/theme";
 import "@styles/global.css";
+import TestPage from "@pages/TestPage";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/test" element={<TestPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
