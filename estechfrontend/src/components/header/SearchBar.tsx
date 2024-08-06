@@ -1,52 +1,55 @@
 // src/components/header/SearchBar.tsx
-import React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import IconButton from "@mui/material/IconButton";
+import { alpha } from "@mui/material";
+import Box from "@mui/material/Box";
+import SearchIcon from "@mui/icons-material/Search";
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  margin: 'auto',
-  width: '100%',
-  maxWidth: '500px',
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: "500px",
+  margin: "auto",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
+  color: "inherit",
+  width: "100%",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    transition: theme.transitions.create("width"),
+    width: "100%",
+  },
+}));
+
+const SearchIconButton = styled(IconButton)(({ theme }) => ({
+  padding: theme.spacing(1),
+  color: theme.palette.common.white,
+  "&:hover": {
+    color: theme.palette.primary.main,
   },
 }));
 
 const SearchBar: React.FC = () => {
   return (
-    <Search sx={{ flexGrow: 1 }}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-    </Search>
+    <Box flexGrow={1} m={"auto"}>
+      <Search>
+        <StyledInputBase placeholder="Искать..." inputProps={{ "aria-label": "search" }} />
+        <SearchIconButton aria-label="search">
+          <SearchIcon />
+        </SearchIconButton>
+      </Search>
+    </Box>
   );
 };
 

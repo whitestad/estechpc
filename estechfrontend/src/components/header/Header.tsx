@@ -16,7 +16,9 @@ import IconWithLabel from "./IconWithLabel"; // Импортируем новы�
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import IconButton from "@mui/material/IconButton";
+import theme from "@styles/theme";
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -44,14 +46,15 @@ const Header: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar color={"background"} sx={{ p: 0 }} position="static">
+      <AppBar color={"background"} position="static">
         <Container maxWidth="xl">
-          <Toolbar>
+          <Toolbar disableGutters sx={{ gap: 5 }}>
             <Logo className={styles.logo} />
 
             <SearchBar />
 
-            <Box sx={{ display: { xs: "none", md: "flex", gap: 25 } }}>
+            <Box sx={{ display: { xs: "none", md: "flex", gap: theme.spacing(5) } }}>
+              <IconWithLabel icon={<ReceiptLongIcon />} label="Заказы" badgeContent={0} ariaLabel="show orders" />
               <IconWithLabel icon={<FavoriteIcon />} label="Избранное" badgeContent={2} ariaLabel="show favorites" />
               <IconWithLabel icon={<ShoppingCartIcon />} label="Корзина" badgeContent={3} ariaLabel="show shopping cart" />
               <IconWithLabel icon={<AccountCircle />} label="Профиль" ariaLabel="account of current user" onClick={handleProfileMenuOpen} />

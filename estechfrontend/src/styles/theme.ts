@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface TypographyVariants {
     actayWide: React.CSSProperties;
   }
@@ -10,7 +10,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-declare module '@mui/material/Typography' {
+declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     actayWide: true;
   }
@@ -19,49 +19,59 @@ declare module '@mui/material/Typography' {
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#C4F230',
-      contrastText: '#111111',
+      main: "#C4F230",
+      contrastText: "#111111",
     },
     secondary: {
-      main: '#FF407D',
-      contrastText: '#ffffff',
+      main: "#FF407D",
+      contrastText: "#ffffff",
     },
     background: {
-      default: '#151515',
-      paper: '#000000',
+      default: "#151515",
+      paper: "#000000",
     },
     text: {
-      primary: '#fff',
-      secondary: '#c2c2c2',
+      primary: "#fff",
+      secondary: "#c2c2c2",
     },
     info: {
-      main: '#307ef2',
-      contrastText: '#ffffff',
+      main: "#307ef2",
+      contrastText: "#ffffff",
     },
   },
   typography: {
-    fontFamily: 'Manrope, sans-serif',
+    fontFamily: "Manrope",
     h1: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
     h2: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
     h3: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
     h4: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
     h5: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
     h6: {
-      fontFamily: 'ActayWide, sans-serif',
+      fontFamily: "ActayWide",
+      fontWeight: 700,
     },
-    actayWide: {
-      fontFamily: 'ActayWide, sans-serif',
+    button: {
+      fontFamily: "Manrope",
     },
+  },
+
+  shape: {
+    borderRadius: 5,
   },
 });
 
