@@ -57,7 +57,7 @@ const StoreStats = () => {
                         <Typography sx={{ color: "#fff" }}>
                             Наш интернет-магазин работает 24/7. Для нас важен каждый клиент, поэтому мы делаем все, чтобы Вы остались довольны.
                         </Typography>
-                        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+                        <Button variant="contained" color="primary" size={"large"} sx={{ mt: 2 }}>
                             Посмотреть товары
                         </Button>
                     </BoxWithImage>

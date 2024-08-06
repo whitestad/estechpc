@@ -31,7 +31,7 @@ const Home = () => {
                                     Открой для себя новое измерение производительности с нашими топовыми компьютерами и комплектующими.
                                 </Typography>
                                 <Divider sx={{ my: 1 }} />
-                                <Button variant="contained" color="primary">
+                                <Button variant="contained" color="primary" size={"large"}>
                                     Посмотреть каталог
                                 </Button>
                             </CardContent>
