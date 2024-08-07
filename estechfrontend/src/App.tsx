@@ -12,6 +12,7 @@ import TestPage from "@pages/TestPage";
 import CatalogPage from "@pages/catalogPage/CatalogPage";
 import LoginPage from "@pages/loginPage/LoginPage";
 import RegisterPage from "@pages/registerPage/RegisterPage";
+import Logout from "@pages/Logout";
 
 const App: React.FC = () => {
     return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
 
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/logout" element={<Logout />} />
                 </Routes>
             </Router>
         </ThemeProvider>

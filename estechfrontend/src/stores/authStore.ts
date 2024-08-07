@@ -1,7 +1,8 @@
 // src/stores/authStore.ts
-import create from "zustand";
-import apiInstance from "../api/api";
-import { jwtDecode } from "jwt-decode";
+import create from 'zustand';
+import apiInstance from '@api/api';
+import { jwtDecode } from 'jwt-decode';
+import { AxiosError } from 'axios';
 
 interface DecodedToken {
     username: string;
@@ -11,8 +12,8 @@ interface DecodedToken {
 interface AuthState {
     token: string | null;
     user: { username: string; email?: string } | null;
-    login: (username: string, password: string) => Promise<void>;
-    register: (username: string, password: string, password2: string) => Promise<void>;
+    login: (username: string, password: string) => Promise<{ data: any; error: string | object | null }>;
+    register: (username: string, password: string, password2: string) => Promise<{ data: any; error: string | object | null }>;
     logout: () => void;
     isAuthenticated: () => boolean;
 }
@@ -23,7 +24,7 @@ const loadFromLocalStorage = (key: string) => {
         const serializedData = localStorage.getItem(key);
         return serializedData ? JSON.parse(serializedData) : null;
     } catch (error) {
-        console.error("Ошибка загрузки данных из localStorage:", error);
+        console.error('Ошибка загрузки данных из localStorage:', error);
         return null;
     }
 };
@@ -34,61 +35,73 @@ const saveToLocalStorage = (key: string, value: any) => {
         const serializedData = JSON.stringify(value);
         localStorage.setItem(key, serializedData);
     } catch (error) {
-        console.error("Ошибка сохранения данных в localStorage:", error);
+        console.error('Ошибка сохранения данных в localStorage:', error);
     }
 };
 
 const useAuthStore = create<AuthState>((set, get) => ({
-    token: localStorage.getItem("token"),
-    user: loadFromLocalStorage("user"),
+    token: localStorage.getItem('token'),
+    user: loadFromLocalStorage('user'),
 
     login: async (username, password) => {
         try {
-            const response = await apiInstance.post("users/token/", { username, password });
+            const response = await apiInstance.post('users/token/', { username, password });
             const { access } = response.data;
             set({ token: access });
-            localStorage.setItem("token", access);
+            localStorage.setItem('token', access);
 
             // Декодируем токен и извлекаем данные пользователя
             const decoded: DecodedToken = jwtDecode(access);
             const user = { username: decoded.username, email: decoded.email };
             set({ user });
-            saveToLocalStorage("user", user); // Сохраняем пользователя в localStorage
+            saveToLocalStorage('user', user); // Сохраняем пользователя в localStorage
+
+            return { data: response.data, error: null };
         } catch (error) {
-            console.error("Ошибка авторизации:", error);
+            console.log(error);
+            if (error instanceof AxiosError && error.response) {
+                return { data: null, error: error.response.data };
+            } else {
+                return { data: null, error: error.message };
+            }
         }
     },
 
     register: async (username, password, password2) => {
         try {
-            const response = await apiInstance.post("users/register/", {
+            const response = await apiInstance.post('users/register/', {
                 username,
-                email: "", // Добавьте email, если он обязателен
+                email: '',
                 password,
                 password2,
             });
-            console.log("Регистрация успешна:", response.data);
+
             const { access } = response.data;
             set({ token: access });
-            localStorage.setItem("token", access);
+            localStorage.setItem('token', access);
 
             // Декодируем токен и извлекаем данные пользователя
             const decoded: DecodedToken = jwtDecode(access);
             const user = { username: decoded.username, email: decoded.email };
             set({ user });
-            saveToLocalStorage("user", user); // Сохраняем пользователя в localStorage
-        } catch (error: any) {
-            if (error.response) {
-                console.error("Ошибка регистрации:", error.response.data);
+
+            saveToLocalStorage('user', user); // Сохраняем пользователя в localStorage
+
+            return { data: response.data, error: null };
+        } catch (error) {
+            console.error(error);
+            if (error instanceof AxiosError && error.response) {
+                console.log(error)
+                return { data: null, error: error.response.data };
             } else {
-                console.error("Ошибка:", error.message);
+                return { data: null, error: error.message };
             }
         }
     },
 
     logout: () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         set({ token: null, user: null });
     },
 

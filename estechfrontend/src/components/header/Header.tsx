@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 
 import SearchBar from "./SearchBar";
 import ProfileMenu from "./ProfileMenu";
@@ -20,8 +20,10 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import IconButton from "@mui/material/IconButton";
 import theme from "@styles/theme";
 import useAuthStore from "@stores/authStore";
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const username = useAuthStore((state) => state.user?.username);
 
@@ -53,22 +55,34 @@ const Header: React.FC = () => {
             <AppBar color={"background"} position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ gap: 5 }}>
-                        <Logo className={styles.logo} />
-
-                        <Typography variant="h5">{isAuthenticated() ? username : "NotAuthenticated"}</Typography>
+                        <Logo className={styles.logo} onClick={() => navigate('/')} />
 
                         <SearchBar />
 
-                        <Box sx={{ display: { xs: "none", md: "flex", gap: theme.spacing(5) } }}>
+                        <Box sx={{ display: { xs: "none", md: "flex", gap: theme.spacing(5), alignItems: "center" } }}>
                             <IconWithLabel icon={<ReceiptLongIcon />} label="Заказы" badgeContent={0} ariaLabel="show orders" />
                             <IconWithLabel icon={<FavoriteIcon />} label="Избранное" badgeContent={2} ariaLabel="show favorites" />
                             <IconWithLabel icon={<ShoppingCartIcon />} label="Корзина" badgeContent={3} ariaLabel="show shopping cart" />
-                            <IconWithLabel
-                                icon={<AccountCircle />}
-                                label="Профиль"
-                                ariaLabel="account of current user"
-                                onClick={handleProfileMenuOpen}
-                            />
+
+                            { isAuthenticated() ?
+                                <>
+                                    <IconWithLabel
+                                        icon={<AccountCircle />}
+                                        label="Профиль"
+                                        ariaLabel="account of current user"
+                                        onClick={handleProfileMenuOpen}
+                                    />
+
+                                    <Button onClick={() => navigate('/logout')}>
+                                        Выйти
+                                    </Button>
+                                </>
+                                :
+                                <Button variant="contained" onClick={() => navigate('/login')}>
+                                    Войти
+                                </Button>
+                            }
+
                         </Box>
 
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>
