@@ -10,7 +10,6 @@ const FlexBoxStyled = styled(Box)(({ theme }) => ({
     alignItems: "center", // Центрируем элементы по вертикали
     justifyContent: "flex-start", // Выравниваем элементы в начале контейнера
     gap: theme.spacing(2), // Определяем пространство между элементами внутри контейнера
-    borderRadius: theme.shape.borderRadius,
 }));
 
 // Типы пропсов для FlexBox
@@ -41,6 +40,7 @@ const FlexBox: React.FC<FlexBoxProps> = ({
                 justifyContent,
                 gap,
                 backgroundColor: bgColor,
+                borderRadius: theme.shape.borderRadius,
                 ...sx,
             }}
         >

@@ -9,20 +9,27 @@ import Home from "@pages/home/Home";
 import theme from "@styles/theme";
 import "@styles/global.css";
 import TestPage from "@pages/TestPage";
+import CatalogPage from "@pages/catalogPage/CatalogPage";
+import LoginPage from "@pages/loginPage/LoginPage";
+import RegisterPage from "@pages/registerPage/RegisterPage";
 
 const App: React.FC = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/test" element={<TestPage />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/test" element={<TestPage />} />
+                    <Route path="/catalog" element={<CatalogPage />} />
+
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
 };
 
 export default App;

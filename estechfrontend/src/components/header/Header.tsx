@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 import SearchBar from "./SearchBar";
 import ProfileMenu from "./ProfileMenu";
@@ -19,66 +19,77 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import IconButton from "@mui/material/IconButton";
 import theme from "@styles/theme";
+import useAuthStore from "@stores/authStore";
 
 const Header: React.FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const username = useAuthStore((state) => state.user?.username);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setMobileMoreAnchorEl(event.currentTarget);
+    };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+    };
 
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar color={"background"} position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ gap: 5 }}>
-            <Logo className={styles.logo} />
+    const handleMobileMenuClose = () => {
+        setMobileMoreAnchorEl(null);
+    };
 
-            <SearchBar />
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar color={"background"} position="static">
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters sx={{ gap: 5 }}>
+                        <Logo className={styles.logo} />
 
-            <Box sx={{ display: { xs: "none", md: "flex", gap: theme.spacing(5) } }}>
-              <IconWithLabel icon={<ReceiptLongIcon />} label="Заказы" badgeContent={0} ariaLabel="show orders" />
-              <IconWithLabel icon={<FavoriteIcon />} label="Избранное" badgeContent={2} ariaLabel="show favorites" />
-              <IconWithLabel icon={<ShoppingCartIcon />} label="Корзина" badgeContent={3} ariaLabel="show shopping cart" />
-              <IconWithLabel icon={<AccountCircle />} label="Профиль" ariaLabel="account of current user" onClick={handleProfileMenuOpen} />
-            </Box>
+                        <Typography variant="h5">{isAuthenticated() ? username : "NotAuthenticated"}</Typography>
 
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <IconButton size="large" aria-label="show more" aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <ProfileMenu
-        anchorEl={anchorEl}
-        mobileMoreAnchorEl={mobileMoreAnchorEl}
-        isMenuOpen={isMenuOpen}
-        isMobileMenuOpen={isMobileMenuOpen}
-        handleMenuClose={handleMenuClose}
-        handleMobileMenuClose={handleMobileMenuClose}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-      />
-    </Box>
-  );
+                        <SearchBar />
+
+                        <Box sx={{ display: { xs: "none", md: "flex", gap: theme.spacing(5) } }}>
+                            <IconWithLabel icon={<ReceiptLongIcon />} label="Заказы" badgeContent={0} ariaLabel="show orders" />
+                            <IconWithLabel icon={<FavoriteIcon />} label="Избранное" badgeContent={2} ariaLabel="show favorites" />
+                            <IconWithLabel icon={<ShoppingCartIcon />} label="Корзина" badgeContent={3} ariaLabel="show shopping cart" />
+                            <IconWithLabel
+                                icon={<AccountCircle />}
+                                label="Профиль"
+                                ariaLabel="account of current user"
+                                onClick={handleProfileMenuOpen}
+                            />
+                        </Box>
+
+                        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                            <IconButton size="large" aria-label="show more" aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
+                                <MoreIcon />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <ProfileMenu
+                anchorEl={anchorEl}
+                mobileMoreAnchorEl={mobileMoreAnchorEl}
+                isMenuOpen={isMenuOpen}
+                isMobileMenuOpen={isMobileMenuOpen}
+                handleMenuClose={handleMenuClose}
+                handleMobileMenuClose={handleMobileMenuClose}
+                handleProfileMenuOpen={handleProfileMenuOpen}
+            />
+        </Box>
+    );
 };
 
 export default Header;

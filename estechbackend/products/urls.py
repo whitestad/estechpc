@@ -9,7 +9,7 @@ router.register(r'list', ProductViewSet, basename='products')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('category/<int:category_id>/filters/', CategoryFiltersView.as_view(), name='category-filters'),
+    path('categories/<int:category_id>/filters/', CategoryFiltersView.as_view(), name='category-filters'),
 
     path('admin/upload_json/', upload_json, name='upload_json'),
 ]

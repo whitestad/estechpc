@@ -15,7 +15,6 @@ const Home = () => {
     const gapSize = 2 * 8; // Размер отступа (MUI spacing unit: 1 = 8px)
     const numberOfImages = 3;
     const imageHeight = (totalHeight - gapSize * numberOfImages) / numberOfImages;
-    console.log(imageHeight);
 
     return (
         <Container maxWidth={"xl"} sx={{ my: 5, display: "flex", flexDirection: "column", gap: 4 }}>
