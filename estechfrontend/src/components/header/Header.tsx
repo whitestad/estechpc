@@ -4,8 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container } from "@mui/material";
 
 import SearchBar from "./SearchBar";
 import ProfileMenu from "./ProfileMenu";
@@ -19,13 +18,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import IconButton from "@mui/material/IconButton";
 import theme from "@styles/theme";
-import useAuthStore from "@stores/authStore";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@stores/auth";
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-    const username = useAuthStore((state) => state.user?.username);
+
+    const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -55,7 +54,7 @@ const Header: React.FC = () => {
             <AppBar color={"background"} position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ gap: 5 }}>
-                        <Logo className={styles.logo} onClick={() => navigate('/')} />
+                        <Logo className={styles.logo} onClick={() => navigate("/")} />
 
                         <SearchBar />
 
@@ -64,7 +63,7 @@ const Header: React.FC = () => {
                             <IconWithLabel icon={<FavoriteIcon />} label="Избранное" badgeContent={2} ariaLabel="show favorites" />
                             <IconWithLabel icon={<ShoppingCartIcon />} label="Корзина" badgeContent={3} ariaLabel="show shopping cart" />
 
-                            { isAuthenticated() ?
+                            {isLoggedIn() ? (
                                 <>
                                     <IconWithLabel
                                         icon={<AccountCircle />}
@@ -73,16 +72,13 @@ const Header: React.FC = () => {
                                         onClick={handleProfileMenuOpen}
                                     />
 
-                                    <Button onClick={() => navigate('/logout')}>
-                                        Выйти
-                                    </Button>
+                                    <Button onClick={() => navigate("/logout")}>Выйти ({user().username})</Button>
                                 </>
-                                :
-                                <Button variant="contained" onClick={() => navigate('/login')}>
+                            ) : (
+                                <Button variant="contained" onClick={() => navigate("/login")}>
                                     Войти
                                 </Button>
-                            }
-
+                            )}
                         </Box>
 
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>

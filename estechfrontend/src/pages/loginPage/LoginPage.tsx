@@ -1,19 +1,16 @@
-// src/components/LoginPage.tsx
-import React, { useState } from "react";
-import { Alert, Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
-import useAuthStore from "@stores/authStore";
+import { TextField, Button, Box, Typography, CircularProgress, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { login } from "@api/auth.js";
+import { useState } from "react";
 
-const LoginPage: React.FC = () => {
-    const login = useAuthStore((state) => state.login);
-    const navigate = useNavigate();
-
+const LoginForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setError(null);
@@ -21,26 +18,24 @@ const LoginPage: React.FC = () => {
         try {
             const { error } = await login(username, password);
             if (error) {
-                if (typeof error === 'string'){
-                    setError(error);
-                }
-                else if (typeof error === 'object'){
-                    setError(error.detail);
-                }
+                setError(error.toString());
             } else {
-                navigate('/');
+                navigate("/");
             }
         } catch (err) {
-            setError('Произошла ошибка при входе.');
+            setError("Произошла ошибка при входе.");
         } finally {
             setLoading(false);
         }
+    };
 
+    const handleNavigateToRegister = () => {
+        navigate("/register"); // Переход на страницу регистрации
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400, margin: "0 auto", padding: 4 }}>
-            <Typography variant="h4" gutterBottom>
+        <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 300, margin: "auto", mt: 5 }}>
+            <Typography variant="h5" component="h1" gutterBottom>
                 Вход
             </Typography>
             {error && (
@@ -48,36 +43,29 @@ const LoginPage: React.FC = () => {
                     {error}
                 </Alert>
             )}
-
+            <TextField label="Имя пользователя" value={username} onChange={(e) => setUsername(e.target.value)} fullWidth margin="normal" required />
             <TextField
-                label="Имя пользователя"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                label="Пароль"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 fullWidth
                 margin="normal"
                 required
             />
-            <TextField
-                label="Пароль"
-                type="password"
-                fullWidth margin="normal"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 2 }}
-                disabled={loading}
-            >
-                {loading ? <CircularProgress size={24} /> : 'Войти'}
+            <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }} disabled={loading}>
+                {loading ? <CircularProgress size={24} /> : "Войти"}
             </Button>
+            <Typography
+                variant="body2"
+                component="a"
+                sx={{ mt: 2, display: "block", textAlign: "center", color: "primary.main", cursor: "pointer" }}
+                onClick={handleNavigateToRegister}
+            >
+                Нет аккаунта? Зарегистрируйтесь
+            </Typography>
         </Box>
     );
 };
 
-export default LoginPage;
+export default LoginForm;
