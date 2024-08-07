@@ -55,6 +55,9 @@ const Header: React.FC = () => {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ gap: 5 }}>
                         <Logo className={styles.logo} onClick={() => navigate("/")} />
+                        <Button variant={"contained"} size={"large"} onClick={navigate("/catalog")}>
+                            Каталог
+                        </Button>
 
                         <SearchBar />
 
@@ -71,8 +74,6 @@ const Header: React.FC = () => {
                                         ariaLabel="account of current user"
                                         onClick={handleProfileMenuOpen}
                                     />
-
-                                    <Button onClick={() => navigate("/logout")}>Выйти ({user().username})</Button>
                                 </>
                             ) : (
                                 <Button variant="contained" onClick={() => navigate("/login")}>
