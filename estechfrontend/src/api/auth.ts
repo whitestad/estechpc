@@ -21,7 +21,7 @@ interface TokenData {
 
 export const login = async (username: string, password: string): Promise<RegisterResponse> => {
     try {
-        const { data, status } = await axios.post<LoginResponse>("token/", {
+        const { data, status } = await axios.post<LoginResponse>("users/token/", {
             username,
             password,
         });
@@ -48,7 +48,7 @@ export const register = async (
     lastName: string
 ): Promise<RegisterResponse> => {
     try {
-        const { data } = await axios.post("register/", {
+        const { data } = await axios.post("users/register/", {
             username,
             email,
             password,
@@ -111,7 +111,7 @@ export const setAuthUser = (access_token: string, refresh_token: string): void =
 };
 
 export const getRefreshToken = async (refreshToken: string): Promise<LoginResponse> => {
-    const response = await axios.post<{ access: string; refresh: string }>("token/refresh/", {
+    const response = await axios.post<{ access: string; refresh: string }>("users/token/refresh/", {
         refresh: refreshToken,
     });
     return response.data;

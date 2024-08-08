@@ -55,7 +55,7 @@ const Header: React.FC = () => {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ gap: 5 }}>
                         <Logo className={styles.logo} onClick={() => navigate("/")} />
-                        <Button variant={"contained"} size={"large"} onClick={navigate("/catalog")}>
+                        <Button variant={"contained"} size={"large"} onClick={() => navigate("/catalog")}>
                             Каталог
                         </Button>
 
