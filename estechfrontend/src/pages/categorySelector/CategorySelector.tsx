@@ -1,7 +1,15 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container } from "@mui/material";
+import {
+    Typography,
+    Card,
+    CardMedia,
+    CardContent,
+    CircularProgress,
+    Grid,
+    Container,
+} from "@mui/material";
 import apiInstance from "@api/axios";
 
 interface Category {
@@ -11,8 +19,26 @@ interface Category {
     image: string | null;
 }
 
-const fetchCategories = async (parentId: number | null): Promise<Category[]> => {
-    const response = await apiInstance.get<Category[]>(`/products/categories/?parent_id=${parentId !== null ? parentId : 0}`);
+interface ChildCategory {
+    id: number;
+    name: string;
+}
+
+const fetchCategories = async (
+    parentId: number | null
+): Promise<Category[]> => {
+    const response = await apiInstance.get<Category[]>(
+        `/products/categories/?parent_id=${parentId !== null ? parentId : 0}`
+    );
+    return response.data;
+};
+
+const fetchChildrenCategories = async (
+    categoryId: number
+): Promise<ChildCategory[]> => {
+    const response = await apiInstance.get<ChildCategory[]>(
+        `/products/categories/${categoryId}/children/`
+    );
     return response.data;
 };
 
@@ -31,11 +57,23 @@ const CategorySelector: React.FC = () => {
         keepPreviousData: true,
     });
 
-    const handleCategoryClick = (categoryId: number) => {
-        navigate(`/categories/${categoryId}`);
+    const handleCategoryClick = async (category: Category) => {
+        try {
+            const children = await fetchChildrenCategories(category.id);
+            if (children.length > 0) {
+                // Если есть дочерние категории, переходим к ним
+                navigate(`/categories/${category.id}`);
+            } else {
+                // Если дочерних категорий нет, открываем страницу товаров
+                navigate(`/categories/${category.id}/products`);
+            }
+        } catch (error) {
+            console.error("Ошибка загрузки дочерних категорий:", error);
+            navigate(`/categories/${category.id}/products`); // На случай ошибки, продолжаем с продуктами
+        }
     };
 
-    const defaultImage = "https://via.placeholder.com/550"; // URL дефолтного изображения
+    const defaultImage = "https://via.placeholder.com/550";
 
     if (isLoading) {
         return <CircularProgress />;
@@ -54,8 +92,16 @@ const CategorySelector: React.FC = () => {
                 {Array.isArray(categories) &&
                     categories.map((category) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
-                            <Card onClick={() => handleCategoryClick(category.id)} style={{ cursor: "pointer" }}>
-                                <CardMedia component="img" height="280" image={category.image || defaultImage} alt={category.name} />
+                            <Card
+                                onClick={() => handleCategoryClick(category)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    height="280"
+                                    image={category.image || defaultImage}
+                                    alt={category.name}
+                                />
                                 <CardContent>
                                     <Typography variant="h6" component="div">
                                         {category.name}
