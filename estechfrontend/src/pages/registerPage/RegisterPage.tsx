@@ -1,10 +1,10 @@
 import { TextField, Button, Box, Typography, CircularProgress, Alert } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom"; // Импортируем Link
+import { useNavigate } from "react-router-dom"; // Импортируем Link
 import { useState } from "react";
 
 import { register } from "@api/auth.js";
 
-const RegisterForm = () => {
+const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -91,4 +91,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default RegisterPage;
