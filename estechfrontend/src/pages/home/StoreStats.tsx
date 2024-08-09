@@ -51,7 +51,7 @@ const StoreStats = () => {
                 </Grid>
 
                 <Grid item md={6}>
-                    <BoxWithImage imageUrl={workImage} overlayOpacity={0.75} sx={{ p: 4, height: '100%' }}>
+                    <BoxWithImage imageUrl={workImage as string} overlayOpacity={0.75} sx={{ p: 4, height: '100%' }}>
                         <Typography variant='h6' sx={{ color: '#fff' }}>
                             Работаем круглосуточно
                         </Typography>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Typography, CircularProgress, Grid, Container, Button, Drawer, Box } from '@mui/material';
+import { Typography, Grid, Container, Button, Drawer, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import apiInstance from '@api/axios';
 import FiltersPanel, { FiltersResponse } from '@components/filtersPanel/FiltersPanel';

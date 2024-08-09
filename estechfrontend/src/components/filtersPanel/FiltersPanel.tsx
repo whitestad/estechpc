@@ -12,7 +12,7 @@ export interface FiltersResponse {
 }
 
 interface FiltersPanelProps {
-    filters: Filter[];
+    filters: Filter[] | undefined;
     selectedFilters: { [key: string]: string[] };
     priceRange: { min: number; max: number };
     onFilterChange: (filters: { [key: string]: string[] }) => void;
@@ -66,7 +66,7 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, selectedFilters, p
                         />
                     </Box>
                 </FormGroup>
-                {filters.map((filter) => (
+                {filters?.map((filter) => (
                     <FormGroup key={filter.id}>
                         <Typography variant='subtitle1'>{filter.name}</Typography>
                         {filter.values.map((value) => (
