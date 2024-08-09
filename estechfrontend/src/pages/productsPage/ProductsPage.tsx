@@ -8,37 +8,25 @@ import FiltersPanel, { FiltersResponse } from '@components/filtersPanel/FiltersP
 import ProductList, { Product } from '@components/productList/ProductList';
 
 const fetchProducts = async (categoryId: number | null): Promise<Product[]> => {
-    try {
-        const response = await apiInstance.get(`/products/list/?c=${categoryId || ''}&include_out_of_stock=false`);
-        if (response.data && Array.isArray(response.data.results)) {
-            return response.data.results;
-        }
-        throw new Error('Invalid data format: results should be an array');
-    } catch (error) {
-        console.error('Error fetching products:', error);
-        throw error;
+    const response = await apiInstance.get(`/products/list/?c=${categoryId || ''}&include_out_of_stock=false`);
+    if (response.data && Array.isArray(response.data.results)) {
+        return response.data.results;
     }
+    throw new Error('Invalid data format: results should be an array');
 };
 
 const fetchFilters = async (categoryId: number): Promise<FiltersResponse> => {
-    try {
-        const response = await apiInstance.get(`/products/categories/${categoryId}/filters/`);
-        if (response.data) {
-            return response.data;
-        }
-        throw new Error('Invalid data format for filters');
-    } catch (error) {
-        console.error('Error fetching filters:', error);
-        throw error;
+    const response = await apiInstance.get(`/products/categories/${categoryId}/filters/`);
+    if (response.data) {
+        return response.data;
     }
+    throw new Error('Invalid data format for filters');
 };
 
 const ProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
     const categoryID = parseInt(categoryId as string, 10);
-    const [selectedFilters, setSelectedFilters] = useState<{
-        [key: string]: string[];
-    }>({});
+    const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({});
     const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -65,26 +53,33 @@ const ProductsPage: React.FC = () => {
     };
 
     const applyFilters = (product: Product) => {
-        // Логика применения фильтров
         const isWithinPriceRange =
             (priceRange.min === 0 || product.price >= priceRange.min) && (priceRange.max === 0 || product.price <= priceRange.max);
 
-        // Дополнительная логика фильтрации по другим критериям может быть добавлена здесь
+        // Здесь вы можете добавить логику фильтрации по другим критериям (например, по selectedFilters)
         return isWithinPriceRange;
     };
 
     if (productsLoading || filtersLoading) {
-        return <CircularProgress />;
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+                <CircularProgress />
+            </Box>
+        );
     }
 
     if (productsError || filtersError) {
-        return <Typography color='error'>Ошибка загрузки данных.</Typography>;
+        return (
+            <Typography color='error' variant='h6' align='center' sx={{ mt: 4 }}>
+                Ошибка загрузки данных.
+            </Typography>
+        );
     }
 
-    if (products) {
+    if (!products || products.length === 0) {
         return (
-            <Container maxWidth={'xl'} sx={{ py: 4 }}>
-                <Typography variant={'h4'} align={'center'}>
+            <Container maxWidth='xl' sx={{ py: 4 }}>
+                <Typography variant='h4' align='center'>
                     Нет в наличии
                 </Typography>
             </Container>
@@ -111,7 +106,7 @@ const ProductsPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={9}>
-                    <ProductList products={products?.filter(applyFilters) || []} />
+                    <ProductList products={products.filter(applyFilters)} />
                 </Grid>
             </Grid>
 
