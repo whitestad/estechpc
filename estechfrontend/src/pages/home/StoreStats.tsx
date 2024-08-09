@@ -16,7 +16,7 @@ const StoreStats = () => {
             <Grid container spacing={4}>
                 <Grid item md={6} container spacing={4}>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: theme.shape.borderRadius }}>
+                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: 1 }}>
                             <Typography variant="h5" sx={{ color: "#fff" }}>
                                 30
                             </Typography>
@@ -24,7 +24,7 @@ const StoreStats = () => {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: theme.shape.borderRadius }}>
+                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: 1 }}>
                             <Typography variant="h5" sx={{ color: "#fff" }}>
                                 1 000+
                             </Typography>
@@ -32,7 +32,7 @@ const StoreStats = () => {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: theme.shape.borderRadius }}>
+                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: 1 }}>
                             <Typography variant="h5" sx={{ color: "#fff" }}>
                                 5 лет
                             </Typography>
@@ -40,7 +40,7 @@ const StoreStats = () => {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: theme.shape.borderRadius }}>
+                        <Box sx={{ bgcolor: "background.default", p: 4, borderRadius: 1 }}>
                             <Typography variant="h5" sx={{ color: "#fff" }}>
                                 2 часа
                             </Typography>

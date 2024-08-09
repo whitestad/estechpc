@@ -51,15 +51,15 @@ const Home = () => {
                             gap: `${gapSize}px`,
                         }}
                     >
-                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", borderRadius: "20px", overflow: "hidden" }}>
+                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", overflow: "hidden" }}>
                             <ImageWithText src={pc_power} text="Мощь без границ" alt="Image 1" />
                         </Box>
 
-                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", borderRadius: "20px", overflow: "hidden" }}>
+                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", overflow: "hidden" }}>
                             <ImageWithText src={pc_components} text="Собери систему мечты" alt="Image 2" />
                         </Box>
 
-                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", borderRadius: "20px", overflow: "hidden" }}>
+                        <Box sx={{ flexGrow: 1, height: `${imageHeight}px`, width: "100%", overflow: "hidden" }}>
                             <ImageWithText src={periphery} text="Интерактивный комфорт и контроль" alt="Image 3" />
                         </Box>
                     </Box>

@@ -1,15 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-    Typography,
-    Card,
-    CardMedia,
-    CardContent,
-    CircularProgress,
-    Grid,
-    Container,
-} from "@mui/material";
+import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container } from "@mui/material";
 import apiInstance from "@api/axios";
 
 interface Category {
@@ -24,21 +16,13 @@ interface ChildCategory {
     name: string;
 }
 
-const fetchCategories = async (
-    parentId: number | null
-): Promise<Category[]> => {
-    const response = await apiInstance.get<Category[]>(
-        `/products/categories/?parent_id=${parentId !== null ? parentId : 0}`
-    );
+const fetchCategories = async (parentId: number | null): Promise<Category[]> => {
+    const response = await apiInstance.get<Category[]>(`/products/categories/?parent_id=${parentId !== null ? parentId : 0}`);
     return response.data;
 };
 
-const fetchChildrenCategories = async (
-    categoryId: number
-): Promise<ChildCategory[]> => {
-    const response = await apiInstance.get<ChildCategory[]>(
-        `/products/categories/${categoryId}/children/`
-    );
+const fetchChildrenCategories = async (categoryId: number): Promise<ChildCategory[]> => {
+    const response = await apiInstance.get<ChildCategory[]>(`/products/categories/${categoryId}/children/`);
     return response.data;
 };
 
@@ -92,16 +76,8 @@ const CategorySelector: React.FC = () => {
                 {Array.isArray(categories) &&
                     categories.map((category) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
-                            <Card
-                                onClick={() => handleCategoryClick(category)}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    height="280"
-                                    image={category.image || defaultImage}
-                                    alt={category.name}
-                                />
+                            <Card onClick={() => handleCategoryClick(category)} style={{ cursor: "pointer" }} sx={{ border: "1px solid #202020" }}>
+                                <CardMedia component="img" height="280" image={category.image || defaultImage} alt={category.name} />
                                 <CardContent>
                                     <Typography variant="h6" component="div">
                                         {category.name}

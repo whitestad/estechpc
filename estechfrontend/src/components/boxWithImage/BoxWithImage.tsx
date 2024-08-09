@@ -43,7 +43,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
                 backgroundPosition: backgroundPosition,
                 backgroundRepeat: backgroundRepeat,
                 zIndex: 0,
-                borderRadius: theme.shape.borderRadius,
+                borderRadius: 1,
                 ...boxProps.sx,
             }}
         >

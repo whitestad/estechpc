@@ -40,7 +40,7 @@ const FlexBox: React.FC<FlexBoxProps> = ({
                 justifyContent,
                 gap,
                 backgroundColor: bgColor,
-                borderRadius: theme.shape.borderRadius,
+                borderRadius: 1,
                 ...sx,
             }}
         >

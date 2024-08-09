@@ -3,38 +3,30 @@ import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BoxWithImage from "@components/boxWithImage/BoxWithImage";
 
-// Используем objectFit: 'cover' для растягивания изображения
-const Image = styled("img")(({ theme }) => ({
-  width: "100%",
-  height: "100%", // Заполняет всю высоту контейнера
-  borderRadius: theme.shape.borderRadius,
-  objectFit: "cover", // Заполняет всю ширину контейнера, сохраняя пропорции
-}));
-
 interface BoxImageProps {
-  src: string;
-  text: string;
-  alt: string;
-  sx?: object;
+    src: string;
+    text: string;
+    alt: string;
+    sx?: object;
 }
 
 const ImageWithText: React.FC<BoxImageProps> = ({ src, text, alt, sx }) => {
-  return (
-    <BoxWithImage imageUrl={src} sx={{ position: "relative", height: "100%", width: "100%", ...sx }}>
-      <Typography
-        sx={{
-          color: "white",
-          fontWeight: "bold",
-          height: "100%",
-          alignContent: "end",
+    return (
+        <BoxWithImage imageUrl={src} sx={{ position: "relative", height: "100%", width: "100%", ...sx }}>
+            <Typography
+                sx={{
+                    color: "white",
+                    fontWeight: "bold",
+                    height: "100%",
+                    alignContent: "end",
 
-          p: "1rem 2rem",
-        }}
-      >
-        {text}
-      </Typography>
-    </BoxWithImage>
-  );
+                    p: "1rem 2rem",
+                }}
+            >
+                {text}
+            </Typography>
+        </BoxWithImage>
+    );
 };
 
 // const ImageWithText: React.FC<BoxImageProps> = ({ src, text, alt, sx }) => {
