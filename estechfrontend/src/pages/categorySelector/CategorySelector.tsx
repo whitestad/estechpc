@@ -1,16 +1,20 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container } from '@mui/material';
+import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container, Box, Breadcrumbs, Link } from '@mui/material';
 import apiInstance from '@api/axios';
 import theme from '@styles/theme';
-import Box from '@mui/material/Box';
 
 interface Category {
     id: number;
     parent: Category | null;
     name: string;
     image: string | null;
+}
+
+interface ParentCategory {
+    id: number;
+    name: string;
 }
 
 interface ChildCategory {
@@ -28,6 +32,11 @@ const fetchChildrenCategories = async (categoryId: number): Promise<ChildCategor
     return response.data;
 };
 
+const fetchCategoryPath = async (categoryId: number): Promise<ParentCategory[]> => {
+    const response = await apiInstance.get<ParentCategory[]>(`/products/categories/${categoryId}/parents/?include_yourself=true`);
+    return response.data;
+};
+
 const CategorySelector: React.FC = () => {
     const { parentId } = useParams<{ parentId: string }>();
     const navigate = useNavigate();
@@ -35,42 +44,87 @@ const CategorySelector: React.FC = () => {
 
     const {
         data: categories,
-        isLoading,
-        isError,
+        isLoading: categoriesLoading,
+        isError: categoriesError,
     } = useQuery({
         queryKey: ['categories', selectedCategoryId],
         queryFn: () => fetchCategories(selectedCategoryId),
         keepPreviousData: true,
     });
 
+    const {
+        data: categoryPath,
+        isLoading: pathLoading,
+        isError: pathError,
+    } = useQuery({
+        queryKey: ['categoryPath', selectedCategoryId],
+        queryFn: () => (selectedCategoryId ? fetchCategoryPath(selectedCategoryId) : Promise.resolve([])),
+        enabled: selectedCategoryId !== null, // Выполнять запрос только если selectedCategoryId не null
+    });
+
     const handleCategoryClick = async (category: Category) => {
         try {
             const children = await fetchChildrenCategories(category.id);
             if (children.length > 0) {
-                // Если есть дочерние категории, переходим к ним
                 navigate(`/categories/${category.id}`);
             } else {
-                // Если дочерних категорий нет, открываем страницу товаров
                 navigate(`/categories/${category.id}/products`);
             }
         } catch (error) {
             console.error('Ошибка загрузки дочерних категорий:', error);
-            navigate(`/categories/${category.id}/products`); // На случай ошибки, продолжаем с продуктами
+            navigate(`/categories/${category.id}/products`);
         }
     };
 
     const defaultImage = 'https://via.placeholder.com/550';
 
-    if (isLoading) {
+    if (categoriesLoading || pathLoading) {
         return <CircularProgress />;
     }
 
-    if (isError) {
+    if (categoriesError || pathError) {
         return <Typography color='error'>Ошибка загрузки категорий.</Typography>;
     }
 
     return (
         <Container maxWidth={'xl'} sx={{ py: 4 }}>
+            <Breadcrumbs separator='›' aria-label='breadcrumb' sx={{ mb: 2 }} color={'text.main'}>
+                <Link
+                    color='inherit'
+                    underline='none'
+                    onClick={() => navigate('/categories')}
+                    sx={{
+                        cursor: 'pointer',
+                        '&:hover': {
+                            color: theme.palette.primary.main,
+                        },
+                    }}
+                >
+                    Главная
+                </Link>
+                {categoryPath?.map((cat, index) =>
+                    index === categoryPath?.length - 1 ? (
+                        <Typography key={cat.id} variant='body' color={'text.secondary'}>
+                            {cat.name}
+                        </Typography>
+                    ) : (
+                        <Link
+                            key={cat.id}
+                            color='inherit'
+                            underline='none'
+                            onClick={() => navigate(`/categories/${cat.id}`)}
+                            sx={{
+                                cursor: 'pointer',
+                                '&:hover': {
+                                    color: theme.palette.primary.main,
+                                },
+                            }}
+                        >
+                            {cat.name}
+                        </Link>
+                    )
+                )}
+            </Breadcrumbs>
             <Typography variant='h4' gutterBottom>
                 Выберите категорию
             </Typography>
@@ -80,8 +134,7 @@ const CategorySelector: React.FC = () => {
                         <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
                             <Card
                                 onClick={() => handleCategoryClick(category)}
-                                style={{ cursor: 'pointer' }}
-                                sx={{ border: `1px solid ${theme.palette.grey[700]}`, position: 'relative', overflow: 'hidden' }}
+                                sx={{ cursor: 'pointer', border: `1px solid ${theme.palette.grey[700]}`, position: 'relative', overflow: 'hidden' }}
                             >
                                 <CardMedia component='img' height='280' image={category.image || defaultImage} alt={category.name} />
                                 <Box

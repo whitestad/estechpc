@@ -29,7 +29,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def parents(self, request, pk=None):
         category = self.get_object()
+        include_yourself = self.request.query_params.get('include_yourself', None)
+
         parents = []
+        if include_yourself and include_yourself == 'true':
+            parents.append(category)
+
         while category.parent:
             category = category.parent
             parents.insert(0, category)
