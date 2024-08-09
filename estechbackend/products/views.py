@@ -49,22 +49,28 @@ class ProductViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Product.objects.all()
 
+        # Получение параметров запроса
         category_id = self.request.query_params.get('c')
         min_price = self.request.query_params.get('minp')
         max_price = self.request.query_params.get('maxp')
+        include_out_of_stock = self.request.query_params.get('include_out_of_stock', 'false')
 
         attribute_filters = self.request.query_params.getlist('attribute')
         print(attribute_filters)
 
         print(self.request.query_params)
 
+        # Фильтрация по категории
         if category_id:
             queryset = queryset.filter(category__id=category_id)
+
+        # Фильтрация по цене
         if min_price:
             queryset = queryset.filter(price__gte=min_price)
         if max_price:
             queryset = queryset.filter(price__lte=max_price)
 
+        # Фильтрация по атрибутам
         if attribute_filters:
             q_objects = Q()
             for attr_filter in attribute_filters:
@@ -72,6 +78,11 @@ class ProductViewSet(viewsets.ModelViewSet):
                 q_objects &= Q(attributes__attribute_id=attribute_id, attributes__value=value)
             queryset = queryset.filter(q_objects)
 
+        # Фильтрация по наличию
+        if include_out_of_stock.lower() != 'true':
+            queryset = queryset.filter(count__gt=0)  # Только товары в наличии
+
+        # Агрегация
         queryset = queryset.annotate(
             average_rating=Avg('reviews__rating'),
             count_of_reviews=Count('reviews')
@@ -80,7 +91,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
-        if self.action == 'retrieve' or self.request.query_params.get('include_reviews') == 'true':
+        if self.request.query_params.get('include_reviews') == 'true':
             return ProductDetailSerializer
         return super().get_serializer_class()
 

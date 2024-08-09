@@ -1,54 +1,41 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import {
-    Typography,
-    CircularProgress,
-    Grid,
-    Container,
-    Button,
-    Drawer,
-    Box,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import apiInstance from "@api/axios";
-import FiltersPanel, { FiltersResponse } from "@components/filtersPanel/FiltersPanel";
-import ProductList, { Product } from "@components/productList/ProductList";
-
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { Typography, CircularProgress, Grid, Container, Button, Drawer, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import apiInstance from '@api/axios';
+import FiltersPanel, { FiltersResponse } from '@components/filtersPanel/FiltersPanel';
+import ProductList, { Product } from '@components/productList/ProductList';
 
 const fetchProducts = async (categoryId: number | null): Promise<Product[]> => {
     try {
-        const response = await apiInstance.get(
-            `/products/list/?c=${categoryId || ""}`
-        );
+        const response = await apiInstance.get(`/products/list/?c=${categoryId || ''}&include_out_of_stock=false`);
         if (response.data && Array.isArray(response.data.results)) {
             return response.data.results;
         }
-        throw new Error("Invalid data format: results should be an array");
+        throw new Error('Invalid data format: results should be an array');
     } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
         throw error;
     }
 };
 
 const fetchFilters = async (categoryId: number): Promise<FiltersResponse> => {
     try {
-        const response = await apiInstance.get(
-            `/products/categories/${categoryId}/filters/`
-        );
+        const response = await apiInstance.get(`/products/categories/${categoryId}/filters/`);
         if (response.data) {
             return response.data;
         }
-        throw new Error("Invalid data format for filters");
+        throw new Error('Invalid data format for filters');
     } catch (error) {
-        console.error("Error fetching filters:", error);
+        console.error('Error fetching filters:', error);
         throw error;
     }
 };
 
 const ProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
-    const categoryID = parseInt(categoryId, 10);
+    const categoryID = parseInt(categoryId as string, 10);
     const [selectedFilters, setSelectedFilters] = useState<{
         [key: string]: string[];
     }>({});
@@ -60,7 +47,7 @@ const ProductsPage: React.FC = () => {
         isLoading: productsLoading,
         isError: productsError,
     } = useQuery({
-        queryKey: ["products", categoryID],
+        queryKey: ['products', categoryID],
         queryFn: () => fetchProducts(categoryID),
     });
 
@@ -69,7 +56,7 @@ const ProductsPage: React.FC = () => {
         isLoading: filtersLoading,
         isError: filtersError,
     } = useQuery({
-        queryKey: ["filters", categoryID],
+        queryKey: ['filters', categoryID],
         queryFn: () => fetchFilters(categoryID),
     });
 
@@ -80,8 +67,7 @@ const ProductsPage: React.FC = () => {
     const applyFilters = (product: Product) => {
         // Логика применения фильтров
         const isWithinPriceRange =
-            (priceRange.min === 0 || product.price >= priceRange.min) &&
-            (priceRange.max === 0 || product.price <= priceRange.max);
+            (priceRange.min === 0 || product.price >= priceRange.min) && (priceRange.max === 0 || product.price <= priceRange.max);
 
         // Дополнительная логика фильтрации по другим критериям может быть добавлена здесь
         return isWithinPriceRange;
@@ -92,19 +78,29 @@ const ProductsPage: React.FC = () => {
     }
 
     if (productsError || filtersError) {
-        return <Typography color="error">Ошибка загрузки данных.</Typography>;
+        return <Typography color='error'>Ошибка загрузки данных.</Typography>;
+    }
+
+    if (products) {
+        return (
+            <Container maxWidth={'xl'} sx={{ py: 4 }}>
+                <Typography variant={'h4'} align={'center'}>
+                    Нет в наличии
+                </Typography>
+            </Container>
+        );
     }
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Container maxWidth='xl' sx={{ py: 4 }}>
             <Grid container spacing={2}>
-                <Grid item xs={12} sx={{ display: { xs: "block", sm: "none" }, textAlign: "right" }}>
+                <Grid item xs={12} sx={{ display: { xs: 'block', sm: 'none' }, textAlign: 'right' }}>
                     <Button startIcon={<MenuIcon />} onClick={toggleDrawer(true)}>
                         Фильтры
                     </Button>
                 </Grid>
 
-                <Grid item xs={3} sx={{ display: { xs: "none", sm: "block" } }}>
+                <Grid item xs={3} sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <FiltersPanel
                         filters={filtersResponse?.filters}
                         selectedFilters={selectedFilters}
@@ -119,7 +115,7 @@ const ProductsPage: React.FC = () => {
                 </Grid>
             </Grid>
 
-            <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+            <Drawer anchor='left' open={isDrawerOpen} onClose={toggleDrawer(false)}>
                 <Box sx={{ width: 250, p: 2 }}>
                     <FiltersPanel
                         filters={filtersResponse?.filters}

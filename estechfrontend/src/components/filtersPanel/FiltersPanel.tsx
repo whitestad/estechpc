@@ -1,18 +1,14 @@
-import React from "react";
-import {
-    Typography,
-    List,
-    FormGroup,
-    FormControlLabel,
-    Checkbox,
-    TextField,
-    Box,
-} from "@mui/material";
+import React from 'react';
+import { Typography, List, FormGroup, FormControlLabel, Checkbox, TextField, Box } from '@mui/material';
 
 interface Filter {
     id: number;
     name: string;
     values: string[];
+}
+
+export interface FiltersResponse {
+    filters: Filter[];
 }
 
 interface FiltersPanelProps {
@@ -23,13 +19,7 @@ interface FiltersPanelProps {
     onPriceRangeChange: (range: { min: number; max: number }) => void;
 }
 
-const FiltersPanel: React.FC<FiltersPanelProps> = ({
-                                                       filters,
-                                                       selectedFilters,
-                                                       priceRange,
-                                                       onFilterChange,
-                                                       onPriceRangeChange,
-                                                   }) => {
+const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, selectedFilters, priceRange, onFilterChange, onPriceRangeChange }) => {
     const handleFilterChange = (filterId: string, value: string) => {
         onFilterChange({
             ...selectedFilters,
@@ -49,36 +39,36 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({
 
     return (
         <Box>
-            <Typography variant="h6">Фильтры</Typography>
+            <Typography variant='h6'>Фильтры</Typography>
             <List>
                 <FormGroup>
-                    <Typography variant="subtitle1">Цена</Typography>
-                    <Box sx={{ display: "flex", gap: 1 }}>
+                    <Typography variant='subtitle1'>Цена</Typography>
+                    <Box sx={{ display: 'flex', gap: 1 }}>
                         <TextField
-                            label="Минимум"
-                            type="number"
-                            name="min"
+                            label='Минимум'
+                            type='number'
+                            name='min'
                             value={priceRange.min}
                             onChange={handlePriceChange}
-                            size="small"
-                            variant="outlined"
+                            size='small'
+                            variant='outlined'
                             fullWidth
                         />
                         <TextField
-                            label="Максимум"
-                            type="number"
-                            name="max"
+                            label='Максимум'
+                            type='number'
+                            name='max'
                             value={priceRange.max}
                             onChange={handlePriceChange}
-                            size="small"
-                            variant="outlined"
+                            size='small'
+                            variant='outlined'
                             fullWidth
                         />
                     </Box>
                 </FormGroup>
                 {filters.map((filter) => (
                     <FormGroup key={filter.id}>
-                        <Typography variant="subtitle1">{filter.name}</Typography>
+                        <Typography variant='subtitle1'>{filter.name}</Typography>
                         {filter.values.map((value) => (
                             <FormControlLabel
                                 control={
