@@ -61,9 +61,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         include_out_of_stock = self.request.query_params.get('include_out_of_stock', 'false')
 
         attribute_filters = self.request.query_params.getlist('attribute')
-        print(attribute_filters)
-
-        print(self.request.query_params)
 
         # Фильтрация по категории
         if category_id:

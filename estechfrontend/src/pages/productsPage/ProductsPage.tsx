@@ -6,6 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import apiInstance from '@api/axios';
 import FiltersPanel, { FiltersResponse } from '@components/filtersPanel/FiltersPanel';
 import ProductList, { Product } from '@components/productList/ProductList';
+import LoadingBox from '@components/loadingBox/LoadingBox';
+import ErrorText from '@components/errorText/ErrorText';
 
 const fetchProducts = async (categoryId: number | null): Promise<Product[]> => {
     const response = await apiInstance.get(`/products/list/?c=${categoryId || ''}&include_out_of_stock=false`);
@@ -61,19 +63,11 @@ const ProductsPage: React.FC = () => {
     };
 
     if (productsLoading || filtersLoading) {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-                <CircularProgress />
-            </Box>
-        );
+        return <LoadingBox />;
     }
 
     if (productsError || filtersError) {
-        return (
-            <Typography color='error' variant='h6' align='center' sx={{ mt: 4 }}>
-                Ошибка загрузки данных.
-            </Typography>
-        );
+        return <ErrorText>Ошибка загрузки данных.</ErrorText>;
     }
 
     if (!products || products.length === 0) {

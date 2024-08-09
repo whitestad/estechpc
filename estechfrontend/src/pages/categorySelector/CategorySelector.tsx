@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container, Box, Breadcrumbs, Link } from '@mui/material';
 import apiInstance from '@api/axios';
 import theme from '@styles/theme';
+import LoadingBox from '@components/loadingBox/LoadingBox';
+import ErrorText from '@components/errorText/ErrorText';
 
 interface Category {
     id: number;
@@ -79,11 +81,11 @@ const CategorySelector: React.FC = () => {
     const defaultImage = 'https://via.placeholder.com/550';
 
     if (categoriesLoading || pathLoading) {
-        return <CircularProgress />;
+        return <LoadingBox />;
     }
 
     if (categoriesError || pathError) {
-        return <Typography color='error'>Ошибка загрузки категорий.</Typography>;
+        return <ErrorText>Ошибка загрузки категорий.</ErrorText>;
     }
 
     return (
