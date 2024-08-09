@@ -11,8 +11,11 @@ import BoxWithImage from '@components/boxWithImage/BoxWithImage';
 import StoreStats from '@pages/home/StoreStats';
 
 import './Home.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate();
+
     const totalHeight = 500; // Общая высота контейнера
     const gapSize = 2 * 8; // Размер отступа (MUI spacing unit: 1 = 8px)
     const numberOfImages = 3;
@@ -33,7 +36,7 @@ const Home = () => {
                                         Открой для себя новое измерение производительности с нашими топовыми компьютерами и комплектующими.
                                     </Typography>
                                     <Divider sx={{ my: 1 }} />
-                                    <Button variant='contained' size={'large'} color='primary'>
+                                    <Button variant='contained' size='large' color='primary' onClick={() => navigate('/categories')}>
                                         Посмотреть каталог
                                     </Button>
                                 </CardContent>
