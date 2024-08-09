@@ -1,8 +1,10 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container } from "@mui/material";
-import apiInstance from "@api/axios";
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container } from '@mui/material';
+import apiInstance from '@api/axios';
+import theme from '@styles/theme';
+import Box from '@mui/material/Box';
 
 interface Category {
     id: number;
@@ -36,7 +38,7 @@ const CategorySelector: React.FC = () => {
         isLoading,
         isError,
     } = useQuery({
-        queryKey: ["categories", selectedCategoryId],
+        queryKey: ['categories', selectedCategoryId],
         queryFn: () => fetchCategories(selectedCategoryId),
         keepPreviousData: true,
     });
@@ -52,37 +54,52 @@ const CategorySelector: React.FC = () => {
                 navigate(`/categories/${category.id}/products`);
             }
         } catch (error) {
-            console.error("Ошибка загрузки дочерних категорий:", error);
+            console.error('Ошибка загрузки дочерних категорий:', error);
             navigate(`/categories/${category.id}/products`); // На случай ошибки, продолжаем с продуктами
         }
     };
 
-    const defaultImage = "https://via.placeholder.com/550";
+    const defaultImage = 'https://via.placeholder.com/550';
 
     if (isLoading) {
         return <CircularProgress />;
     }
 
     if (isError) {
-        return <Typography color="error">Ошибка загрузки категорий.</Typography>;
+        return <Typography color='error'>Ошибка загрузки категорий.</Typography>;
     }
 
     return (
-        <Container maxWidth={"xl"} sx={{ py: 4 }}>
-            <Typography variant="h4" gutterBottom>
+        <Container maxWidth={'xl'} sx={{ py: 4 }}>
+            <Typography variant='h4' gutterBottom>
                 Выберите категорию
             </Typography>
             <Grid container spacing={2}>
                 {Array.isArray(categories) &&
                     categories.map((category) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
-                            <Card onClick={() => handleCategoryClick(category)} style={{ cursor: "pointer" }} sx={{ border: "1px solid #202020" }}>
-                                <CardMedia component="img" height="280" image={category.image || defaultImage} alt={category.name} />
-                                <CardContent>
-                                    <Typography variant="h6" component="div">
+                            <Card
+                                onClick={() => handleCategoryClick(category)}
+                                style={{ cursor: 'pointer' }}
+                                sx={{ border: `1px solid ${theme.palette.grey[700]}`, position: 'relative', overflow: 'hidden' }}
+                            >
+                                <CardMedia component='img' height='280' image={category.image || defaultImage} alt={category.name} />
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                        color: 'white',
+                                        padding: theme.spacing(1),
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <Typography variant='h6' component='div'>
                                         {category.name}
                                     </Typography>
-                                </CardContent>
+                                </Box>
                             </Card>
                         </Grid>
                     ))}
