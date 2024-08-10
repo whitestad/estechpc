@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { Grid, Container, Button, Drawer, Box, Typography } from '@mui/material';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { Grid, Container, Button, Drawer, Box, Typography, CircularProgress } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { fetchProducts, fetchFilters } from '@api/products';
 import FiltersPanel from '@components/filtersPanel/FiltersPanel';
@@ -10,6 +10,7 @@ import LoadingBox from '@components/loadingBox/LoadingBox';
 import ErrorText from '@components/errorText/ErrorText';
 import { useProductFilters } from '@hooks/useProductFilters';
 import theme from '@styles/theme';
+import { useInView } from 'react-intersection-observer';
 
 const ProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
@@ -20,6 +21,7 @@ const ProductsPage: React.FC = () => {
     const [draftFilters, setDraftFilters] = React.useState(selectedFilters);
     const [draftPriceRange, setDraftPriceRange] = React.useState(priceRange);
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+    const { ref, inView } = useInView();
 
     const {
         data: filtersResponse,
@@ -31,19 +33,35 @@ const ProductsPage: React.FC = () => {
     });
 
     const {
-        data: products,
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
         isLoading: productsLoading,
         isError: productsError,
-        refetch: refetchProducts,
-    } = useQuery({
+    } = useInfiniteQuery({
         queryKey: ['products', categoryID, selectedFilters, priceRange],
-        queryFn: () => fetchProducts(categoryID, selectedFilters, priceRange),
+        queryFn: ({ pageParam = 1 }) => fetchProducts(categoryID, selectedFilters, priceRange, pageParam),
+        getNextPageParam: (lastPage) => {
+            const nextUrl = lastPage.next;
+            if (nextUrl) {
+                const urlParams = new URLSearchParams(nextUrl.split('?')[1]);
+                return urlParams.get('page') ? parseInt(urlParams.get('page')!) : undefined;
+            }
+            return undefined;
+        },
+        initialPageParam: 1,
     });
+
+    useEffect(() => {
+        if (inView && hasNextPage) {
+            fetchNextPage();
+        }
+    }, [inView, hasNextPage, fetchNextPage]);
 
     const applyFilters = () => {
         updateFilters(draftFilters);
         updatePriceRange(draftPriceRange);
-
         setIsDrawerOpen(false);
     };
 
@@ -58,6 +76,8 @@ const ProductsPage: React.FC = () => {
     if (productsError || filtersError) {
         return <ErrorText>Ошибка загрузки данных.</ErrorText>;
     }
+
+    const products = data?.pages.flatMap((page) => page.results) || [];
 
     return (
         <Container maxWidth='xl' sx={{ py: 8 }}>
@@ -79,10 +99,9 @@ const ProductsPage: React.FC = () => {
                         alignSelf: 'flex-start',
                         backgroundColor: theme.palette.background.paper,
                         borderRadius: 1,
-                        overflowY: 'auto', // Сделать панель прокручиваемой, если контента много
-                        maxHeight: 'calc(100vh - 64px)', // Ограничение высоты, чтобы фильтры не выходили за пределы экрана
+                        overflowY: 'auto',
+                        maxHeight: 'calc(100vh - 64px)',
                         padding: 2,
-                        // boxShadow: theme.shadows[3],
                     }}
                 >
                     <FiltersPanel
@@ -96,7 +115,10 @@ const ProductsPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
-                    <ProductList products={products ? products : []} />
+                    <ProductList products={products} />
+                    <div ref={ref} style={{ textAlign: 'center', marginTop: 16 }}>
+                        {isFetchingNextPage && <CircularProgress />}
+                    </div>
                 </Grid>
             </Grid>
 

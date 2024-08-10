@@ -23,7 +23,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
     return (
         <Grid container spacing={2}>
             {products.map((product) => (
-                <Grid item xs={12} sm={6} md={4} key={product.id}>
+                <Grid item xs={12} sm={6} md={4} xl={3} key={product.id}>
                     <Card
                         sx={{
                             borderRadius: 1,
@@ -64,7 +64,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                                 <Rating
                                     value={product.average_rating || 0}
-                                    precision={0.05}
+                                    precision={0.1}
                                     readOnly
                                     size='small'
                                     icon={<StarIcon fontSize='inherit' sx={{ color: 'primary.main' }} />}
