@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, List, FormGroup, FormControlLabel, Checkbox, TextField, Box, Button } from '@mui/material';
-import FlexBox from '@components/flexBox/FlexBox';
 
 interface Filter {
     id: number;
