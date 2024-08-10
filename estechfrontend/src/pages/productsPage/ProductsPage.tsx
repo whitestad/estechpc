@@ -1,45 +1,26 @@
-import React, { useState } from 'react';
+// src/components/ProductsPage.tsx
+
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Typography, Grid, Container, Button, Drawer, Box } from '@mui/material';
+import { Grid, Container, Button, Drawer, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import apiInstance from '@api/axios';
-import FiltersPanel, { FiltersResponse } from '@components/filtersPanel/FiltersPanel';
-import ProductList, { Product } from '@components/productList/ProductList';
+import { fetchProducts, fetchFilters } from '@api/products';
+import FiltersPanel from '@components/filtersPanel/FiltersPanel';
+import ProductList from '@components/productList/ProductList';
 import LoadingBox from '@components/loadingBox/LoadingBox';
 import ErrorText from '@components/errorText/ErrorText';
-
-const fetchProducts = async (categoryId: number | null): Promise<Product[]> => {
-    const response = await apiInstance.get(`/products/list/?c=${categoryId || ''}&include_out_of_stock=false`);
-    if (response.data && Array.isArray(response.data.results)) {
-        return response.data.results;
-    }
-    throw new Error('Invalid data format: results should be an array');
-};
-
-const fetchFilters = async (categoryId: number): Promise<FiltersResponse> => {
-    const response = await apiInstance.get(`/products/categories/${categoryId}/filters/`);
-    if (response.data) {
-        return response.data;
-    }
-    throw new Error('Invalid data format for filters');
-};
+import { useProductFilters } from '@hooks/useProductFilters';
 
 const ProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
     const categoryID = parseInt(categoryId as string, 10);
-    const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({});
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    const {
-        data: products,
-        isLoading: productsLoading,
-        isError: productsError,
-    } = useQuery({
-        queryKey: ['products', categoryID],
-        queryFn: () => fetchProducts(categoryID),
-    });
+    const { selectedFilters, priceRange, updateFilters, updatePriceRange } = useProductFilters();
+
+    const [draftFilters, setDraftFilters] = React.useState(selectedFilters);
+    const [draftPriceRange, setDraftPriceRange] = React.useState(priceRange);
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     const {
         data: filtersResponse,
@@ -50,16 +31,25 @@ const ProductsPage: React.FC = () => {
         queryFn: () => fetchFilters(categoryID),
     });
 
-    const toggleDrawer = (open: boolean) => () => {
-        setIsDrawerOpen(open);
+    const {
+        data: products,
+        isLoading: productsLoading,
+        isError: productsError,
+        refetch: refetchProducts,
+    } = useQuery({
+        queryKey: ['products', categoryID, selectedFilters, priceRange],
+        queryFn: () => fetchProducts(categoryID, selectedFilters, priceRange),
+    });
+
+    const applyFilters = () => {
+        updateFilters(draftFilters);
+        updatePriceRange(draftPriceRange);
+
+        setIsDrawerOpen(false);
     };
 
-    const applyFilters = (product: Product) => {
-        const isWithinPriceRange =
-            (priceRange.min === 0 || product.price >= priceRange.min) && (priceRange.max === 0 || product.price <= priceRange.max);
-
-        // Здесь вы можете добавить логику фильтрации по другим критериям (например, по selectedFilters)
-        return isWithinPriceRange;
+    const toggleDrawer = (open: boolean) => () => {
+        setIsDrawerOpen(open);
     };
 
     if (productsLoading || filtersLoading) {
@@ -68,16 +58,6 @@ const ProductsPage: React.FC = () => {
 
     if (productsError || filtersError) {
         return <ErrorText>Ошибка загрузки данных.</ErrorText>;
-    }
-
-    if (!products || products.length === 0) {
-        return (
-            <Container maxWidth='xl' sx={{ py: 4 }}>
-                <Typography variant='h4' align='center'>
-                    Нет в наличии
-                </Typography>
-            </Container>
-        );
     }
 
     return (
@@ -92,15 +72,16 @@ const ProductsPage: React.FC = () => {
                 <Grid item xs={3} sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <FiltersPanel
                         filters={filtersResponse?.filters}
-                        selectedFilters={selectedFilters}
-                        priceRange={priceRange}
-                        onFilterChange={setSelectedFilters}
-                        onPriceRangeChange={setPriceRange}
+                        selectedFilters={draftFilters}
+                        priceRange={draftPriceRange}
+                        onFilterChange={setDraftFilters}
+                        onPriceRangeChange={setDraftPriceRange}
+                        onApply={applyFilters}
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={9}>
-                    <ProductList products={products.filter(applyFilters)} />
+                    <ProductList products={products ? products : []} />
                 </Grid>
             </Grid>
 
@@ -108,10 +89,11 @@ const ProductsPage: React.FC = () => {
                 <Box sx={{ width: 250, p: 2 }}>
                     <FiltersPanel
                         filters={filtersResponse?.filters}
-                        selectedFilters={selectedFilters}
-                        priceRange={priceRange}
-                        onFilterChange={setSelectedFilters}
-                        onPriceRangeChange={setPriceRange}
+                        selectedFilters={draftFilters}
+                        priceRange={draftPriceRange}
+                        onFilterChange={setDraftFilters}
+                        onPriceRangeChange={setDraftPriceRange}
+                        onApply={applyFilters}
                     />
                 </Box>
             </Drawer>

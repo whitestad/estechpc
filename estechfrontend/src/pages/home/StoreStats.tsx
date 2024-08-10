@@ -18,44 +18,34 @@ const StoreStats = () => {
                 <Grid item md={6} container spacing={4}>
                     <Grid item xs={12} md={6}>
                         <Box sx={{ bgcolor: 'background.default', p: 4, borderRadius: 1 }}>
-                            <Typography variant='h5' sx={{ color: '#fff' }}>
-                                30
-                            </Typography>
-                            <Typography sx={{ color: '#fff' }}>сотрудников</Typography>
+                            <Typography variant='h5'>10+</Typography>
+                            <Typography>сотрудников</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Box sx={{ bgcolor: 'background.default', p: 4, borderRadius: 1 }}>
-                            <Typography variant='h5' sx={{ color: '#fff' }}>
-                                1 000+
-                            </Typography>
-                            <Typography sx={{ color: '#fff' }}>довольных клиентов</Typography>
+                            <Typography variant='h5'>1 000+</Typography>
+                            <Typography>довольных клиентов</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Box sx={{ bgcolor: 'background.default', p: 4, borderRadius: 1 }}>
-                            <Typography variant='h5' sx={{ color: '#fff' }}>
-                                5 лет
-                            </Typography>
-                            <Typography sx={{ color: '#fff' }}>на рынке электроники</Typography>
+                            <Typography variant='h5'>5 лет</Typography>
+                            <Typography>на рынке электроники</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Box sx={{ bgcolor: 'background.default', p: 4, borderRadius: 1 }}>
-                            <Typography variant='h5' sx={{ color: '#fff' }}>
-                                2 часа
-                            </Typography>
-                            <Typography sx={{ color: '#fff' }}>среднее время доставки</Typography>
+                            <Typography variant='h5'>2 часа</Typography>
+                            <Typography>среднее время доставки</Typography>
                         </Box>
                     </Grid>
                 </Grid>
 
                 <Grid item md={6}>
                     <BoxWithImage imageUrl={workImage as string} overlayOpacity={0.75} sx={{ p: 4, height: '100%' }}>
-                        <Typography variant='h6' sx={{ color: '#fff' }}>
-                            Работаем круглосуточно
-                        </Typography>
-                        <Typography sx={{ color: '#fff' }}>
+                        <Typography variant='h6'>Работаем круглосуточно</Typography>
+                        <Typography>
                             Наш интернет-магазин работает 24/7. Для нас важен каждый клиент, поэтому мы делаем все, чтобы Вы остались довольны.
                         </Typography>
                         <Button variant='contained' color='primary' size='small' onClick={() => navigate('/categories')} sx={{ mt: 2 }}>

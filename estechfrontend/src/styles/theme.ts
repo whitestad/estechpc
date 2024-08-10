@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
     interface TypographyVariants {
         actayWide: React.CSSProperties;
     }
@@ -10,64 +10,63 @@ declare module "@mui/material/styles" {
     }
 }
 
-declare module "@mui/material/Typography" {
+declare module '@mui/material/Typography' {
     interface TypographyPropsVariantOverrides {
         actayWide: true;
     }
 }
 
 const theme = createTheme({
-    mode: "dark",
     palette: {
         primary: {
-            main: "#C4F230",
-            contrastText: "#111111",
+            main: '#C4F230',
+            contrastText: '#111111',
         },
         secondary: {
-            main: "#FF407D",
-            contrastText: "#ffffff",
+            main: '#FF407D',
+            contrastText: '#ffffff',
         },
         background: {
-            default: "#111111",
-            paper: "#000000",
+            default: '#111111',
+            paper: '#000000',
         },
         text: {
-            primary: "#fff",
-            secondary: "#c2c2c2",
+            primary: '#fff',
+            secondary: '#c2c2c2',
         },
         info: {
-            main: "#307ef2",
-            contrastText: "#ffffff",
+            main: '#307ef2',
+            contrastText: '#ffffff',
         },
     },
     typography: {
-        fontFamily: "Manrope",
+        fontFamily: 'Manrope',
         h1: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         h2: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         h3: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         h4: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         h5: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         h6: {
-            fontFamily: "ActayWide",
+            fontFamily: 'ActayWide',
             fontWeight: 700,
         },
         button: {
-            fontFamily: "Manrope",
+            fontFamily: 'Manrope',
         },
     },
 
@@ -75,5 +74,19 @@ const theme = createTheme({
         borderRadius: 8,
     },
 });
+
+theme.components = {
+    MuiButton: {
+        styleOverrides: {
+            root: {
+                '&.Mui-disabled': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.grey[700],
+                    opacity: 0.5,
+                },
+            },
+        },
+    },
+};
 
 export default theme;
