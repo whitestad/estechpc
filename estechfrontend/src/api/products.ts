@@ -44,3 +44,12 @@ export const fetchFilters = async (categoryId: number): Promise<FiltersResponse>
     }
     throw new Error('Invalid data format for filters');
 };
+
+// Новая функция для получения всех продуктов
+export const fetchAllProducts = async (): Promise<Product[]> => {
+    const response = await apiInstance.get('/products/list/');
+    if (response.data && Array.isArray(response.data.results)) {
+        return response.data.results;
+    }
+    throw new Error('Invalid data format: results should be an array');
+};
