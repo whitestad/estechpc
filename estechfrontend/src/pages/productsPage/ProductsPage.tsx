@@ -1,5 +1,3 @@
-// src/components/ProductsPage.tsx
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -70,7 +68,23 @@ const ProductsPage: React.FC = () => {
                     </Button>
                 </Grid>
 
-                <Grid item xs={3} sx={{ display: { xs: 'none', sm: 'block' }, backgroundColor: theme.palette.background.paper, borderRadius: 1 }}>
+                <Grid
+                    item
+                    xs={12}
+                    sm={3}
+                    sx={{
+                        display: { xs: 'none', sm: 'block' },
+                        position: 'sticky',
+                        top: theme.spacing(8),
+                        alignSelf: 'flex-start',
+                        backgroundColor: theme.palette.background.paper,
+                        borderRadius: 1,
+                        overflowY: 'auto', // Сделать панель прокручиваемой, если контента много
+                        maxHeight: 'calc(100vh - 64px)', // Ограничение высоты, чтобы фильтры не выходили за пределы экрана
+                        padding: 2,
+                        // boxShadow: theme.shadows[3],
+                    }}
+                >
                     <FiltersPanel
                         filters={filtersResponse?.filters}
                         selectedFilters={draftFilters}
