@@ -21,7 +21,7 @@ export interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
     return (
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
             {products.map((product) => (
                 <Grid item xs={12} sm={6} md={4} key={product.id}>
                     <Card
