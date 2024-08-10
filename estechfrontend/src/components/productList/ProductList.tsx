@@ -26,7 +26,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                 <Grid item xs={12} sm={6} md={4} key={product.id}>
                     <Card
                         sx={{
-                            borderRadius: 3,
+                            borderRadius: 1,
                             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
                             overflow: 'hidden',
                             transition: 'transform 0.3s, box-shadow 0.3s',

@@ -79,6 +79,7 @@ theme.components = {
     MuiButton: {
         styleOverrides: {
             root: {
+                borderRadius: theme.shape.borderRadius,
                 '&.Mui-disabled': {
                     backgroundColor: theme.palette.primary.main,
                     color: theme.palette.grey[700],

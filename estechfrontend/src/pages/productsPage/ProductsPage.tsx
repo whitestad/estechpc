@@ -3,7 +3,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Grid, Container, Button, Drawer, Box } from '@mui/material';
+import { Grid, Container, Button, Drawer, Box, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { fetchProducts, fetchFilters } from '@api/products';
 import FiltersPanel from '@components/filtersPanel/FiltersPanel';
@@ -11,6 +11,7 @@ import ProductList from '@components/productList/ProductList';
 import LoadingBox from '@components/loadingBox/LoadingBox';
 import ErrorText from '@components/errorText/ErrorText';
 import { useProductFilters } from '@hooks/useProductFilters';
+import theme from '@styles/theme';
 
 const ProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
@@ -61,7 +62,7 @@ const ProductsPage: React.FC = () => {
     }
 
     return (
-        <Container maxWidth='xl' sx={{ py: 4 }}>
+        <Container maxWidth='xl' sx={{ py: 8 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: { xs: 'block', sm: 'none' }, textAlign: 'right' }}>
                     <Button startIcon={<MenuIcon />} onClick={toggleDrawer(true)}>
@@ -69,7 +70,7 @@ const ProductsPage: React.FC = () => {
                     </Button>
                 </Grid>
 
-                <Grid item xs={3} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <Grid item xs={3} sx={{ display: { xs: 'none', sm: 'block' }, backgroundColor: theme.palette.background.paper, borderRadius: 1 }}>
                     <FiltersPanel
                         filters={filtersResponse?.filters}
                         selectedFilters={draftFilters}
@@ -80,7 +81,7 @@ const ProductsPage: React.FC = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={9}>
+                <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
                     <ProductList products={products ? products : []} />
                 </Grid>
             </Grid>
