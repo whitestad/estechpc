@@ -3,6 +3,8 @@ import { Grid, Card, CardContent, CardMedia, Typography, Rating, Box } from '@mu
 import StarIcon from '@mui/icons-material/Star';
 import { Products } from 'types/products';
 import { useNavigate } from 'react-router-dom';
+import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
+import theme from '@styles/theme';
 
 export interface ProductListProps {
     products: Products[];
@@ -30,7 +32,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         <CardMedia
                             component='img'
                             height='250'
-                            image={(product.photos[0] && product.photos[0].photo) || 'https://via.placeholder.com/250'}
+                            image={(product.photos[0] && product.photos[0].photo) || DEFAULT_PRODUCT_IMAGE}
                             alt={product.name}
                             sx={{ objectFit: 'cover' }}
                         />
