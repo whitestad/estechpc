@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Grid, Container, Typography, CircularProgress, Box } from '@mui/material';
+import { Grid, Container, Typography, CircularProgress } from '@mui/material';
 import { fetchAllProducts } from '@api/products';
 import ProductList from '@components/productList/ProductList';
 import ErrorText from '@components/errorText/ErrorText';

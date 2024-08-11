@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { Grid, Container, Button, Drawer, Box, Typography, CircularProgress } from '@mui/material';
+import { Grid, Container, Button, Drawer, Box, CircularProgress } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { fetchProducts, fetchFilters } from '@api/products';
 import FiltersPanel from '@components/filtersPanel/FiltersPanel';

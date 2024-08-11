@@ -59,12 +59,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         min_price = self.request.query_params.get('minp')
         max_price = self.request.query_params.get('maxp')
         include_out_of_stock = self.request.query_params.get('include_out_of_stock', 'false')
-
         attribute_filters = self.request.query_params.getlist('attribute')
 
         # Фильтрация по категории
         if category_id:
-            queryset = queryset.filter(category__id=category_id)
+            queryset = queryset.filter(category_id=category_id)
 
         # Фильтрация по цене
         if min_price:
@@ -76,8 +75,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         if attribute_filters:
             q_objects = Q()
             for attr_filter in attribute_filters:
-                attribute_id, value = attr_filter.split(':')
-                q_objects &= Q(attributes__attribute_id=attribute_id, attributes__value=value)
+                try:
+                    attribute_id, value = attr_filter.split(':')
+                    q_objects |= Q(attributes__attribute_value__attribute_id=attribute_id, attributes__attribute_value__value=value)
+                except ValueError:
+                    continue  # Игнорируем неправильно отформатированные фильтры
             queryset = queryset.filter(q_objects)
 
         # Фильтрация по наличию

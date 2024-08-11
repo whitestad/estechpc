@@ -41,9 +41,7 @@ class Product(models.Model):
 
 
 class Attribute(models.Model):
-    # category = models.ForeignKey(Category, related_name='attributes', on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=100)
-    # description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -54,16 +52,28 @@ class Attribute(models.Model):
 
 
 class AttributeValue(models.Model):
-    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, related_name='values')
     value = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.product.name} - {self.attribute.name}: {self.value}"
+        return f"{self.attribute.name}: {self.value}"
 
     class Meta:
         verbose_name = 'Значение характеристики'
         verbose_name_plural = 'Значения характеристики'
+
+
+class ProductAttribute(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='attributes')
+    attribute_value = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, related_name='product_attributes')
+
+    class Meta:
+        unique_together = ('product', 'attribute_value')
+        verbose_name = 'Характеристики товаров'
+        verbose_name_plural = 'Характеристика товара'
+
+    def __str__(self):
+        return f"{self.product.name} - {self.attribute_value}"
 
 
 class Filter(models.Model):
