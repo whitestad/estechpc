@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'price', 'count', 'count_of_orders', 'count_of_likes']
     search_fields = ['name', 'category__name']
     list_filter = ['category']
-    readonly_fields = ['count_of_orders', 'count_of_likes']
+    readonly_fields = ['count_of_orders', 'count_of_likes', 'id']
 
 class AttributeAdmin(admin.ModelAdmin):
     list_display = ['name']

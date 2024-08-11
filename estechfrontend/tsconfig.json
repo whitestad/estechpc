@@ -17,14 +17,11 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@hooks/*": ["src/hooks/*"],
+      "types/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
       "@stores/*": ["src/stores/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
-      "@controllers/*": ["server/controllers/*"],
-      "@models/*": ["server/models/*"],
-      "@routes/*": ["server/routes/*"],
-      "@middlewares/*": ["server/middlewares/*"]
     }
   },
   "include": ["src", "server", "vite.config.ts"]

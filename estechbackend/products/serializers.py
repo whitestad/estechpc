@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from community.serializers import ProductReviewSerializer
-from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter
+from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter, ProductAttribute
 
 
 class ParentCategorySerializer(serializers.ModelSerializer):
@@ -28,6 +28,21 @@ class ProductPhotoSerializer(serializers.ModelSerializer):
         model = ProductPhoto
         fields = ['photo']
 
+class AttributeValueSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='attribute.name')
+
+    class Meta:
+        model = AttributeValue
+        fields = ['name', 'value']
+
+class ProductAttributeSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='attribute_value.attribute.name')
+    value = serializers.CharField(source='attribute_value.value')
+
+    class Meta:
+        model = ProductAttribute
+        fields = ['name', 'value']
+
 
 class ProductSerializer(serializers.ModelSerializer):
     photos = ProductPhotoSerializer(many=True, read_only=True)
@@ -37,15 +52,17 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'short_characteristics', 'description', 'price', 'photos', 'average_rating', 'count', 'count_of_reviews', 'count_of_orders']
+        fields = ['id', 'name', 'short_characteristics', 'description', 'price', 'photos',
+                  'average_rating', 'count', 'count_of_reviews', 'count_of_orders']
 
 
 class ProductDetailSerializer(ProductSerializer):
     reviews = serializers.SerializerMethodField()
+    attributes = ProductAttributeSerializer(source='attributes.all', many=True)
 
     class Meta:
         model = ProductSerializer.Meta.model
-        fields = ProductSerializer.Meta.fields + ['reviews']
+        fields = ProductSerializer.Meta.fields + ['reviews', 'attributes']
 
     def get_reviews(self, obj):
         reviews = obj.reviews.all()

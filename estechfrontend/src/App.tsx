@@ -18,6 +18,7 @@ import Logout from '@pages/Logout';
 import CategorySelector from '@pages/categorySelector/CategorySelector';
 import ProductsPage from '@pages/productsPage/ProductsPage';
 import AllProductsPage from '@pages/allProductsPage/AllProductsPage';
+import ProductPage from '@pages/productPage/ProductPage';
 
 const App: React.FC = () => {
     return (
@@ -32,6 +33,8 @@ const App: React.FC = () => {
 
                     <Route path='/categories/:parentId?' element={<CategorySelector />} />
                     <Route path='/categories/:categoryId/products' element={<ProductsPage />} />
+
+                    <Route path='/products/:productId' element={<ProductPage />} />
 
                     <Route path='/login' element={<LoginPage />} />
                     <Route path='/register' element={<RegisterPage />} />

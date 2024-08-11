@@ -1,30 +1,21 @@
 import React from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography, Rating, Box } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import theme from '@styles/theme';
-
-export interface Product {
-    id: number;
-    name: string;
-    short_characteristics: string;
-    description: string;
-    price: number;
-    photos: string[];
-    average_rating: number | null;
-    count_of_reviews: number;
-    count_of_orders: number;
-}
+import { Products } from 'types/products';
+import { useNavigate } from 'react-router-dom';
 
 export interface ProductListProps {
-    products: Product[];
+    products: Products[];
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
+    const navigate = useNavigate();
     return (
         <Grid container spacing={2}>
             {products.map((product) => (
                 <Grid item xs={12} sm={6} md={4} xl={3} key={product.id}>
                     <Card
+                        onClick={() => navigate(`/products/${product.id}`)}
                         sx={{
                             borderRadius: 1,
                             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
@@ -39,7 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         <CardMedia
                             component='img'
                             height='250'
-                            image={product.photos[0] || 'https://via.placeholder.com/250'}
+                            image={(product.photos[0] && product.photos[0].photo) || 'https://via.placeholder.com/250'}
                             alt={product.name}
                             sx={{ objectFit: 'cover' }}
                         />

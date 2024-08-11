@@ -1,12 +1,12 @@
 // src/api/products.ts
 
 import apiInstance from '@api/axios';
-import { Product } from '@components/productList/ProductList';
 import { FiltersResponse } from '@components/filtersPanel/FiltersPanel';
+import { Products, IProductDetail } from 'types/products';
 
 // Интерфейс для ответа API
 interface ProductsResponse {
-    results: Product[];
+    results: Products[];
     next: string | null;
 }
 
@@ -61,6 +61,14 @@ export const fetchAllProducts = async (page: number): Promise<ProductsResponse> 
         console.error('Error fetching all products:', error);
         throw new Error('Failed to fetch all products');
     }
+};
+
+export const fetchProductById = async (productId: string): Promise<IProductDetail> => {
+    const response = await apiInstance.get(`/products/list/${productId}/?include_detail=True`);
+    if (response.data) {
+        return response.data;
+    }
+    throw new Error('Product not found');
 };
 
 export const fetchFilters = async (categoryId: number): Promise<FiltersResponse> => {

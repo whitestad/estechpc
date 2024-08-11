@@ -95,7 +95,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
-        if self.request.query_params.get('include_reviews') == 'true':
+        if self.request.query_params.get('include_detail') == 'True':
             return ProductDetailSerializer
         return super().get_serializer_class()
 
