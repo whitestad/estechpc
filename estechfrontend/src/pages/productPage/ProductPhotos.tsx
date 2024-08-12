@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { IProductPhoto } from 'types/products';
 import theme from '@styles/theme';
+import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
 
 interface ProductPhotosProps {
     photos: IProductPhoto[];
@@ -19,7 +20,20 @@ const ProductPhotos: React.FC<ProductPhotosProps> = ({ photos }) => {
 
     if (photos.length === 0) {
         return (
-            <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <Box sx={{ textAlign: 'center' }}>
+                <Box
+                    component='img'
+                    src={DEFAULT_PRODUCT_IMAGE}
+                    alt={`Фото товара`}
+                    loading='lazy'
+                    sx={{
+                        width: '100%',
+                        height: '400px',
+                        objectFit: 'cover',
+                        borderRadius: 2,
+                    }}
+                />
+
                 <Typography variant='body2' color='text.secondary'>
                     Нет доступных фотографий
                 </Typography>
