@@ -123,11 +123,10 @@ class Favorite(models.Model):
 
     class Meta:
         unique_together = ('user', 'product')
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки'
 
     def __str__(self):
         return f"{self.user} - {self.product.name}"
 
-
-    class Meta:
-        verbose_name = 'Лайк'
-        verbose_name_plural = 'Лайки'
+    def save(self):

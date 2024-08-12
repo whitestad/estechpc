@@ -5,6 +5,8 @@ import { Box, Typography, CircularProgress, Paper, List, ListItem, Divider } fro
 import { fetchProductReviews } from '@api/products';
 import { RatingLite } from '@components/rating/CustomRating';
 import theme from '@styles/theme';
+import ErrorText from '@components/errorText/ErrorText';
+import LoadingBox from '@components/loadingBox/LoadingBox';
 
 const ProductReviews: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -21,11 +23,11 @@ const ProductReviews: React.FC = () => {
     });
 
     if (isLoading) {
-        return <CircularProgress />;
+        return <LoadingBox minHeight={'200px'} />;
     }
 
     if (isError || !reviews) {
-        return <Typography color='error'>Ошибка загрузки отзывов.</Typography>;
+        return <ErrorText>Ошибка загрузки отзывов.</ErrorText>;
     }
 
     return (
