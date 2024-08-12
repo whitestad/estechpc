@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
+from users.models import User
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -101,22 +103,6 @@ class PriceHistory(models.Model):
         verbose_name_plural = 'истории цен'
 
 
-@receiver(pre_save, sender=Product)
-def capture_pre_save_price(sender, instance, **kwargs):
-    if instance.pk:
-        instance._pre_save_price = Product.objects.get(pk=instance.pk).price
-    else:
-        instance._pre_save_price = None
-
-
-@receiver(post_save, sender=Product)
-def handle_price_history(sender, instance, created, **kwargs):
-    if created:
-        instance.add_price_history(instance.price)
-    elif (hasattr(instance, '_pre_save_price')
-          and instance._pre_save_price is not None and instance._pre_save_price != instance.price):
-        instance.add_price_history(instance.price)
-
 
 class ProductPhoto(models.Model):
     product = models.ForeignKey(Product, related_name='photos', on_delete=models.CASCADE)
@@ -128,3 +114,20 @@ class ProductPhoto(models.Model):
     class Meta:
         verbose_name = 'фото товаров'
         verbose_name_plural = 'фотографии товаров'
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favorites')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+
+    def __str__(self):
+        return f"{self.user} - {self.product.name}"
+
+
+    class Meta:
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки'

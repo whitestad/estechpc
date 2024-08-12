@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from community.serializers import ProductReviewSerializer
-from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter, ProductAttribute
+from .models import Product, ProductPhoto, Category, Attribute, AttributeValue, Filter, ProductAttribute, Favorite
 
 
 class ParentCategorySerializer(serializers.ModelSerializer):
@@ -69,10 +69,19 @@ class ProductDetailSerializer(ProductSerializer):
         return ProductReviewSerializer(reviews, many=True).data
 
 
-class AttributeValueSerializer(serializers.ModelSerializer):
+class FavoriteSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
     class Meta:
-        model = AttributeValue
-        fields = ['value']
+        model = Favorite
+        fields = ['id', 'product', 'created_at']
+
+
+# class AttributeValueSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = AttributeValue
+#         fields = ['value']
+
 
 class AttributeSerializer(serializers.ModelSerializer):
     values = serializers.SerializerMethodField()

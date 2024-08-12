@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, Product, Attribute, AttributeValue, PriceHistory, ProductPhoto, Filter, ProductAttribute
+from .models import Category, Product, Attribute, AttributeValue, PriceHistory, ProductPhoto, Filter, ProductAttribute, \
+    Favorite
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -45,6 +46,11 @@ class FilterAdmin(admin.ModelAdmin):
     list_filter = ['category']
 
 
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product',]
+    search_fields = ['user', 'product']
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Attribute, AttributeAdmin)
@@ -53,3 +59,4 @@ admin.site.register(ProductAttribute, ProductAttributeAdmin)
 admin.site.register(PriceHistory, PriceHistoryAdmin)
 admin.site.register(ProductPhoto, ProductPhotoAdmin)
 admin.site.register(Filter, FilterAdmin)
+admin.site.register(Favorite, FavoriteAdmin)

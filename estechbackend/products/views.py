@@ -1,13 +1,14 @@
 from django.db.models import Avg, Count, Q
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 
-from products.models import Product, Category, Filter
+from products.models import Product, Category, Filter, Favorite
 from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer, CategoryFiltersSerializer, \
-    FilterSerializer, ParentCategorySerializer, ChildCategorySerializer
+    FilterSerializer, ParentCategorySerializer, ChildCategorySerializer, FavoriteSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -114,6 +115,33 @@ class CategoryFiltersView(APIView):
         except Category.DoesNotExist:
             return Response({'error': 'Category not found'}, status=404)
 
+
+class FavoriteViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        favorites = Favorite.objects.filter(user=request.user)
+        serializer = FavoriteSerializer(favorites, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        product_id = request.data.get('product_id')
+        product = Product.objects.get(id=product_id)
+
+        favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
+        if not created:
+            return Response({'detail': 'Product already in favorites'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = FavoriteSerializer(favorite)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, pk=None):
+        try:
+            favorite = Favorite.objects.get(user=request.user, product_id=pk)
+            favorite.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Favorite.DoesNotExist:
+            return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 import json
