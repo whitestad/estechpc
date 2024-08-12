@@ -44,6 +44,7 @@ const ProductPhotos: React.FC<ProductPhotosProps> = ({ photos }) => {
     return (
         <Box sx={{ width: '100%', maxWidth: '600px', margin: 'auto', overflow: 'hidden', borderRadius: 2 }}>
             <Carousel
+                height={400}
                 indicators={false}
                 navButtonsAlwaysVisible={true}
                 animation='fade'
