@@ -1,12 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Box, Typography, CircularProgress, Paper, List, ListItem, Divider } from '@mui/material';
+import { Box, Typography, CircularProgress, Paper, List, ListItem, Divider, Avatar } from "@mui/material";
 import { fetchProductReviews } from '@api/products';
 import { RatingLite } from '@components/rating/CustomRating';
 import theme from '@styles/theme';
 import ErrorText from '@components/errorText/ErrorText';
 import LoadingBox from '@components/loadingBox/LoadingBox';
+import FlexBox from "@components/flexBox/FlexBox";
+import { toDatetime } from "@utils/datetime";
 
 const ProductReviews: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -37,14 +39,17 @@ const ProductReviews: React.FC = () => {
                     reviews.map((review, index) => (
                         <>
                             <ListItem key={index}>
-                                <Box>
-                                    <Typography variant='h6' sx={{ mt: 2 }}>
-                                        {review.username}
-                                    </Typography>
+                                <Box sx={{ width: '100%' }}>
+                                    <FlexBox sx={{ mb: 1 }}>
+                                        <Avatar src={review.avatar} alt={review.username} />
+                                        <Typography variant='h6' sx={{ mt: 2 }}>
+                                            {review.username}
+                                        </Typography>
+                                    </FlexBox>
                                     <RatingLite rating={review.rating} />
                                     <Typography variant='body2'>{review.text}</Typography>
-                                    <Typography variant='caption' color='textSecondary'>
-                                        {new Date(review.created_at).toLocaleDateString()}
+                                    <Typography variant='caption' color='textSecondary' sx={{ width: '100%', display: 'block', textAlign: 'end' }}>
+                                        {toDatetime(review.created_at)}
                                     </Typography>
                                 </Box>
                             </ListItem>

@@ -9,6 +9,7 @@ export interface IReview {
     username: string;
     text: string;
     rating: number;
+    avatar: string
     created_at: string;
 }
 

@@ -103,7 +103,6 @@ class PriceHistory(models.Model):
         verbose_name_plural = 'истории цен'
 
 
-
 class ProductPhoto(models.Model):
     product = models.ForeignKey(Product, related_name='photos', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='products_photos')
