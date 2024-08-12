@@ -68,7 +68,7 @@ const ProductPage: React.FC = () => {
     if (isError || !product) return <ErrorText>Ошибка загрузки данных товара.</ErrorText>;
 
     return (
-        <Container maxWidth='lg' sx={{ py: 4 }}>
+        <Container maxWidth='lg' sx={{ my: 4, py: 4, backgroundColor: 'background.paper', borderRadius: 2 }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
                     <ProductPhotos photos={product.photos} />

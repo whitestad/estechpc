@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const StoreStats = () => {
     const navigate = useNavigate();
     return (
-        <FlexBox flexDirection={'column'} sx={{ p: 4 }}>
+        <FlexBox flexDirection={'column'} bgColor={'background.paper'} sx={{ p: 4 }}>
             <Typography variant='h4' gutterBottom component='div' sx={{ color: '#fff' }}>
                 ИНТЕРНЕТ-МАГАЗИН КОПЬЮТЕРНОЙ ТЕХНИКИ
             </Typography>
