@@ -1,9 +1,8 @@
-from django.db.models import Avg
-from rest_framework import serializers
+# serializers.py
 
+from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from .models import User
 
 
@@ -51,4 +50,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'avatar', 'phone_number']
+        fields = ['username', 'first_name', 'last_name', 'avatar', 'phone_number']
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'avatar', 'phone_number']
+
+    def validate_username(self, value):
+        if User.objects.exclude(pk=self.instance.pk).filter(username=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value

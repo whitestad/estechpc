@@ -19,6 +19,7 @@ import CategorySelector from '@pages/categorySelector/CategorySelector';
 import ProductsPage from '@pages/productsPage/ProductsPage';
 import AllProductsPage from '@pages/allProductsPage/AllProductsPage';
 import ProductPage from '@pages/productPage/ProductPage';
+import ProfilePage from "@pages/profilePage/ProfilePage";
 
 const App: React.FC = () => {
     return (
@@ -35,6 +36,8 @@ const App: React.FC = () => {
                     <Route path='/categories/:categoryId/products' element={<ProductsPage />} />
 
                     <Route path='/products/:productId' element={<ProductPage />} />
+
+                    <Route path='/profile' element={<ProfilePage />} />
 
                     <Route path='/login' element={<LoginPage />} />
                     <Route path='/register' element={<RegisterPage />} />
