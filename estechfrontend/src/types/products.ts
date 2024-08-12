@@ -4,7 +4,7 @@ export interface IProductPhoto {
     photo: string;
 }
 
-export interface Products {
+export interface IProduct {
     id: number;
     name: string;
     short_characteristics: string;
@@ -14,6 +14,7 @@ export interface Products {
     average_rating: number | null;
     count_of_reviews: number;
     count_of_orders: number;
+    is_favorite: boolean;
 }
 
 export interface IAttribute {
@@ -32,6 +33,7 @@ export interface IProductDetail {
     count: number;
     count_of_reviews: number;
     count_of_orders: number;
+    is_favorite: boolean;
     reviews: unknown[];
     attributes: IAttribute[];
 }

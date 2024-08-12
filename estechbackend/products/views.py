@@ -100,6 +100,13 @@ class ProductViewSet(viewsets.ModelViewSet):
             return ProductDetailSerializer
         return super().get_serializer_class()
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({
+            "request": self.request,
+        })
+        return context
+
 
 class CategoryFiltersView(APIView):
     def get(self, request, category_id):
@@ -122,11 +129,15 @@ class FavoriteViewSet(viewsets.ViewSet):
     def list(self, request):
         favorites = Favorite.objects.filter(user=request.user)
         serializer = FavoriteSerializer(favorites, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         product_id = request.data.get('product_id')
-        product = Product.objects.get(id=product_id)
+        if not product_id:
+            return Response({'detail': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Используем get_object_or_404 для более безопасного получения объекта
+        product = get_object_or_404(Product, id=product_id)
 
         favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
         if not created:
@@ -136,16 +147,19 @@ class FavoriteViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk=None):
-        try:
-            favorite = Favorite.objects.get(user=request.user, product_id=pk)
-            favorite.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Favorite.DoesNotExist:
+        if pk is None:
+            return Response({'detail': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        favorite = Favorite.objects.filter(user=request.user, product_id=pk).first()
+        if not favorite:
             return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        favorite.delete()
+        return Response({'detail': 'Success deleted'}, status=status.HTTP_204_NO_CONTENT)
 
 
 import json
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import Product, Category
 from .forms import JSONUploadForm
