@@ -2,7 +2,7 @@
 
 import apiInstance from '@api/axios';
 import { FiltersResponse } from '@components/filtersPanel/FiltersPanel';
-import { IProduct, IProductDetail } from 'types/products';
+import { IProduct, IProductDetail, IReview } from 'types/products';
 import { createAuthAxiosInstance } from '@api/authAxios';
 
 interface ProductsResponse {
@@ -73,6 +73,11 @@ export const fetchProductById = async (productId: string): Promise<IProductDetai
         console.error('Ошибка загрузки продукта:', error);
         throw new Error('Failed to fetch product');
     }
+};
+
+export const fetchProductReviews = async (productId: string): Promise<IReview[]> => {
+    const response = await authAxios.get(`/community/products/${productId}/reviews/`);
+    return response.data;
 };
 
 export const fetchFilters = async (categoryId: number): Promise<FiltersResponse> => {

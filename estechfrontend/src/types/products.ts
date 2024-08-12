@@ -6,10 +6,10 @@ export interface IProductPhoto {
 
 export interface IReview {
     id: number;
-    author: number;
     username: string;
     text: string;
     rating: number;
+    created_at: string;
 }
 
 export interface IProduct {
@@ -42,6 +42,5 @@ export interface IProductDetail {
     count_of_reviews: number;
     count_of_orders: number;
     is_favorite: boolean;
-    reviews: IReview[];
     attributes: IAttribute[];
 }

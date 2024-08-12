@@ -67,16 +67,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(ProductSerializer):
-    reviews = serializers.SerializerMethodField()
     attributes = ProductAttributeSerializer(source='attributes.all', many=True)
 
     class Meta:
         model = ProductSerializer.Meta.model
-        fields = ProductSerializer.Meta.fields + ['reviews', 'attributes']
-
-    def get_reviews(self, obj):
-        reviews = obj.reviews.all()
-        return ProductReviewSerializer(reviews, many=True).data
+        fields = ProductSerializer.Meta.fields + ['attributes']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
