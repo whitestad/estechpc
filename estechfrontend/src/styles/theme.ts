@@ -80,11 +80,7 @@ theme.components = {
         styleOverrides: {
             root: {
                 borderRadius: theme.shape.borderRadius,
-                '&.Mui-disabled': {
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.grey[700],
-                    opacity: 0.5,
-                },
+                '&.Mui-disabled': {},
             },
         },
     },

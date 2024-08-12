@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Typography, Card, CardMedia, CardContent, CircularProgress, Grid, Container, Box, Breadcrumbs, Link } from '@mui/material';
+import { Typography, Card, CardMedia, Grid, Container, Box, Breadcrumbs, Link } from '@mui/material';
 import apiInstance from '@api/axios';
 import theme from '@styles/theme';
 import LoadingBox from '@components/loadingBox/LoadingBox';
@@ -106,7 +106,7 @@ const CategorySelector: React.FC = () => {
                 </Link>
                 {categoryPath?.map((cat, index) =>
                     index === categoryPath?.length - 1 ? (
-                        <Typography key={cat.id} variant='body' color={'text.secondary'}>
+                        <Typography key={cat.id} color={'text.secondary'}>
                             {cat.name}
                         </Typography>
                     ) : (

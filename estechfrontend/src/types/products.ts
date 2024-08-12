@@ -4,6 +4,14 @@ export interface IProductPhoto {
     photo: string;
 }
 
+export interface IReview {
+    id: number;
+    author: number;
+    username: string;
+    text: string;
+    rating: number;
+}
+
 export interface IProduct {
     id: number;
     name: string;
@@ -34,6 +42,6 @@ export interface IProductDetail {
     count_of_reviews: number;
     count_of_orders: number;
     is_favorite: boolean;
-    reviews: unknown[];
+    reviews: IReview[];
     attributes: IAttribute[];
 }

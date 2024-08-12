@@ -1,13 +1,12 @@
 import React from 'react';
-import { Grid, Card, CardContent, CardMedia, Typography, Rating, Box } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import { Products } from 'types/products';
+import { Grid, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { IProduct } from 'types/products';
 import { useNavigate } from 'react-router-dom';
 import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
-import theme from '@styles/theme';
+import CustomRating from '@components/rating/CustomRating';
 
 export interface ProductListProps {
-    products: Products[];
+    products: IProduct[];
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
@@ -54,19 +53,8 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                             <Typography variant='h6' sx={{ color: 'primary.main', mb: 1 }}>
                                 {product.price.toLocaleString('ru-RU')} ₽
                             </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                <Rating
-                                    value={product.average_rating || 0}
-                                    precision={0.1}
-                                    readOnly
-                                    size='small'
-                                    icon={<StarIcon fontSize='inherit' sx={{ color: 'primary.main' }} />}
-                                    emptyIcon={<StarIcon fontSize='inherit' sx={{ color: 'text.primary', opacity: 0.5 }} />}
-                                />
-                                <Typography variant='body2' sx={{ ml: 1, color: 'text.secondary' }}>
-                                    {product.average_rating ? product.average_rating.toFixed(1) : 0} ({product.count_of_reviews || 0} отзывов)
-                                </Typography>
-                            </Box>
+
+                            <CustomRating averageRating={product.average_rating} countOfReviews={product.count_of_reviews} />
                             <Typography variant='body2' sx={{ color: 'text.secondary' }}>
                                 Заказы: {product.count_of_orders}
                             </Typography>
