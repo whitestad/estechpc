@@ -1,6 +1,6 @@
 // src/api/authAxios.ts
 
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { getRefreshToken, isAccessTokenExpired, setAuthUser } from './auth';
 import { API_BASE_URL } from './constants';
 import Cookies from 'js-cookie';
@@ -15,13 +15,13 @@ export const createAuthAxiosInstance = (): AxiosInstance => {
         },
     });
 
-    axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig) => {
+    axiosInstance.interceptors.request.use(async (req: InternalAxiosRequestConfig<any>) => {
         const accessToken = Cookies.get('access_token') || '';
         const refreshToken = Cookies.get('refresh_token') || '';
 
         // Проверка истечения срока действия токена
         if (!isAccessTokenExpired(accessToken)) {
-            req.headers!.Authorization = `Bearer ${accessToken}`;
+            req.headers.Authorization = `Bearer ${accessToken}`;
             return req;
         }
 
