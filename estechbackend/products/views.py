@@ -128,7 +128,7 @@ class FavoriteViewSet(viewsets.ViewSet):
 
     def list(self, request):
         favorites = Favorite.objects.filter(user=request.user)
-        serializer = FavoriteSerializer(favorites, many=True)
+        serializer = FavoriteSerializer(favorites, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -136,7 +136,6 @@ class FavoriteViewSet(viewsets.ViewSet):
         if not product_id:
             return Response({'detail': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Используем get_object_or_404 для более безопасного получения объекта
         product = get_object_or_404(Product, id=product_id)
 
         favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
@@ -150,12 +149,9 @@ class FavoriteViewSet(viewsets.ViewSet):
         if pk is None:
             return Response({'detail': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        favorite = Favorite.objects.filter(user=request.user, product_id=pk).first()
-        if not favorite:
-            return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
-
+        favorite = get_object_or_404(Favorite, user=request.user, product_id=pk)
         favorite.delete()
-        return Response({'detail': 'Success deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 import json

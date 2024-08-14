@@ -19,12 +19,13 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         onClick={() => navigate(`/products/${product.id}`)}
                         sx={{
                             borderRadius: 1,
-                            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
+                            boxShadow: 1,
                             overflow: 'hidden',
+
                             transition: 'transform 0.3s, box-shadow 0.3s',
                             '&:hover': {
                                 transform: 'scale(1.02)',
-                                boxShadow: '0 6px 30px rgba(0, 0, 0, 0.15)',
+                                boxShadow: 3,
                             },
                         }}
                     >

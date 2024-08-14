@@ -136,7 +136,18 @@ const CategorySelector: React.FC = () => {
                         <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
                             <Card
                                 onClick={() => handleCategoryClick(category)}
-                                sx={{ cursor: 'pointer', border: `1px solid ${theme.palette.grey[700]}`, position: 'relative', overflow: 'hidden' }}
+                                sx={{
+                                    cursor: 'pointer',
+                                    // border: `1px solid ${theme.palette.grey[800]}`,
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    // boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
+                                    transition: 'transform 0.3s, box-shadow 0.3s',
+                                    '&:hover': {
+                                        transform: 'scale(1.02)',
+                                        boxShadow: 3,
+                                    },
+                                }}
                             >
                                 <CardMedia component='img' height='280' image={category.image || defaultImage} alt={category.name} />
                                 <Box

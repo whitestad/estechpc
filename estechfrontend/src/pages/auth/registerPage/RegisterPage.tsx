@@ -2,7 +2,7 @@ import { TextField, Button, Box, Typography, CircularProgress, Alert } from '@mu
 import { useNavigate } from 'react-router-dom'; // Импортируем Link
 import { useState } from 'react';
 
-import { register } from '@api/auth.js';
+import { register } from '@api/auth';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');

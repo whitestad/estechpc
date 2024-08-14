@@ -13,13 +13,14 @@ import '@styles/globalStyles';
 import TestPage from '@pages/TestPage';
 import CatalogPage from '@pages/catalogPage/CatalogPage';
 import LoginPage from '@pages/loginPage/LoginPage';
-import RegisterPage from '@pages/registerPage/RegisterPage';
-import Logout from '@pages/Logout';
+import RegisterPage from '@pages/auth/registerPage/RegisterPage';
+import Logout from '@pages/auth/Logout';
 import CategorySelector from '@pages/categorySelector/CategorySelector';
 import ProductsPage from '@pages/productsPage/ProductsPage';
 import AllProductsPage from '@pages/allProductsPage/AllProductsPage';
 import ProductPage from '@pages/productPage/ProductPage';
-import ProfilePage from "@pages/profilePage/ProfilePage";
+import ProfilePage from '@pages/auth/profilePage/ProfilePage';
+import FavoritesPage from '@pages/favoritesPage/FavoritesPage';
 
 const App: React.FC = () => {
     return (
@@ -34,6 +35,8 @@ const App: React.FC = () => {
 
                     <Route path='/categories/:parentId?' element={<CategorySelector />} />
                     <Route path='/categories/:categoryId/products' element={<ProductsPage />} />
+
+                    <Route path='/favorites' element={<FavoritesPage />} />
 
                     <Route path='/products/:productId' element={<ProductPage />} />
 
