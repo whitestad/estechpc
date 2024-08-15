@@ -11,7 +11,6 @@ import '@styles/global.css';
 import '@styles/globalStyles';
 
 import TestPage from '@pages/TestPage';
-import CatalogPage from '@pages/catalogPage/CatalogPage';
 import LoginPage from '@pages/loginPage/LoginPage';
 import RegisterPage from '@pages/auth/registerPage/RegisterPage';
 import Logout from '@pages/auth/Logout';

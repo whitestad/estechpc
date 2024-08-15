@@ -10,7 +10,7 @@ import SearchBar from './SearchBar';
 import ProfileMenu from './ProfileMenu';
 import styles from './Header.module.css';
 import Logo from '@assets/favicon.svg?react';
-import IconWithLabel from './IconWithLabel'; // Импортируем новый компонент
+import IconWithLabel from './IconWithLabel';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -62,8 +62,20 @@ const Header: React.FC = () => {
                         <SearchBar />
 
                         <Box sx={{ display: { xs: 'none', md: 'flex', gap: theme.spacing(5), alignItems: 'center' } }}>
-                            <IconWithLabel icon={<ReceiptLongIcon />} label='Заказы' badgeContent={0} ariaLabel='show orders' />
-                            <IconWithLabel icon={<FavoriteIcon />} label='Избранное' badgeContent={2} ariaLabel='show favorites' />
+                            <IconWithLabel
+                                onClick={() => navigate('/')}
+                                icon={<ReceiptLongIcon />}
+                                label='Заказы'
+                                badgeContent={0}
+                                ariaLabel='show orders'
+                            />
+                            <IconWithLabel
+                                onClick={() => navigate('/favorites')}
+                                icon={<FavoriteIcon />}
+                                label='Избранное'
+                                badgeContent={2}
+                                ariaLabel='show favorites'
+                            />
                             <IconWithLabel icon={<ShoppingCartIcon />} label='Корзина' badgeContent={3} ariaLabel='show shopping cart' />
 
                             {isLoggedIn() ? (

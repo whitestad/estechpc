@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button, Grid, Card, CardMedia, CardContent, Container, Divider } from '@mui/material';
+import { Box, Typography, Button, Grid, CardContent, Container, Divider } from '@mui/material';
 
 import pc_power from '@assets/images/pcs/pc_power.jpg';
 import pc_components from '@assets/images/pcs/pc_components.jpg';

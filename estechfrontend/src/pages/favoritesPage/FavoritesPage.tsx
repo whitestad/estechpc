@@ -5,6 +5,9 @@ import { fetchFavorites } from '@api/favorites';
 import ProductCard from '@components/productCard/ProductCard';
 import ErrorText from '@components/errorText/ErrorText';
 import ProductList from '@components/productList/ProductList';
+import { useFavorites } from '@hooks/useFavorites';
+
+const FAVORITES_QUERY = ['favorites'];
 
 const FavoritesPage: React.FC = () => {
     const {
@@ -12,7 +15,7 @@ const FavoritesPage: React.FC = () => {
         isLoading,
         isError,
     } = useQuery({
-        queryKey: ['favorites'],
+        queryKey: FAVORITES_QUERY,
         queryFn: fetchFavorites,
     });
 
@@ -23,8 +26,6 @@ const FavoritesPage: React.FC = () => {
             </Box>
         );
     }
-
-    console.log(favorites.map((favorite) => favorite.product));
 
     if (isError || !favorites || favorites.length === 0) {
         return (
@@ -44,7 +45,7 @@ const FavoritesPage: React.FC = () => {
             </Typography>
 
             <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
-                <ProductList products={favorites.map((favorite) => favorite.product)} />
+                <ProductList products={favorites.map((favorite) => favorite.product)} queryKey={[FAVORITES_QUERY]} />
             </Grid>
         </Container>
     );

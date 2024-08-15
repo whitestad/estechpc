@@ -10,7 +10,7 @@ interface IconWithLabelProps {
     icon: React.ReactElement;
     label: string;
     badgeContent?: number;
-    onClick?: () => (event: React.MouseEvent<HTMLElement>) => void;
+    onClick?: (event: React.MouseEvent<HTMLElement>) => void;
     sx?: SxProps<Theme>; // Дополнительные стили
     ariaLabel: string;
 }
