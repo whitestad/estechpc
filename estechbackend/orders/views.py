@@ -46,8 +46,11 @@ class UpdateCartItemView(APIView):
     def patch(self, request, *args, **kwargs):
         user = request.user
         cart = get_object_or_404(Cart, user=user)
-        item_id = request.data.get('item_id')
+        item_id = kwargs.get('item_id')
         quantity = request.data.get('quantity')
+
+        if not isinstance(quantity, int) or quantity < 0:
+            return Response({'success': False, 'message': 'Invalid quantity'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             cart_item = CartItem.objects.get(cart=cart, id=item_id)
@@ -59,6 +62,8 @@ class UpdateCartItemView(APIView):
             return Response({'success': True, 'message': 'Item updated'}, status=status.HTTP_200_OK)
         except CartItem.DoesNotExist:
             return Response({'success': False, 'message': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'success': False, 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class RemoveProductFromCartView(APIView):
@@ -67,7 +72,7 @@ class RemoveProductFromCartView(APIView):
     def delete(self, request, *args, **kwargs):
         user = request.user
         cart = get_object_or_404(Cart, user=user)
-        item_id = request.data.get('item_id')
+        item_id = kwargs.get('item_id')
 
         try:
             cart_item = CartItem.objects.get(cart=cart, id=item_id)
