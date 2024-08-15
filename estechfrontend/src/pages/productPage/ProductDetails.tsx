@@ -1,20 +1,19 @@
 // src/components/ProductDetails.tsx
 
 import React from 'react';
-import { Typography, Box, Button, IconButton, CircularProgress } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Typography, Box, Button } from '@mui/material';
 import { IProductDetail } from 'types/products';
 import FlexBox from '@components/flexBox/FlexBox';
 import CustomRating from '@components/rating/CustomRating';
+import FavoriteButton from '@components/favoriteButton/FavoriteButton';
 
 interface ProductDetailsProps {
     product: IProductDetail;
-    onToggleFavorite: () => void;
+    toggleFavorite: (productId: number, isFavorite: boolean) => void;
     isLoading: boolean;
 }
 
-const ProductDetails: React.FC<ProductDetailsProps> = ({ product, onToggleFavorite, isLoading }) => (
+const ProductDetails: React.FC<ProductDetailsProps> = ({ product, toggleFavorite, isLoading }) => (
     <Box>
         <Typography variant='h4' component='h1' gutterBottom>
             {product.name}
@@ -33,20 +32,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, onToggleFavori
                 Добавить в корзину
             </Button>
 
-            <IconButton
-                size='medium'
-                onClick={onToggleFavorite}
-                disabled={isLoading}
-                sx={{ color: product.is_favorite ? 'primary.main' : 'primary.main' }}
-            >
-                {isLoading ? (
-                    <CircularProgress size={28} />
-                ) : product.is_favorite ? (
-                    <FavoriteIcon sx={{ fontSize: 28 }} />
-                ) : (
-                    <FavoriteBorderIcon sx={{ fontSize: 28 }} />
-                )}
-            </IconButton>
+            <FavoriteButton productId={product.id} isFavorite={product.is_favorite} toggleFavorite={toggleFavorite} isLoading={isLoading} />
         </FlexBox>
     </Box>
 );

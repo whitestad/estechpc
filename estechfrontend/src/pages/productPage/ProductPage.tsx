@@ -13,6 +13,7 @@ import { IProductDetail } from 'types/products';
 import ProductDetails from './ProductDetails';
 import ProductTabs from './ProductTabs';
 import LoadingBox from '@components/loadingBox/LoadingBox';
+import { useFavorites } from '@hooks/useFavorites';
 
 const ProductPage: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -27,42 +28,7 @@ const ProductPage: React.FC = () => {
         enabled: !!productId,
     });
 
-    const handleSuccess = (isFavorite: boolean) => {
-        queryClient.setQueryData(['product', productId], (oldData: IProductDetail | undefined) => {
-            if (!oldData) {
-                console.error('No old data found!');
-                return undefined;
-            }
-            return {
-                ...oldData,
-                is_favorite: isFavorite,
-            };
-        });
-    };
-
-    const handleError = (error: unknown, action: string) => {
-        console.error(`Ошибка при ${action}:`, error);
-    };
-
-    const addToFavoritesMutation = useMutation({
-        mutationFn: addToFavorites,
-        onSuccess: () => handleSuccess(true),
-        onError: (error) => handleError(error, 'добавлении в избранное'),
-    });
-
-    const removeFromFavoritesMutation = useMutation({
-        mutationFn: removeFromFavorites,
-        onSuccess: () => handleSuccess(false),
-        onError: (error) => handleError(error, 'удалении из избранного'),
-    });
-
-    const handleToggleFavorite = () => {
-        if (product?.is_favorite) {
-            removeFromFavoritesMutation.mutate(product!.id);
-        } else {
-            addToFavoritesMutation.mutate(product!.id);
-        }
-    };
+    const { toggleFavorite, isAdding, isRemoving } = useFavorites([['product', productId]]);
 
     if (isLoading) return <LoadingBox />;
     if (isError || !product) return <ErrorText>Ошибка загрузки данных товара.</ErrorText>;
@@ -75,11 +41,7 @@ const ProductPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <ProductDetails
-                        product={product}
-                        onToggleFavorite={handleToggleFavorite}
-                        isLoading={addToFavoritesMutation.isPending || removeFromFavoritesMutation.isPending}
-                    />
+                    <ProductDetails product={product} toggleFavorite={toggleFavorite} isLoading={isAdding || isRemoving} />
                 </Grid>
 
                 <Grid item xs={12}>
