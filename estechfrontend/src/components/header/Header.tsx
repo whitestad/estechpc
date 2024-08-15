@@ -51,7 +51,7 @@ const Header: React.FC = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar color='background' position='static'>
+            <AppBar position='static'>
                 <Container maxWidth='xl'>
                     <Toolbar disableGutters sx={{ gap: 5 }}>
                         <Logo className={styles.logo} onClick={() => navigate('/')} />

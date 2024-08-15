@@ -113,6 +113,15 @@ theme.components = {
             },
         },
     },
+    MuiAppBar: {
+        styleOverrides: {
+            root: {
+                background: 'none',
+                backgroundColor: theme.palette.background.paper,
+                boxShadow: 'none',
+            },
+        },
+    },
 };
 
 export default theme;
