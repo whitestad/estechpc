@@ -1,4 +1,3 @@
-// src/components/ProductList.tsx
 import React from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { IProduct } from 'types/products';
@@ -10,11 +9,12 @@ import FavoriteButton from '@components/favoriteButton/FavoriteButton';
 
 export interface ProductListProps {
     products: IProduct[];
+    queryKey: unknown[][];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, queryKey }) => {
     const navigate = useNavigate();
-    const { toggleFavorite, isAdding, isRemoving } = useFavorites();
+    const { toggleFavorite, isAdding, isRemoving } = useFavorites(queryKey);
 
     return (
         <Grid container spacing={2}>

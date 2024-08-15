@@ -1,30 +1,32 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addToFavorites, removeFromFavorites } from '@api/favorites';
 
-export const useFavorites = () => {
+export const useFavorites = (invalidateQueries: unknown[][] = [['products']]) => {
     const queryClient = useQueryClient();
 
     const addToFavoritesMutation = useMutation({
         mutationFn: addToFavorites,
-        onSuccess: (data, variables) => {
-            queryClient.invalidateQueries({
-                queryKey: ['product', variables],
-            });
-            queryClient.invalidateQueries({
-                queryKey: ['favorites'],
-            });
+        onSuccess: () => {
+            if (invalidateQueries) {
+                invalidateQueries.forEach((q) => {
+                    queryClient.invalidateQueries({
+                        queryKey: q,
+                    });
+                });
+            }
         },
     });
 
     const removeFromFavoritesMutation = useMutation({
         mutationFn: removeFromFavorites,
-        onSuccess: (data, variables) => {
-            queryClient.invalidateQueries({
-                queryKey: ['product', variables],
-            });
-            queryClient.invalidateQueries({
-                queryKey: ['favorites'],
-            });
+        onSuccess: () => {
+            if (invalidateQueries) {
+                invalidateQueries.forEach((q) => {
+                    queryClient.invalidateQueries({
+                        queryKey: q,
+                    });
+                });
+            }
         },
     });
 

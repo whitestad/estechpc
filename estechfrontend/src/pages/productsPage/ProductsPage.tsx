@@ -115,7 +115,7 @@ const ProductsPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
-                    <ProductList products={products} />
+                    <ProductList products={products} queryVariables={[categoryID, selectedFilters, priceRange]} />
                     <div ref={ref} style={{ textAlign: 'center', marginTop: 16 }}>
                         {isFetchingNextPage && <CircularProgress />}
                     </div>
