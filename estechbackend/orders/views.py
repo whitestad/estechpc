@@ -1,84 +1,87 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Basket, BasketItem, Product
-from .serializers import BasketSerializer, BasketItemSerializer
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+
+from .models import Cart, CartItem, Product
+from .serializers import CartSerializer, CartItemSerializer
 
 
-class BasketDetailView(generics.RetrieveAPIView):
-    serializer_class = BasketSerializer
+class CartDetailView(generics.RetrieveAPIView):
+    serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         user = self.request.user
-        basket, created = Basket.objects.get_or_create(user=user)
-        return basket
+        cart, created = Cart.objects.get_or_create(user=user)
+        return cart
 
 
-class AddProductToBasketView(generics.GenericAPIView):
+class AddProductToCartView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         user = request.user
-        basket, created = Basket.objects.get_or_create(user=user)
+        cart, created = Cart.objects.get_or_create(user=user)
         product_id = request.data.get('product_id')
         quantity = request.data.get('quantity', 1)
 
-        product = Product.objects.get(id=product_id)
-        basket_item, created = BasketItem.objects.get_or_create(basket=basket, product=product)
+        product = get_object_or_404(Product, id=product_id)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
         if not created:
-            basket_item.quantity += int(quantity)
+            cart_item.quantity += int(quantity)
         else:
-            basket_item.quantity = int(quantity)
-        basket_item.save()
+            cart_item.quantity = int(quantity)
+        cart_item.save()
 
-        return Response({'status': 'product added'}, status=status.HTTP_200_OK)
+        return Response({'success': True, 'message': 'Product added to cart'}, status=status.HTTP_200_OK)
 
 
-class UpdateBasketItemView(generics.GenericAPIView):
+class UpdateCartItemView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         user = request.user
-        basket = Basket.objects.get(user=user)
+        cart = get_object_or_404(Cart, user=user)
         item_id = request.data.get('item_id')
         quantity = request.data.get('quantity')
 
-        print(request.data)
-
         try:
-            basket_item = BasketItem.objects.get(basket=basket, id=item_id)
+            cart_item = CartItem.objects.get(cart=cart, id=item_id)
             if quantity > 0:
-                basket_item.quantity = quantity
-                basket_item.save()
+                cart_item.quantity = quantity
+                cart_item.save()
             else:
-                basket_item.delete()
-            return Response({'status': 'item updated'}, status=status.HTTP_200_OK)
-        except BasketItem.DoesNotExist:
-            return Response({'error': 'item not found'}, status=status.HTTP_404_NOT_FOUND)
+                cart_item.delete()
+            return Response({'success': True, 'message': 'Item updated'}, status=status.HTTP_200_OK)
+        except CartItem.DoesNotExist:
+            return Response({'success': False, 'message': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class RemoveProductFromBasketView(generics.GenericAPIView):
+class RemoveProductFromCartView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         user = request.user
-        basket = Basket.objects.get(user=user)
+        cart = get_object_or_404(Cart, user=user)
         item_id = request.data.get('item_id')
 
         try:
-            basket_item = BasketItem.objects.get(basket=basket, id=item_id)
-            basket_item.delete()
-            return Response({'status': 'product removed'}, status=status.HTTP_200_OK)
-        except BasketItem.DoesNotExist:
-            return Response({'error': 'item not found'}, status=status.HTTP_404_NOT_FOUND)
+            cart_item = CartItem.objects.get(cart=cart, id=item_id)
+            cart_item.delete()
+            return Response({'success': True, 'message': 'Product removed from cart'}, status=status.HTTP_200_OK)
+        except CartItem.DoesNotExist:
+            return Response({'success': False, 'message': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class ClearBasketView(generics.GenericAPIView):
+class ClearCartView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        basket = Basket.objects.get(user=user)
-        basket.items.all().delete()
-        return Response({'status': 'basket cleared'}, status=status.HTTP_200_OK)
+        cart = get_object_or_404(Cart, user=user)
+        cart.items.all().delete()
+        return Response({'success': True, 'message': 'Cart cleared'}, status=status.HTTP_200_OK)

@@ -1,20 +1,22 @@
 from rest_framework import serializers
-from .models import Basket, BasketItem
-
+from .models import Cart, CartItem
 from products.serializers import ProductSerializer
 
-
-class BasketItemSerializer(serializers.ModelSerializer):
+class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
-        model = BasketItem
+        model = CartItem
         fields = ['id', 'product', 'quantity']
 
-
-class BasketSerializer(serializers.ModelSerializer):
-    items = BasketItemSerializer(many=True, read_only=True)
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True, read_only=True)
+    total_amount = serializers.SerializerMethodField()
 
     class Meta:
-        model = Basket
-        fields = ['id', 'user', 'items']
+        model = Cart
+        fields = ['id', 'items', 'total_amount']
+
+    def get_total_amount(self, obj):
+        total = sum(item.product.price * item.quantity for item in obj.items.all())
+        return total
