@@ -76,7 +76,13 @@ const Header: React.FC = () => {
                                 badgeContent={2}
                                 ariaLabel='show favorites'
                             />
-                            <IconWithLabel icon={<ShoppingCartIcon />} label='Корзина' badgeContent={3} ariaLabel='show shopping cart' />
+                            <IconWithLabel
+                                onClick={() => navigate('/cart')}
+                                icon={<ShoppingCartIcon />}
+                                label='Корзина'
+                                badgeContent={3}
+                                ariaLabel='show shopping cart'
+                            />
 
                             {isLoggedIn() ? (
                                 <>

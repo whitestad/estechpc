@@ -45,7 +45,7 @@ const FavoritesPage: React.FC = () => {
             </Typography>
 
             <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
-                <ProductList products={favorites.map((favorite) => favorite.product)} queryKey={[FAVORITES_QUERY]} />
+                <ProductList products={favorites.map((favorite) => favorite.product)} queryKeys={[FAVORITES_QUERY]} />
             </Grid>
         </Container>
     );
