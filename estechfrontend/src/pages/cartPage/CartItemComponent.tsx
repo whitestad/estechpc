@@ -50,7 +50,7 @@ const CartItemComponent: React.FC<CartItemProps> = ({ item, selected, onSelect, 
                     </Typography>
                 </Box>
                 <Box display='flex' alignItems='center' mt={{ xs: 2, sm: 0 }}>
-                    <IconButton onClick={onDecrease} sx={{ color: theme.palette.primary.main }}>
+                    <IconButton onClick={onDecrease} disabled={item.quantity <= 1} sx={{ color: theme.palette.primary.main }}>
                         <Remove />
                     </IconButton>
                     <Typography variant='body1' sx={{ mx: 2 }}>

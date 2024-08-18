@@ -103,8 +103,8 @@ const CartPage: React.FC = () => {
                                 onRemove={() => handleRemove(item.id)}
                             />
                         ))}
+                        <CartActionsComponent isClearing={isClearing} onClearCart={clearCart} />
                     </Paper>
-                    <CartActionsComponent isClearing={isClearing} onClearCart={clearCart} />
                 </Box>
                 <Box width={{ xs: '100%', sm: '30%' }} ref={summaryRef}>
                     <CartSummaryComponent
