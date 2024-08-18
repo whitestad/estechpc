@@ -24,8 +24,12 @@ const theme = createTheme({
             contrastText: '#111111',
         },
         secondary: {
-            main: '#FF407D',
+            // main: '#FF407D',
+            main: '#F59CF1',
             contrastText: '#ffffff',
+        },
+        error: {
+            main: '#E41749',
         },
         background: {
             default: '#202020',
