@@ -7,12 +7,15 @@ import { fetchAllProducts } from '@api/products';
 import ProductList from '@components/productList/ProductList';
 import ErrorText from '@components/errorText/ErrorText';
 import { useInView } from 'react-intersection-observer';
+import LoadingBox from '@components/loadingBox/LoadingBox';
 
 const AllProductsPage: React.FC = () => {
     const { ref, inView } = useInView();
 
+    const productsQuery = ['allProducts'];
+
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useInfiniteQuery({
-        queryKey: ['allProducts'],
+        queryKey: productsQuery,
         queryFn: ({ pageParam = 1 }) => fetchAllProducts(pageParam),
         getNextPageParam: (lastPage) => {
             const nextUrl = lastPage.next;
@@ -32,7 +35,7 @@ const AllProductsPage: React.FC = () => {
     }, [inView, hasNextPage, fetchNextPage]);
 
     if (isLoading) {
-        return <CircularProgress />;
+        return <LoadingBox />;
     }
 
     if (isError) {
@@ -48,7 +51,7 @@ const AllProductsPage: React.FC = () => {
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <ProductList products={products} />
+                    <ProductList products={products} queryKeys={[productsQuery]} />
                 </Grid>
                 <Grid item xs={12} ref={ref} sx={{ textAlign: 'center', mt: 2 }}>
                     {isFetchingNextPage && <CircularProgress />}

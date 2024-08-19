@@ -53,9 +53,9 @@ const Header: React.FC = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position='static'>
                 <Container maxWidth='xl'>
-                    <Toolbar disableGutters sx={{ gap: 5 }}>
+                    <Toolbar disableGutters sx={{ gap: 3 }}>
                         <Logo className={styles.logo} onClick={() => navigate('/')} />
-                        <Button variant='contained' size='large' onClick={() => navigate('/categories')}>
+                        <Button variant='contained' sx={{ px: 2 }} onClick={() => navigate('/categories')}>
                             Каталог
                         </Button>
 

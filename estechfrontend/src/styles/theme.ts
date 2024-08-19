@@ -32,7 +32,7 @@ const theme = createTheme({
             main: '#E41749',
         },
         background: {
-            default: '#202020',
+            default: '#111111',
             paper: '#000000',
         },
         text: {

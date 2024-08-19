@@ -32,6 +32,8 @@ const ProductsPage: React.FC = () => {
         queryFn: () => fetchFilters(categoryID),
     });
 
+    const productsQuery = ['products', categoryID, selectedFilters, priceRange];
+
     const {
         data,
         fetchNextPage,
@@ -40,7 +42,7 @@ const ProductsPage: React.FC = () => {
         isLoading: productsLoading,
         isError: productsError,
     } = useInfiniteQuery({
-        queryKey: ['products', categoryID, selectedFilters, priceRange],
+        queryKey: productsQuery,
         queryFn: ({ pageParam = 1 }) => fetchProducts(categoryID, selectedFilters, priceRange, pageParam),
         getNextPageParam: (lastPage) => {
             const nextUrl = lastPage.next;
@@ -115,7 +117,7 @@ const ProductsPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={9} sx={{ paddingTop: '0 !important', marginTop: 0 }}>
-                    <ProductList products={products} queryKeys={[['products', categoryID, selectedFilters, priceRange]]} />
+                    <ProductList products={products} queryKeys={[productsQuery]} />
                     <div ref={ref} style={{ textAlign: 'center', marginTop: 16 }}>
                         {isFetchingNextPage && <CircularProgress />}
                     </div>
