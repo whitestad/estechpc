@@ -1,19 +1,19 @@
 // src/api/user.ts
 
 import { IUserProfile } from 'types/user';
-import { createAuthAxiosInstance } from "@api/authAxios";
+import { createAuthAxiosInstance } from '@api/authAxios';
 
 const authAxios = createAuthAxiosInstance();
 
 // Функция для получения профиля пользователя
 export const fetchUserProfile = async (): Promise<IUserProfile> => {
     const response = await authAxios.get('/users/profile/');
-    console.log(response);
     return response.data;
 };
 
 // Функция для обновления профиля пользователя
 export const updateUserProfile = async (profileData: Partial<IUserProfile>): Promise<IUserProfile> => {
+    console.log(profileData);
     const response = await authAxios.put('/users/profile/', profileData);
     return response.data;
 };
