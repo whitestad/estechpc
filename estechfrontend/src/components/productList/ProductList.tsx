@@ -9,6 +9,8 @@ import FavoriteButton from '@components/favoriteButton/FavoriteButton';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
+import useCartStore from '@stores/cartStore';
+
 import theme from '@styles/theme';
 import { useCart } from '@hooks/useCart';
 

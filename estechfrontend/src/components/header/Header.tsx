@@ -1,5 +1,5 @@
 // src/components/header/Header.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,10 @@ import IconButton from '@mui/material/IconButton';
 import theme from '@styles/theme';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@stores/auth';
+import useCartStore from '@stores/cartStore';
+import { useCart } from '@hooks/useCart';
+import { useFavorites } from '@hooks/useFavorites';
+import useFavoritesStore from '@stores/favoritesStore';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
@@ -49,6 +53,26 @@ const Header: React.FC = () => {
         setMobileMoreAnchorEl(null);
     };
 
+    const { cart } = useCart(); // Предполагается, что этот хук возвращает текущее состояние корзины
+    const { cartCount, setCartCount } = useCartStore();
+
+    const { favorites } = useFavorites();
+    const { favoritesCount, setFavoritesCount } = useFavoritesStore();
+
+    useEffect(() => {
+        if (cart) {
+            const totalCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+            setCartCount(totalCount);
+        }
+    }, [cart, setCartCount]);
+
+    useEffect(() => {
+        if (favorites) {
+            const totalCount = favorites.length;
+            setFavoritesCount(totalCount);
+        }
+    }, [favorites, setFavoritesCount]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position='static'>
@@ -73,14 +97,14 @@ const Header: React.FC = () => {
                                 onClick={() => navigate('/favorites')}
                                 icon={<FavoriteIcon />}
                                 label='Избранное'
-                                badgeContent={2}
+                                badgeContent={favoritesCount}
                                 ariaLabel='show favorites'
                             />
                             <IconWithLabel
                                 onClick={() => navigate('/cart')}
                                 icon={<ShoppingCartIcon />}
                                 label='Корзина'
-                                badgeContent={3}
+                                badgeContent={cartCount}
                                 ariaLabel='show shopping cart'
                             />
 

@@ -1,23 +1,11 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Container, Grid, Typography, CircularProgress, Box } from '@mui/material';
-import { fetchFavorites } from '@api/favorites';
-import ProductCard from '@components/productCard/ProductCard';
 import ErrorText from '@components/errorText/ErrorText';
 import ProductList from '@components/productList/ProductList';
-import { useFavorites } from '@hooks/useFavorites';
-
-const FAVORITES_QUERY = ['favorites'];
+import { FAVORITES_QUERY, useFavorites } from '@hooks/useFavorites';
 
 const FavoritesPage: React.FC = () => {
-    const {
-        data: favorites,
-        isLoading,
-        isError,
-    } = useQuery({
-        queryKey: FAVORITES_QUERY,
-        queryFn: fetchFavorites,
-    });
+    const { favorites, isLoading, isError } = useFavorites();
 
     if (isLoading) {
         return (
