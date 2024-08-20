@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Typography, Avatar, CircularProgress, Alert } from '@mui/material';
 import { useUser } from '@hooks/useUser';
+import FlexBox from '@components/flexBox/FlexBox';
 
 interface FormData {
     username: string;
@@ -9,7 +10,7 @@ interface FormData {
     last_name: string;
     phone_number: string;
     avatar: File | string | null;
-    avatarPreview: string | null; // Добавлено для предварительного просмотра
+    avatarPreview: string | null;
 }
 
 const ProfilePage: React.FC = () => {
@@ -31,7 +32,7 @@ const ProfilePage: React.FC = () => {
                 last_name: user.last_name || '',
                 phone_number: user.phone_number || '',
                 avatar: user.avatar || null,
-                avatarPreview: user.avatar || null,
+                avatarPreview: (typeof user.avatar == 'string' && user.avatar) || null,
             });
         }
     }, [user]);
@@ -47,6 +48,17 @@ const ProfilePage: React.FC = () => {
             const fileURL = URL.createObjectURL(file);
             setFormData((prev) => ({ ...prev, avatar: file, avatarPreview: fileURL }));
         }
+    };
+
+    const handleCancel = () => {
+        setFormData({
+            username: user?.username || '',
+            first_name: user?.first_name || '',
+            last_name: user?.last_name || '',
+            phone_number: user?.phone_number || '',
+            avatar: user?.avatar || null,
+            avatarPreview: (typeof user.avatar == 'string' && user.avatar) || null,
+        });
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -70,14 +82,25 @@ const ProfilePage: React.FC = () => {
                 Профиль
             </Typography>
             {error && <Alert severity='error'>{error.message}</Alert>}
-            <Avatar src={typeof formData.avatarPreview === 'string' ? formData.avatarPreview : undefined} sx={{ width: 90, height: 90, mb: 2 }} />
-            <input type='file' onChange={handleAvatarChange} accept='image/*' />
-            <TextField name='username' label='Username' fullWidth margin='normal' value={formData.username} onChange={handleChange} />
-            <TextField name='first_name' label='First Name' fullWidth margin='normal' value={formData.first_name} onChange={handleChange} />
-            <TextField name='last_name' label='Last Name' fullWidth margin='normal' value={formData.last_name} onChange={handleChange} />
-            <TextField name='phone_number' label='Phone Number' fullWidth margin='normal' value={formData.phone_number} onChange={handleChange} />
+            <FlexBox flexDirection={'column'} gap={1}>
+                <Avatar src={(formData.avatarPreview as string) || ''} sx={{ width: 128, height: 128 }} />
+                <label htmlFor='icon-button-file'>
+                    <Button color='primary' size='small' component='span'>
+                        Загрузить новое фото
+                    </Button>
+                    <input type='file' id='icon-button-file' style={{ display: 'none' }} onChange={handleAvatarChange} accept='image/*' />
+                </label>
+            </FlexBox>
+            <TextField name='username' label='Имя пользователя' fullWidth margin='normal' value={formData.username} onChange={handleChange} />
+            <TextField name='first_name' label='Имя' fullWidth margin='normal' value={formData.first_name} onChange={handleChange} />
+            <TextField name='last_name' label='Фамилия' fullWidth margin='normal' value={formData.last_name} onChange={handleChange} />
+            <TextField name='phone_number' label='Номер телефона' fullWidth margin='normal' value={formData.phone_number} onChange={handleChange} />
             <Button type='submit' variant='contained' color='primary' fullWidth sx={{ mt: 3 }} disabled={isUpdating}>
                 {isUpdating ? <CircularProgress size={24} /> : 'Сохранить изменения'}
+            </Button>
+
+            <Button variant='text' color='secondary' fullWidth sx={{ mt: 1 }} onClick={handleCancel} disabled={isUpdating}>
+                Отменить
             </Button>
         </Box>
     );
