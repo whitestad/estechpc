@@ -2,6 +2,7 @@ from rest_framework import viewsets, generics
 
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer, UserProfileSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -25,8 +26,9 @@ class RegisterView(generics.CreateAPIView):
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
-    permission_classes = [IsAuthenticated]
     serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return self.request.user

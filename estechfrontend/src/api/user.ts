@@ -12,18 +12,8 @@ export const fetchUserProfile = async (): Promise<IUserProfile> => {
 };
 
 // Функция для обновления профиля пользователя
-export const updateUserProfile = async (profileData: Partial<IUserProfile>): Promise<IUserProfile> => {
-    console.log(profileData);
-    const response = await authAxios.put('/users/profile/', profileData);
-    return response.data;
-};
-
-// Функция для обновления аватара пользователя
-export const updateUserAvatar = async (avatarFile: File): Promise<IUserProfile> => {
-    const formData = new FormData();
-    formData.append('avatar', avatarFile);
-
-    const response = await authAxios.put('/users/profile/avatar/', formData, {
+export const updateUserProfile = async (profileData: Partial<FormData>): Promise<IUserProfile> => {
+    const response = await authAxios.put('/users/profile/', profileData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },

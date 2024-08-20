@@ -38,7 +38,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
-            email=validated_data.get('email', '')
+            email=validated_data.get('email', ''),
+
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', ''),
+            phone_number=validated_data.get('phone_number', ''),
         )
 
         user.set_password(validated_data['password'])
@@ -56,7 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'avatar', 'phone_number']
+        fields = ['username', 'first_name', 'last_name', 'phone_number', 'avatar']
 
     def validate_username(self, value):
         if User.objects.exclude(pk=self.instance.pk).filter(username=value).exists():

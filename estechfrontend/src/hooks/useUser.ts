@@ -23,7 +23,7 @@ export const useUser = () => {
         queryFn: fetchUserProfile,
     });
 
-    const updateUserMutation = useMutation<IUserProfile, IUserError, IUserProfile>({
+    const updateUserMutation = useMutation<IUserProfile, IUserError, FormData>({
         mutationFn: updateUserProfile,
         onSuccess: () => {
             queryClient.invalidateQueries({
