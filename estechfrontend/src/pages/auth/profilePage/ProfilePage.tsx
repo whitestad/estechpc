@@ -57,7 +57,7 @@ const ProfilePage: React.FC = () => {
             last_name: user?.last_name || '',
             phone_number: user?.phone_number || '',
             avatar: user?.avatar || null,
-            avatarPreview: (typeof user.avatar == 'string' && user.avatar) || null,
+            avatarPreview: (typeof user?.avatar == 'string' && user.avatar) || null,
         });
     };
 
@@ -99,7 +99,7 @@ const ProfilePage: React.FC = () => {
                 {isUpdating ? <CircularProgress size={24} /> : 'Сохранить изменения'}
             </Button>
 
-            <Button variant='text' color='secondary' fullWidth sx={{ mt: 1 }} onClick={handleCancel} disabled={isUpdating}>
+            <Button variant='text' color='error' fullWidth sx={{ mt: 1 }} onClick={handleCancel} disabled={isUpdating}>
                 Отменить
             </Button>
         </Box>

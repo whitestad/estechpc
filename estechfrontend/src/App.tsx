@@ -21,6 +21,7 @@ import ProductPage from '@pages/productPage/ProductPage';
 import ProfilePage from '@pages/auth/profilePage/ProfilePage';
 import FavoritesPage from '@pages/favoritesPage/FavoritesPage';
 import CartPage from '@pages/cartPage/CartPage';
+import CheckoutPage from '@pages/checkoutPage/CheckoutPage';
 
 const App: React.FC = () => {
     return (
@@ -41,6 +42,7 @@ const App: React.FC = () => {
                     <Route path='/products/:productId' element={<ProductPage />} />
 
                     <Route path='/cart' element={<CartPage />} />
+                    <Route path='/checkout' element={<CheckoutPage />} />
 
                     <Route path='/profile' element={<ProfilePage />} />
 
