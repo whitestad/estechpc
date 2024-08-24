@@ -10,10 +10,10 @@ export interface IOrder {
     status: string;
     status_display: string;
 
-    items: OrderItem[];
+    items: IOrderItem[];
 }
 
-export interface OrderItem {
+export interface IOrderItem {
     id: number;
     product: IProduct;
     quantity: number;
