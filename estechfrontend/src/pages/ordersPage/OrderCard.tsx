@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, CardContent, Collapse, Grid, Typography, Box, Button, List, IconButton, Avatar } from '@mui/material';
+import { Card, CardContent, Collapse, Grid, Typography, Box, Button, List, IconButton, Avatar, Chip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { IOrder } from 'src/types/order';
 import OrderItem from './OrderItem';
 import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
+import OrderStatusChip from '@pages/ordersPage/OrderStatusChip';
 
 interface OrderCardProps {
     order: IOrder;
@@ -16,15 +17,16 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
     const totalPrice = order.items.reduce((total, item) => total + item.total_price, 0);
 
     return (
-        <Card elevation={0} sx={{ mb: 3 }} onClick={onToggle}>
+        <Card elevation={0} sx={{ mb: 3, p: 1 }} onClick={onToggle}>
             <CardContent>
                 <Grid container justifyContent='space-between' alignItems='center'>
                     <Grid item>
                         <Typography variant='h6'>
-                            Заказ №{order.id} от {new Date(order.created_at).toLocaleDateString()}
+                            Заказ №{order.id} от {new Date(order.created_at).toLocaleDateString()}{' '}
+                            <OrderStatusChip status={order.status} statusDisplay={order.status_display} />
                         </Typography>
                         <Typography variant='body2' color='textSecondary'>
-                            Статус: <strong>{order.status_display}</strong> | Общая сумма: <strong>{totalPrice} ₽</strong>
+                            Общая сумма: <strong>{totalPrice} ₽</strong>
                         </Typography>
                     </Grid>
                     <Grid item>
