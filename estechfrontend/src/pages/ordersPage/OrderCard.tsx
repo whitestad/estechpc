@@ -6,6 +6,7 @@ import { IOrder } from 'src/types/order';
 import OrderItem from './OrderItem';
 import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
 import OrderStatusChip from '@pages/ordersPage/OrderStatusChip';
+import { formatPrice } from '@utils/formatPrice';
 
 interface OrderCardProps {
     order: IOrder;
@@ -21,12 +22,10 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
             <CardContent>
                 <Grid container justifyContent='space-between' alignItems='center'>
                     <Grid item>
-                        <Typography variant='h6'>
-                            Заказ №{order.id} от {new Date(order.created_at).toLocaleDateString()}{' '}
+                        <Typography variant='actayWide'>
+                            Заказ №{order.id} <Typography component='span'>от {new Date(order.created_at).toLocaleDateString()}</Typography>
+                            {'\u00A0 \u00A0 \u00A0'}
                             <OrderStatusChip status={order.status} statusDisplay={order.status_display} />
-                        </Typography>
-                        <Typography variant='body2' color='textSecondary'>
-                            Общая сумма: <strong>{totalPrice} ₽</strong>
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -36,20 +35,28 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                     </Grid>
                 </Grid>
 
-                {!isExpanded && (
-                    <Grid container spacing={1} sx={{ mt: 2 }}>
-                        {order.items.slice(0, 3).map((item) => (
-                            <Grid item key={item.id}>
-                                <Avatar
-                                    variant='rounded'
-                                    src={(item.product.photos[0] && item.product.photos[0].photo) || DEFAULT_PRODUCT_IMAGE}
-                                    alt={item.product.name}
-                                    sx={{ width: 48, height: 48, borderRadius: 2 }}
-                                />
-                            </Grid>
-                        ))}
+                <Collapse in={!isExpanded} timeout='auto' unmountOnExit>
+                    <Grid container sx={{ mt: 2 }}>
+                        <Grid item md={10} container spacing={1}>
+                            {order.items.slice(0, 3).map((item) => (
+                                <Grid item key={item.id}>
+                                    <Avatar
+                                        variant='rounded'
+                                        src={(item.product.photos[0] && item.product.photos[0].photo) || DEFAULT_PRODUCT_IMAGE}
+                                        alt={item.product.name}
+                                        sx={{ width: 48, height: 48, borderRadius: 2 }}
+                                    />
+                                </Grid>
+                            ))}
+                        </Grid>
+
+                        <Grid item md={2} sx={{ mt: 'auto' }}>
+                            <Typography variant='h6' align={'right'}>
+                                {formatPrice(totalPrice)}
+                            </Typography>
+                        </Grid>
                     </Grid>
-                )}
+                </Collapse>
 
                 <Collapse in={isExpanded} timeout='auto' unmountOnExit>
                     <List sx={{ mt: 2 }}>
@@ -58,12 +65,12 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                         ))}
                     </List>
                     <Box display='flex' justifyContent='flex-end' mt={2}>
-                        <Typography variant='h6'>Итого: {totalPrice} ₽</Typography>
-                    </Box>
-                    <Box display='flex' justifyContent='flex-end' mt={2}>
-                        <Button variant='contained' color='primary'>
-                            Повторить заказ
-                        </Button>
+                        <Typography variant='body1'>
+                            Итого:{' '}
+                            <Typography variant='h6' component={'span'}>
+                                {formatPrice(totalPrice)}
+                            </Typography>
+                        </Typography>
                     </Box>
                 </Collapse>
             </CardContent>

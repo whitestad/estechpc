@@ -12,7 +12,7 @@ const statusColorMapping: { [key: string]: 'default' | 'primary' | 'error' } = {
 };
 
 const OrderStatusChip: React.FC<OrderStatusProps> = ({ status, statusDisplay }) => {
-    return <Chip label={statusDisplay} sx={{ ml: 2 }} color={statusColorMapping[status] || 'default'} />;
+    return <Chip label={statusDisplay} sx={{ fontWeight: 'bold' }} color={statusColorMapping[status] || 'default'} />;
 };
 
 export default OrderStatusChip;
