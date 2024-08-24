@@ -22,6 +22,7 @@ import ProfilePage from '@pages/auth/profilePage/ProfilePage';
 import FavoritesPage from '@pages/favoritesPage/FavoritesPage';
 import CartPage from '@pages/cartPage/CartPage';
 import CheckoutPage from '@pages/checkoutPage/CheckoutPage';
+import OrdersPage from '@pages/ordersPage/OrdersPage';
 
 const App: React.FC = () => {
     return (
@@ -43,6 +44,8 @@ const App: React.FC = () => {
 
                     <Route path='/cart' element={<CartPage />} />
                     <Route path='/checkout' element={<CheckoutPage />} />
+
+                    <Route path='orders' element={<OrdersPage />} />
 
                     <Route path='/profile' element={<ProfilePage />} />
 

@@ -5,7 +5,6 @@ const authAxios = createAuthAxiosInstance();
 
 export const fetchFavorites = async (): Promise<IFavorite[]> => {
     const response = await authAxios.get('/products/favorites/');
-    console.log(response);
     return response.data;
 };
 

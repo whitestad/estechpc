@@ -87,7 +87,7 @@ const Header: React.FC = () => {
 
                         <Box sx={{ display: { xs: 'none', md: 'flex', gap: theme.spacing(5), alignItems: 'center' } }}>
                             <IconWithLabel
-                                onClick={() => navigate('/')}
+                                onClick={() => navigate('/orders')}
                                 icon={<ReceiptLongIcon />}
                                 label='Заказы'
                                 badgeContent={0}

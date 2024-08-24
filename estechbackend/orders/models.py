@@ -64,15 +64,6 @@ class Order(models.Model):
     def __str__(self):
         return f"Заказ {self.id} от {self.user.username}"
 
-    def get_delivery_method_display(self):
-        return self.get_delivery_method_display()
-
-    def get_contact_method_display(self):
-        return self.get_contact_method_display()
-
-    def get_status_display(self):
-        return self.get_status_display()
-
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"

@@ -9,6 +9,6 @@ urlpatterns = [
     path('cart/remove/<int:item_id>/', RemoveProductFromCartView.as_view(), name='cart-remove-product'),
     path('cart/clear/', ClearCartView.as_view(), name='cart-clear'),
 
-    path('orders/', OrderListCreateView.as_view(), name='order-list-create'),
-    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('list/', OrderListCreateView.as_view(), name='order-list-create'),
+    path('list/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
 ]

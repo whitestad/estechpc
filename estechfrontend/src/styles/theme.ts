@@ -73,6 +73,10 @@ const theme = createTheme({
         button: {
             fontFamily: 'Manrope',
         },
+
+        actayWide: {
+            fontFamily: 'ActayWide',
+        },
     },
 
     shape: {

@@ -8,7 +8,6 @@ import {
     List,
     ListItem,
     ListItemText,
-    Divider,
     Radio,
     RadioGroup,
     FormControlLabel,
@@ -32,9 +31,9 @@ const CheckoutPage: React.FC = () => {
         contactMethod: 'phone',
         address: '',
         deliveryMethod: 'pickup',
-        termsAccepted: false,
+        termsAccepted: true,
     });
-    const [isItemsVisible, setItemsVisible] = useState(true);
+    const [isItemsVisible, setItemsVisible] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, checked } = event.target;
@@ -62,24 +61,29 @@ const CheckoutPage: React.FC = () => {
                     Внимание: На данный момент прямая оплата на сайте недоступна. После подтверждения заказа с вами свяжется наш менеджер для
                     уточнения деталей и возможных способов оплаты.
                 </Typography>
-                <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography variant='body1'>Товары в корзине ({cart?.items.length || 0})</Typography>
                     <IconButton onClick={handleToggleItems}>{isItemsVisible ? <ExpandLessIcon /> : <ExpandMoreIcon />}</IconButton>
                 </Box>
 
                 <Collapse in={isItemsVisible}>
-                    <List>
+                    <List disablePadding>
                         {cart?.items.map((item) => (
                             <ListItem key={item.id} divider>
                                 <ListItemText primary={item.product.name} secondary={`Количество: ${item.quantity}`} />
                                 <Typography variant='body2'>{`${item.product.price} ₽`}</Typography>
                             </ListItem>
                         ))}
-                        <Typography variant='h6' sx={{ mb: 2 }}>
-                            Общая сумма: {cart?.total_amount} ₽
-                        </Typography>
                     </List>
                 </Collapse>
+
+                <Typography variant='body1' sx={{ my: 2 }}>
+                    Общая сумма:{' '}
+                    <Typography component='span' variant={'actayWide'} color='primary'>
+                        {cart?.total_amount}
+                    </Typography>{' '}
+                    ₽
+                </Typography>
 
                 <Box sx={{ padding: 2, marginBottom: 2 }}>
                     <FormControl component='fieldset'>
