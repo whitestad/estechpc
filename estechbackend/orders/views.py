@@ -1,12 +1,13 @@
 from rest_framework import generics, status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 
-from .models import Cart, CartItem, Product
-from .serializers import CartSerializer, CartItemSerializer
+from .models import Cart, CartItem, Product, Order
+from .serializers import CartSerializer, CartItemSerializer, OrderSerializer
 
 
 class CartDetailView(generics.RetrieveAPIView):
@@ -90,3 +91,31 @@ class ClearCartView(APIView):
         cart = get_object_or_404(Cart, user=user)
         cart.items.all().delete()
         return Response({'success': True, 'message': 'Cart cleared'}, status=status.HTTP_200_OK)
+
+
+class OrderListCreateView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('-created_at')
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class OrderDetailView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        order = super().get_object()
+        if order.user != self.request.user:
+            raise PermissionDenied("Вы не можете просматривать этот заказ.")
+        return order

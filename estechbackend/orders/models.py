@@ -35,19 +35,43 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'Ожидает обработки'
+        PROCESSING = 'processing', 'В процессе обработки'
+        COMPLETED = 'completed', 'Завершен'
+        CANCELED = 'canceled', 'Отменен'
+
+    class DeliveryMethods(models.TextChoices):
+        PICKUP = 'pickup', 'Самовывоз'
+        DELIVERY = 'delivery', 'Доставка'
+
+    class ContactMethods(models.TextChoices):
+        PHONE = 'phone', 'Звонок'
+        WHATSAPP = 'whatsapp', 'WhatsApp'
+        TELEGRAM = 'telegram', 'Telegram'
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=20, choices=[
-        ('pending', 'Ожидает обработки'),
-        ('processing', 'В процессе обработки'),
-        ('completed', 'Завершен'),
-        ('canceled', 'Отменен'),
-    ], default='pending')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    price = models.IntegerField()
+
+    delivery_method = models.CharField(max_length=10, choices=DeliveryMethods.choices, default=DeliveryMethods.PICKUP)
+    contact_method = models.CharField(max_length=10, choices=ContactMethods.choices, default=ContactMethods.PHONE)
+    contact_info = models.CharField(max_length=255, help_text="Телефонный номер или Telegram ник")
+    address = models.CharField(max_length=255, blank=True, null=True, help_text="Адрес для доставки (если выбрана доставка)")
 
     def __str__(self):
         return f"Заказ {self.id} от {self.user.username}"
+
+    def get_delivery_method_display(self):
+        return self.get_delivery_method_display()
+
+    def get_contact_method_display(self):
+        return self.get_contact_method_display()
+
+    def get_status_display(self):
+        return self.get_status_display()
 
     class Meta:
         verbose_name = "Заказ"
