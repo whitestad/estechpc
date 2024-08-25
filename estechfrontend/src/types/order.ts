@@ -4,13 +4,22 @@ import { IProduct } from 'types/products';
 
 export interface IOrder {
     id: number;
-    created_at: string;
-    updated_at: string;
+
+    address: string;
+    contact_method: string;
+    contact_method_display: string;
+    contact_info: string;
+
+    delivery_method: string;
+    delivery_method_display: string;
 
     status: string;
     status_display: string;
 
     items: IOrderItem[];
+
+    created_at: string;
+    updated_at: string;
 }
 
 export interface IOrderItem {

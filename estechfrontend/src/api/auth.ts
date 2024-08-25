@@ -1,7 +1,7 @@
-import axios from "./axios";
-import { jwtDecode } from "jwt-decode";
-import Cookies from "js-cookie";
-import { useAuthStore } from "@stores/auth";
+import axios from './axios';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
+import { useAuthStore } from '@stores/auth';
 
 interface LoginResponse {
     access: string;
@@ -21,7 +21,7 @@ interface TokenData {
 
 export const login = async (username: string, password: string): Promise<RegisterResponse> => {
     try {
-        const { data, status } = await axios.post<LoginResponse>("users/token/", {
+        const { data, status } = await axios.post<LoginResponse>('users/token/', {
             username,
             password,
         });
@@ -31,10 +31,10 @@ export const login = async (username: string, password: string): Promise<Registe
         }
 
         return { data, error: null };
-    } catch (error: unknown) {
+    } catch (error: any) {
         return {
             data: null,
-            error: error.response?.data?.detail || "Что-то пошло не так",
+            error: error.response?.data?.detail || 'Что-то пошло не так',
         };
     }
 };
@@ -48,7 +48,7 @@ export const register = async (
     lastName: string
 ): Promise<RegisterResponse> => {
     try {
-        const { data } = await axios.post("users/register/", {
+        const { data } = await axios.post('users/register/', {
             username,
             email,
             password,
@@ -58,25 +58,25 @@ export const register = async (
         });
         await login(username, password);
         return { data, error: null };
-    } catch (error: unknown) {
+    } catch (error: any) {
         return {
             data: null,
-            error: error.response?.data || "Что-то пошло не так",
+            error: error.response?.data || 'Что-то пошло не так',
         };
     }
 };
 
 export const logout = (): void => {
-    Cookies.remove("access_token");
-    Cookies.remove("refresh_token");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    Cookies.remove('access_token');
+    Cookies.remove('refresh_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     useAuthStore.getState().setUser(null);
 };
 
 export const setUser = async (): Promise<void> => {
-    const accessToken = localStorage.getItem("access_token") || "";
-    const refreshToken = localStorage.getItem("refresh_token") || "";
+    const accessToken = localStorage.getItem('access_token') || '';
+    const refreshToken = localStorage.getItem('refresh_token') || '';
     if (!accessToken || !refreshToken) {
         return;
     }
@@ -89,18 +89,18 @@ export const setUser = async (): Promise<void> => {
 };
 
 export const setAuthUser = (access_token: string, refresh_token: string): void => {
-    Cookies.set("access_token", access_token, {
+    Cookies.set('access_token', access_token, {
         expires: 1,
         secure: true,
     });
 
-    Cookies.set("refresh_token", refresh_token, {
+    Cookies.set('refresh_token', refresh_token, {
         expires: 7,
         secure: true,
     });
 
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
 
     const user = jwtDecode<TokenData>(access_token) ?? null;
 
@@ -111,7 +111,7 @@ export const setAuthUser = (access_token: string, refresh_token: string): void =
 };
 
 export const getRefreshToken = async (refreshToken: string): Promise<LoginResponse> => {
-    const response = await axios.post<{ access: string; refresh: string }>("users/token/refresh/", {
+    const response = await axios.post<{ access: string; refresh: string }>('users/token/refresh/', {
         refresh: refreshToken,
     });
     return response.data;

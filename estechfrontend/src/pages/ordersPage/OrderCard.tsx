@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Collapse, Grid, Typography, Box, Button, List, IconButton, Avatar, Chip } from '@mui/material';
+import { Card, CardContent, Collapse, Grid, Typography, Box, Button, List, IconButton, Avatar, Chip, Divider } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { IOrder } from 'src/types/order';
@@ -28,12 +28,15 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                             <OrderStatusChip status={order.status} statusDisplay={order.status_display} />
                         </Typography>
                     </Grid>
+
                     <Grid item>
                         <Button variant='text' endIcon={isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}>
                             {isExpanded ? 'Скрыть детали' : 'Подробнее'}
                         </Button>
                     </Grid>
                 </Grid>
+
+                <Divider sx={{ my: 2 }} />
 
                 <Collapse in={!isExpanded} timeout='auto' unmountOnExit>
                     <Grid container sx={{ mt: 2 }}>
@@ -59,6 +62,20 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                 </Collapse>
 
                 <Collapse in={isExpanded} timeout='auto' unmountOnExit>
+                    <Typography variant='body1'>
+                        <Typography color='textSecondary' component='span'>
+                            Способ получения:
+                        </Typography>{' '}
+                        {order.delivery_method_display} {order.address && `(${order.address})`}
+                    </Typography>
+                    <Typography variant='body1'>
+                        <Typography color='textSecondary' component='span'>
+                            Контактная информация:
+                        </Typography>{' '}
+                        {order.contact_info} ({order.contact_method_display})
+                    </Typography>
+
+                    <Divider sx={{ my: 2 }} />
                     <List sx={{ mt: 2 }}>
                         {order.items.map((item) => (
                             <OrderItem key={item.id} item={item} />

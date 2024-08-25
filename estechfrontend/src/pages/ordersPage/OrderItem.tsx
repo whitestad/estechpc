@@ -1,18 +1,15 @@
 import React from 'react';
-import { Avatar, Box, Link, ListItem, ListItemText, Typography } from '@mui/material';
+import { Avatar, Box, Link, ListItem, Typography } from '@mui/material';
 import { IOrderItem } from 'types/order';
 import { DEFAULT_PRODUCT_IMAGE } from '@utils/constans';
 import theme from '@styles/theme';
 import { formatPrice } from '@utils/formatPrice';
-import { useNavigate } from 'react-router-dom';
 
 interface OrderItemProps {
     item: IOrderItem;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
-    const navigate = useNavigate();
-
     return (
         <ListItem sx={{ p: 0, mb: 2 }}>
             <Avatar

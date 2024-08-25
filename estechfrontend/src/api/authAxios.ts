@@ -15,17 +15,17 @@ export const createAuthAxiosInstance = (): AxiosInstance => {
         },
     });
 
-    axiosInstance.interceptors.request.use(async (req: InternalAxiosRequestConfig<any>) => {
+    axiosInstance.interceptors.request.use(async (req: InternalAxiosRequestConfig<unknown>) => {
         const accessToken = Cookies.get('access_token');
         const refreshToken = Cookies.get('refresh_token');
 
         // Если accessToken отсутствует, мы не добавляем заголовок Authorization
-        if (!accessToken) {
+        if (!accessToken && !refreshToken) {
             return req;
         }
 
         // Проверка истечения срока действия токена
-        if (!isAccessTokenExpired(accessToken)) {
+        if (accessToken && !isAccessTokenExpired(accessToken)) {
             req.headers.Authorization = `Bearer ${accessToken}`;
             return req;
         }
