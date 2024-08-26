@@ -3,6 +3,7 @@ import { Paper, Typography, Button, List, ListItem, ListItemText, Divider } from
 import { useNavigate } from 'react-router-dom';
 import theme from '@styles/theme';
 import { ICartItem as CartItemType } from 'types/cart';
+import { formatPrice } from '@utils/formatPrice';
 
 interface CartSummaryProps {
     selectedItems: CartItemType[];
@@ -21,10 +22,17 @@ const CartSummaryComponent: React.FC<CartSummaryProps> = ({ selectedItems, total
                 padding: theme.spacing(3),
                 borderRadius: 2,
                 boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.1)`,
-                mb: { xs: 4, sm: 0 }, // Отступ снизу на мобильных
+                mb: { xs: 4, sm: 0 },
             }}
             elevation={0}
         >
+            <Typography variant='h5' sx={{ mb: 2, textAlign: 'right', fontWeight: 'bold' }}>
+                Сумма:{' '}
+                <Typography variant='h5' color='primary' component='span'>
+                    {formatPrice(totalAmount)}
+                </Typography>
+            </Typography>
+
             <Button
                 variant='contained'
                 color='primary'
@@ -41,9 +49,7 @@ const CartSummaryComponent: React.FC<CartSummaryProps> = ({ selectedItems, total
             >
                 Перейти к оформлению
             </Button>
-            <Typography variant='h5' sx={{ mb: 2, textAlign: 'right', fontWeight: 'bold' }}>
-                Сумма: {totalAmount.toLocaleString('ru-RU')} ₽
-            </Typography>
+
             <Divider sx={{ my: 2 }} />
             <Typography variant='h6' sx={{ mb: 2 }}>
                 Ваша корзина

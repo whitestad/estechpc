@@ -86,14 +86,13 @@ const CartPage: React.FC = () => {
     return (
         <Container maxWidth='lg' sx={{ py: 4 }}>
             <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', sm: 'row' }} gap={2}>
-                <Box width={{ xs: '100%', sm: '70%' }} mb={{ xs: 4, sm: 0 }}>
+                <Box width={{ xs: '100%', sm: '70%' }} mb={{ xs: 2, sm: 0 }}>
                     <Paper
                         elevation={0}
                         sx={{
                             padding: theme.spacing(3),
                             borderRadius: 2,
                             boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.1)`,
-                            mb: 4,
                         }}
                     >
                         {cart.items.map((item) => (
