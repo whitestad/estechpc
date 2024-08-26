@@ -4,11 +4,11 @@ import { useCart } from '@hooks/useCart';
 import ErrorText from '@components/errorText/ErrorText';
 import CartItemComponent from './CartItemComponent';
 import CartSummaryComponent from './CartSummaryComponent';
-import CartEmptyStateComponent from './CartEmptyStateComponent';
 import CartActionsComponent from './CartActionsComponent';
 import FixedBottomBar from './FixedBottomBar';
 import theme from '@styles/theme';
 import { useNavigate } from 'react-router-dom';
+import CartEmptyStateComponent from '@pages/cartPage/CartEmptyStateComponent';
 
 const CartPage: React.FC = () => {
     const { cart, isLoadingCart, isErrorCart, clearCart, isClearing, updateCartItem, removeProductFromCart } = useCart();
@@ -77,6 +77,10 @@ const CartPage: React.FC = () => {
 
     if (isErrorCart || !cart) {
         return <ErrorText>Ошибка загрузки корзины.</ErrorText>;
+    }
+
+    if (cart.items.length === 0) {
+        return <CartEmptyStateComponent />;
     }
 
     return (
