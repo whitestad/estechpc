@@ -32,6 +32,7 @@ class CartItem(models.Model):
     class Meta:
         verbose_name = "Элемент корзины"
         verbose_name_plural = "Элементы корзины"
+        ordering = ("-created_at",)
 
 
 class Order(models.Model):
