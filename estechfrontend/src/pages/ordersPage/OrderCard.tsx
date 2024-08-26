@@ -39,7 +39,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                 <Collapse in={!isExpanded} timeout='auto' unmountOnExit>
                     <Grid container sx={{ mt: 2 }}>
                         <Grid item md={10} container spacing={1}>
-                            {order.items.slice(0, 3).map((item) => (
+                            {order.items.map((item) => (
                                 <Grid item key={item.id}>
                                     <Avatar
                                         variant='rounded'

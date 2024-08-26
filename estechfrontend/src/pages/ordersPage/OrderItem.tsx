@@ -19,7 +19,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
                 sx={{ width: 80, height: 80, mr: 2, borderRadius: 2 }}
             />
             <Box sx={{ width: '100%', minHeight: 80, display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
-                <Box>
+                <Box width='70%'>
                     <Link
                         href={`/products/${item.product.id}`}
                         variant='actayWide'
@@ -32,22 +32,23 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
                                 textDecoration: 'none',
                             },
                         }}
+                        fontSize={{ xs: 14, md: 18 }}
                     >
                         {item.product.name}
                     </Link>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant='body2' color='textSecondary' fontSize={{ xs: 12, md: 14 }}>
                         {item.product.short_characteristics}
                     </Typography>
                 </Box>
 
-                <Box>
-                    <Typography variant='body1' color='textSecondary' align={'right'}>
+                <Box width='30%'>
+                    <Typography variant='body1' color='textSecondary' align={'right'} fontSize={{ xs: 14, md: 18 }}>
                         Цена:{' '}
                         <Typography component={'span'} variant={'actayWide'} color={'text.primary'}>
                             {formatPrice(item.total_price)}
                         </Typography>{' '}
                     </Typography>
-                    <Typography variant='body2' color='textSecondary' align={'right'}>
+                    <Typography variant='body2' color='textSecondary' align={'right'} fontSize={{ xs: 12, md: 16 }}>
                         {item.quantity}шт. x {formatPrice(item.product.price)}
                     </Typography>
                 </Box>
