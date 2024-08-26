@@ -24,8 +24,15 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useCart } from '@hooks/useCart';
 import IconButton from '@mui/material/IconButton';
 
+import { useNavigate } from 'react-router-dom'; // для навигации
+import { useOrders } from '@hooks/useOrders';
+import { IOrder, IOrderCreateData } from 'types/order'; // импортируйте ваш хук
+
 const CheckoutPage: React.FC = () => {
-    const { cart } = useCart();
+    const { cart, clearCart } = useCart();
+    const { createOrder } = useOrders(); // Хук для работы с заказами
+    const navigate = useNavigate(); // Для навигации
+
     const [contactInfo, setContactInfo] = useState({
         phoneNumber: '',
         contactMethod: 'phone',
@@ -47,8 +54,32 @@ const CheckoutPage: React.FC = () => {
         setItemsVisible(!isItemsVisible);
     };
 
-    const handlePlaceOrder = () => {
-        alert('Ваш заказ принят! С вами свяжется наш менеджер.');
+    const handlePlaceOrder = async () => {
+        if (!cart || cart.items.length === 0) {
+            alert('Ваша корзина пуста. Добавьте товары перед оформлением заказа.');
+            return;
+        }
+
+        // Подготовка данных для заказа
+        const orderData: IOrderCreateData = {
+            delivery_method: contactInfo.deliveryMethod,
+            contact_method: contactInfo.contactMethod,
+            contact_info: contactInfo.phoneNumber,
+            address: contactInfo.address,
+            items: cart.items.map((item) => ({
+                product: item.product.id,
+                quantity: item.quantity,
+            })),
+        };
+
+        try {
+            await createOrder(orderData);
+            clearCart();
+            navigate('/order-success');
+        } catch (error) {
+            console.error('Error creating order:', error);
+            alert('Произошла ошибка при создании заказа. Пожалуйста, попробуйте снова.');
+        }
     };
 
     return (
@@ -79,7 +110,7 @@ const CheckoutPage: React.FC = () => {
 
                 <Typography variant='body1' sx={{ my: 2 }}>
                     Общая сумма:{' '}
-                    <Typography component='span' variant={'actayWide'} color='primary'>
+                    <Typography component='span' variant={'h6'} color='primary'>
                         {cart?.total_amount}
                     </Typography>{' '}
                     ₽

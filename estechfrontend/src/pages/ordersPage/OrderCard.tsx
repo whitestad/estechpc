@@ -15,8 +15,6 @@ interface OrderCardProps {
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) => {
-    const totalPrice = order.items.reduce((total, item) => total + item.total_price, 0);
-
     return (
         <Card elevation={0} sx={{ mb: 3, p: 1 }} onClick={onToggle}>
             <CardContent>
@@ -55,7 +53,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
 
                         <Grid item md={2} sx={{ mt: 'auto' }}>
                             <Typography variant='h6' align={'right'}>
-                                {formatPrice(totalPrice)}
+                                {formatPrice(order.price)}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -85,7 +83,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, isExpanded, onToggle }) =>
                         <Typography variant='body1'>
                             Итого:{' '}
                             <Typography variant='h6' component={'span'}>
-                                {formatPrice(totalPrice)}
+                                {formatPrice(order.price)}
                             </Typography>
                         </Typography>
                     </Box>

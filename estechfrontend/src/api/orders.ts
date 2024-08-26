@@ -14,12 +14,12 @@ export const fetchOrders = async (page: number = 1): Promise<PaginatedResponse<I
 
 // Получение деталей одного заказа
 export const fetchOrderDetails = async (orderId: number): Promise<IOrder> => {
-    const response = await authAxios.get(`/orders/${orderId}/`);
+    const response = await authAxios.get(`/orders/list/${orderId}/`);
     return response.data;
 };
 
 // Создание нового заказа
 export const createOrder = async (orderData: IOrderCreateData): Promise<IOrder> => {
-    const response = await authAxios.post('/orders/create/', orderData);
+    const response = await authAxios.post('/orders/list/', orderData);
     return response.data;
 };

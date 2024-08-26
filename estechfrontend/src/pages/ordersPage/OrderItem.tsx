@@ -48,7 +48,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
                         </Typography>{' '}
                     </Typography>
                     <Typography variant='body2' color='textSecondary' align={'right'}>
-                        {item.quantity}шт. x {formatPrice(item.price)}
+                        {item.quantity}шт. x {formatPrice(item.product.price)}
                     </Typography>
                 </Box>
             </Box>
