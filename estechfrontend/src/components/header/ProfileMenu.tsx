@@ -42,7 +42,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
     return (
         <>
             <Menu
-                elevation={0}
+                elevation={1}
                 anchorEl={anchorEl}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -61,7 +61,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
                 <MenuItem onClick={() => handleNavigate('/logout')}>Выйти с аккаунта</MenuItem>
             </Menu>
             <Menu
-                elevation={0}
+                elevation={1}
                 anchorEl={mobileMoreAnchorEl}
                 anchorOrigin={{
                     vertical: 'top',

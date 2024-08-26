@@ -23,6 +23,7 @@ import FavoritesPage from '@pages/favoritesPage/FavoritesPage';
 import CartPage from '@pages/cartPage/CartPage';
 import CheckoutPage from '@pages/checkoutPage/CheckoutPage';
 import OrdersPage from '@pages/ordersPage/OrdersPage';
+import OrderSuccessPage from '@pages/orderSuccessPage/OrderSuccessPage';
 
 const App: React.FC = () => {
     return (
@@ -44,6 +45,7 @@ const App: React.FC = () => {
 
                     <Route path='/cart' element={<CartPage />} />
                     <Route path='/checkout' element={<CheckoutPage />} />
+                    <Route path='/order-success' element={<OrderSuccessPage />} />
 
                     <Route path='orders' element={<OrdersPage />} />
 
