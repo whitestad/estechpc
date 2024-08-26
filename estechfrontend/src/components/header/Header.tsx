@@ -83,7 +83,8 @@ const Header: React.FC = () => {
                             Каталог
                         </Button>
 
-                        <SearchBar />
+                        {/*<SearchBar />*/}
+                        <Box flexGrow={1}></Box>
 
                         <Box sx={{ display: { xs: 'none', md: 'flex', gap: theme.spacing(5), alignItems: 'center' } }}>
                             <IconWithLabel
