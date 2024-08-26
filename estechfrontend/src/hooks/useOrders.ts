@@ -10,7 +10,7 @@ export const useOrders = () => {
     // Получение списка заказов с пагинацией через useInfiniteQuery
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery<PaginatedResponse<IOrder>, Error>({
         queryKey: [ORDERS_QUERY_KEY],
-        queryFn: ({ pageParam = 1 }) => fetchOrders(pageParam),
+        queryFn: ({ pageParam = 1 }) => fetchOrders(typeof pageParam === 'number' ? pageParam : 1),
         getNextPageParam: (lastPage) => {
             const nextUrl = lastPage.next;
             if (nextUrl) {
@@ -23,7 +23,7 @@ export const useOrders = () => {
     });
 
     // Мутация для создания нового заказа
-    const createOrderMutation = useMutation<IOrder, Error, IOrderCreateData>({
+    const createOrderMutation = useMutation<IOrderCreateData, Error, IOrderCreateData>({
         mutationFn: createOrder,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [ORDERS_QUERY_KEY] });

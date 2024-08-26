@@ -24,13 +24,13 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useCart } from '@hooks/useCart';
 import IconButton from '@mui/material/IconButton';
 
-import { useNavigate } from 'react-router-dom'; // для навигации
+import { useNavigate } from 'react-router-dom';
 import { useOrders } from '@hooks/useOrders';
-import { IOrder, IOrderCreateData } from 'types/order'; // импортируйте ваш хук
+import { IOrderCreateData } from 'types/order';
 
 const CheckoutPage: React.FC = () => {
     const { cart, clearCart } = useCart();
-    const { createOrder } = useOrders(); // Хук для работы с заказами
+    const { createOrder } = useOrders();
     const navigate = useNavigate(); // Для навигации
 
     const [contactInfo, setContactInfo] = useState({
