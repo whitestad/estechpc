@@ -37,7 +37,7 @@ class CartItem(models.Model):
 class Order(models.Model):
     class Status(models.TextChoices):
         PENDING = 'pending', 'Ожидает обработки'
-        PROCESSING = 'processing', 'В процессе обработки'
+        PROCESSING = 'processing', 'В процессе'
         COMPLETED = 'completed', 'Завершен'
         CANCELED = 'canceled', 'Отменен'
 
