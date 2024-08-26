@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography, Box, IconButton } from '@mui/material';
 import { IProduct } from 'types/products';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,6 @@ import { useFavorites } from '@hooks/useFavorites';
 import FavoriteButton from '@components/favoriteButton/FavoriteButton';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-
-import useCartStore from '@stores/cartStore';
 
 import theme from '@styles/theme';
 import { useCart } from '@hooks/useCart';
@@ -21,12 +19,35 @@ export interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products, queryKeys }) => {
     const navigate = useNavigate();
-    const { toggleFavorite, isAdding, isRemoving } = useFavorites(queryKeys);
+    const { toggleFavorite, isAdding: isFavoriteAdding, isRemoving: isFavoriteRemoving } = useFavorites(queryKeys);
 
-    const { cart, addProductToCart } = useCart();
+    const { cart, addProductToCart, isAdding: isCartAdding, isRemoving: isCartRemoving } = useCart();
+    const [cartClickedItems, setCartClickedItems] = useState<number[]>([]);
+    const [favoriteClickedItems, setFavoriteClickedItems] = useState<number[]>([]);
+
+    const isFavoriteLoading = isFavoriteAdding || isFavoriteRemoving;
+    const isCartLoading = isCartAdding || isCartRemoving;
+
+    const changeFavorite = (productId: number, isFavorite: boolean) => {
+        if (!isFavoriteLoading) {
+            setFavoriteClickedItems([productId]);
+        } else {
+            setFavoriteClickedItems((prev) => [...prev, productId]);
+        }
+
+        toggleFavorite(productId, isFavorite);
+        setFavoriteClickedItems((prev) => [...prev, productId]);
+    };
 
     const addCartHandle = (event: React.MouseEvent<HTMLElement>, productId: number) => {
         event.stopPropagation();
+
+        if (!isCartLoading) {
+            setCartClickedItems([productId]);
+        } else {
+            setCartClickedItems((prev) => [...prev, productId]);
+        }
+
         addProductToCart({ productId: productId, quantity: 1 });
     };
 
@@ -95,13 +116,14 @@ const ProductList: React.FC<ProductListProps> = ({ products, queryKeys }) => {
                                         <FavoriteButton
                                             productId={product.id}
                                             isFavorite={product.is_favorite}
-                                            toggleFavorite={toggleFavorite}
-                                            isLoading={isAdding || isRemoving}
+                                            toggleFavorite={changeFavorite}
+                                            isLoading={favoriteClickedItems.includes(product.id) && isFavoriteLoading}
                                             sx={{ backgroundColor: theme.palette.background.default, borderRadius: 1 }}
                                         />
 
                                         <IconButton
                                             onClick={isInCart ? (event) => toCartHandle(event) : (event) => addCartHandle(event, product.id)}
+                                            disabled={cartClickedItems.includes(product.id) && isCartLoading}
                                             sx={{
                                                 color: 'primary.contrastText',
                                                 backgroundColor: 'primary.main',

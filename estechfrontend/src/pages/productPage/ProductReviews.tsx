@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Box, Typography, CircularProgress, Paper, List, ListItem, Divider, Avatar } from "@mui/material";
+import { Box, Typography, Paper, List, ListItem, Divider, Avatar } from '@mui/material';
 import { fetchProductReviews } from '@api/products';
 import { RatingLite } from '@components/rating/CustomRating';
 import theme from '@styles/theme';
 import ErrorText from '@components/errorText/ErrorText';
 import LoadingBox from '@components/loadingBox/LoadingBox';
-import FlexBox from "@components/flexBox/FlexBox";
-import { toDatetime } from "@utils/datetime";
+import FlexBox from '@components/flexBox/FlexBox';
+import { toDatetime } from '@utils/datetime';
 
 const ProductReviews: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -34,9 +34,9 @@ const ProductReviews: React.FC = () => {
 
     return (
         <Paper variant='outlined' sx={{ mt: 2, p: 2 }}>
-            <List>
-                {reviews.length > 0 ? (
-                    reviews.map((review, index) => (
+            {reviews.length > 0 ? (
+                <List>
+                    {reviews.map((review, index) => (
                         <>
                             <ListItem key={index}>
                                 <Box sx={{ width: '100%' }}>
@@ -56,11 +56,11 @@ const ProductReviews: React.FC = () => {
 
                             <Divider component='li' sx={{ borderColor: theme.palette.grey[800] }} />
                         </>
-                    ))
-                ) : (
-                    <Typography variant='body2'>Нет отзывов</Typography>
-                )}
-            </List>
+                    ))}
+                </List>
+            ) : (
+                <Typography variant='body2'>Нет отзывов</Typography>
+            )}
         </Paper>
     );
 };

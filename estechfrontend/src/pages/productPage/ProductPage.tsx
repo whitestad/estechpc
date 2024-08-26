@@ -2,18 +2,16 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Container, Grid } from '@mui/material';
 import { fetchProductById } from '@api/products';
-import { addToFavorites, removeFromFavorites } from '@api/favorites';
 import ProductPhotos from './ProductPhotos';
 import ErrorText from '@components/errorText/ErrorText';
-import { queryClient } from '@src/queryClient';
+
 import { IProductDetail } from 'types/products';
 import ProductDetails from './ProductDetails';
 import ProductTabs from './ProductTabs';
 import LoadingBox from '@components/loadingBox/LoadingBox';
-import { useFavorites } from '@hooks/useFavorites';
 
 const ProductPage: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -23,12 +21,10 @@ const ProductPage: React.FC = () => {
         isLoading,
         isError,
     } = useQuery<IProductDetail>({
-        queryKey: ['product', productId],
+        queryKey: ['product', Number(productId)],
         queryFn: () => fetchProductById(productId!),
         enabled: !!productId,
     });
-
-    const { toggleFavorite, isAdding, isRemoving } = useFavorites([['product', productId]]);
 
     if (isLoading) return <LoadingBox />;
     if (isError || !product) return <ErrorText>Ошибка загрузки данных товара.</ErrorText>;
@@ -41,7 +37,7 @@ const ProductPage: React.FC = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <ProductDetails product={product} toggleFavorite={toggleFavorite} isLoading={isAdding || isRemoving} />
+                    <ProductDetails product={product} />
                 </Grid>
 
                 <Grid item xs={12}>

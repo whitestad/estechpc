@@ -117,6 +117,7 @@ theme.components = {
         styleOverrides: {
             root: {
                 borderRadius: theme.shape.borderRadius,
+                textTransform: 'none',
                 '&.Mui-disabled': {},
             },
         },
